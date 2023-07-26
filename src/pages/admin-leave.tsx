@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Header from '@/components/admin/AdminHeader';
 import Main from '@/components/admin/AdminMain';
 
 export default function adminLeave() {
