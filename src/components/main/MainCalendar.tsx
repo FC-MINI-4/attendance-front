@@ -111,7 +111,7 @@ export default function Calendar(){
   return(
     <>
       <Link href='/'>Go To Home</Link>
-      <div>
+      <div className="w-[75rem]">
         {/* 헤더(년.월 형식 + 월 변경 버튼) */}
         <div className="flex h-20 text-3xl">
           <ChevronLeftIcon
