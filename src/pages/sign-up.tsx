@@ -1,7 +1,7 @@
 import Button from '@/components/common/Button';
 import { SIGNUP_INPUT_INFO } from '@/constants/constants';
-import AuthSignUpInput from '@/components/auth/AuthSignUpInput';
-import AuthSignUpTitle from '@/components/auth/AuthSignUpTitle';
+import AuthSignUpInput from '@/components/auth/signUp/AuthSignUpInput';
+import AuthSignUpTitle from '@/components/auth/signUp/AuthSignUpTitle';
 
 export default function SignUp() {
   return (
@@ -14,6 +14,7 @@ export default function SignUp() {
           button={value.button}
           placeholder={value.placeholder}
           enLabel={value.enLabel}
+          type={value.type}
         />
       ))}
       <Button contents={'회원가입'} />
