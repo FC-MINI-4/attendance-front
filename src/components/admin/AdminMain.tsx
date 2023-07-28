@@ -11,7 +11,7 @@ import {
   department,
   status,
   employeePosition
-} from './AdminOption';
+} from '@/constants/Option';
 
 export default function Main({ page }: MainIProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
@@ -87,7 +87,7 @@ export default function Main({ page }: MainIProps) {
                     </div>
                   )}
 
-                  <div className="w-[16rem] flex justify-center ">
+                  <div className="w-[12rem] flex justify-center ">
                     이름:
                     <input
                       className="w-[5rem] ml-2 border-solid border-2 border-gray-400 rounded-md text-center h-[1.8rem] "
@@ -107,7 +107,7 @@ export default function Main({ page }: MainIProps) {
                     onChange={handlePositionChange}
                   />
                   <div className="text-center w-[11rem]">입사일</div>
-                  <div className="w-[11rem] text-center">요청내역</div>
+                  <div className="w-[19rem] text-center">요청내역</div>
                   <DropdownFilter
                     options={status}
                     value={selectedStatus}
@@ -119,7 +119,7 @@ export default function Main({ page }: MainIProps) {
 
               {page === 'admin-manage' && (
                 <>
-                  <div className="w-[10rem] text-center">
+                  <div className="w-[9rem] ml-[3rem] mr-4 text-center">
                     이름:
                     <input
                       className="w-[5rem] ml-2 border-solid border-2 border-gray-400 rounded-md text-center h-[1.8rem] "
@@ -138,8 +138,8 @@ export default function Main({ page }: MainIProps) {
                     onChange={handlePositionChange}
                   />
                   <div className="text-center w-[10rem]">입사일</div>
-                  <div className="w-[10rem] text-center">당직내역</div>
                   <div className="w-[10rem] text-center">연차내역</div>
+                  <div className="w-[10rem] text-center">당직내역</div>
                   <div className="w-[10rem] text-center">총연차</div>
                   <div className="w-[10rem] text-center">사용연차</div>
                   <div className="w-[10rem]  text-center">잔여연차</div>
@@ -150,9 +150,13 @@ export default function Main({ page }: MainIProps) {
               {page === 'admin-duty' && (
                 <RequestList isSidebarOpen={isSidebarOpen} />
               )}
+            </div>
+            <div>
               {page === 'admin-leave' && (
                 <RequestList isSidebarOpen={isSidebarOpen} />
               )}
+            </div>
+            <div>
               {page === 'admin-manage' && (
                 <EmployeeList isSidebarOpen={isSidebarOpen} />
               )}

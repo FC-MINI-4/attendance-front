@@ -25,13 +25,13 @@ export const RequestList: React.FC<SideBarIProps> = ({ isSidebarOpen }) => {
   return (
     <div
       className={`flex border-solid border-b-[1px] justify-between h-[42px] items-center `}>
-      <div className="w-[10rem] text-center font-semibold">연차</div>
-      <div className="w-[15.5rem] text-center">이창휘</div>
-      <div className="w-[10rem] text-center">인사팀</div>
-      <div className="w-[10rem] text-center">사원</div>
-      <div className="text-center w-[11rem]">2021년 11월 27일</div>
-      <button className="w-[11rem] justify-center flex hover:underline  text-secondaryGray text-center">
-        2023년 7월 2일
+      <div className="w-[8rem] text-center font-semibold">연차</div>
+      <div className="w-[12rem] text-center">이창휘</div>
+      <div className="w-[8.5rem] ml-4 text-center">인사팀</div>
+      <div className="w-[8.5rem] text-center">사원</div>
+      <div className="text-center w-[13rem]">2021년 11월 27일</div>
+      <button className="w-[18rem] justify-center flex hover:underline  text-secondaryGray text-center">
+        2023년 12월 24일 ~ 2023년 12월 25일
       </button>
 
       <div className="w-[10rem] item-center flex justify-center">
