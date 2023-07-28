@@ -8,12 +8,12 @@ import { GoPaperAirplane } from 'react-icons/go';
 export default function SideBar() {
   const router = useRouter();
   return (
-    <div className="w-[5rem] h-[46rem] bg-primary rounded-bl-2xl">
+    <div className="w-[5rem] h-[48.25rem] bg-primary rounded-bl-2xl">
       <Link href="/admin-manage" as="/admin-manage">
         <button
           className={`text-white w-[5rem] h-[5rem] ${
             router.asPath === '/admin-manage'
-              ? 'active bg-blue-800 rounded-xl '
+              ? 'active bg-secondaryHover rounded-xl '
               : ''
           }`}>
           <div className="flex flex-col items-center">
@@ -27,7 +27,7 @@ export default function SideBar() {
         <button
           className={`text-white w-[5rem] h-[5rem] ${
             router.asPath === '/admin-leave'
-              ? 'active bg-blue-800 rounded-xl'
+              ? 'active bg-secondaryHover rounded-xl'
               : ''
           }`}>
           <div className="flex flex-col items-center">
@@ -41,7 +41,7 @@ export default function SideBar() {
         <button
           className={`text-white w-[5rem] h-[5rem] ${
             router.asPath === '/admin-duty'
-              ? 'active bg-blue-800 rounded-xl'
+              ? 'active bg-secondaryHover rounded-xl'
               : ''
           }`}>
           <div className="flex flex-col items-center">
