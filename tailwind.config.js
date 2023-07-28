@@ -10,12 +10,15 @@ module.exports = {
     extend: {
       colors: {
         primary: '#4050E0', // main blue
-        primaryHover:'#9fa6e0',
+        primaryHover: '#9fa6e0',
+        secondaryHover: '#0000CC',
         secondary: '#E32636', // main red
         accent: '#51D285', // main green
         input: '#F4F4F4',
         mainGray: '#D0D0D0', // placeholder gray
-        subTextAndBorder: '#9CA3Af'
+        secondaryGray: '#757575',
+        subTextAndBorder: '#9CA3Af',
+        mainOrange: '#FF8339' // main orange
       }
     }
   },
