@@ -3,6 +3,7 @@ export interface IAuthSignUpInput {
   enLabel: string;
   button?: string;
   placeholder?: string;
+  type: string;
 }
 
 export interface ISignUpItem {
@@ -10,6 +11,7 @@ export interface ISignUpItem {
   enLabel: string;
   button?: string;
   placeholder?: string;
+  type: string;
 }
 
 export interface IAuthCheckPw {
