@@ -8,7 +8,8 @@ export default function AuthSignUpInput({
   info,
   button,
   placeholder,
-  enLabel
+  enLabel,
+  type
 }: IAuthSignUpInput) {
   const [signupInput, setSignupInput] = useState({
     profileUrl: '',
@@ -64,6 +65,7 @@ export default function AuthSignUpInput({
         name={enLabel}
         onChange={handleChange}
         placeholder={placeholder}
+        type={type}
       />
       <div className="flex sm:min-w-[5rem] min-w-[4rem] items-end justify-cente ml-4">
         {renderButton()}
