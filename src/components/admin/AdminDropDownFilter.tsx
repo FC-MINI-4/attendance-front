@@ -12,7 +12,7 @@ export const DropdownFilter: React.FC<DropdownFilterIProps> = ({
   };
 
   return (
-    <div className="w-[10rem] flex justify-center ">
+    <div className="w-[7em] flex justify-center ">
       <select className="  text-center" value={value} onChange={handleChange}>
         {options.map(option => (
           <option key={option} value={option}>
