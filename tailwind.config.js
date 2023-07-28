@@ -18,7 +18,8 @@ module.exports = {
         mainGray: '#D0D0D0', // placeholder gray
         secondaryGray: '#757575',
         subTextAndBorder: '#9CA3Af',
-        mainOrange: '#FF8339' // main orange
+        mainOrange: '#FF8339', // main orange
+        mainBlack: '#525252'
       }
     }
   },

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useState } from 'react'
 import moment from 'moment'
 import{
@@ -10,18 +9,19 @@ startOfWeek,
 endOfWeek,
 addDays
 } from 'date-fns'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from '@heroicons/react/24/solid'
 
-export default function Calendar(){
+export default function MiniCalendar(){
   // new Date 한국시간으로 변경
-  const offset = 1000 * 60 * 60 * 9
-  const koreaNow = new Date((new Date()).getTime() + offset)
+  // const offset = 1000 * 60 * 60 * 9
+  // const koreaNow = new Date((new Date()).getTime() + offset)
+
 
   //현재 달 state에 저장!
-  const [currentDate, setCurrentDate] = useState(koreaNow)
+  const [currentDate, setCurrentDate] = useState(new Date())
   const currentYear = moment(currentDate).format ('YYYY')
   const currentMonth = moment(currentDate).format('MM')
-  const currentDayForm = moment(currentDate).format('YYYY.MM.DD')
+  const currentDayForm = moment(new Date()).format('YYYY.MM.DD')
 
   //버튼 클릭시 월 바뀌는 로직
   const prevMonth = () => {
@@ -39,13 +39,13 @@ export default function Calendar(){
     //0부터 해당되는 인덱스의 요일을 days에 입력
     for(let i=0; i<7; i++){
       days.push(
-        <div className="grow border-r-2 last:border-0 bg-mainGray pl-1.5" key={i}>
+        <div className="grow text-xs text-center" key={i}>
           {date[i]}
         </div>
       )
     }
     return(
-      <div className="flex">{days}</div>
+      <div className="flex pb-4">{days}</div>
     )
   }
 
@@ -67,19 +67,19 @@ export default function Calendar(){
         let today = moment(day).format('YYYY.MM.DD') === currentDayForm
         days.push(
           <div
-            className={`h-[7.5rem] grow border box-border last:border-r-0
+            className={`h-8 grow text-xs flex justify-center items-center rounded-full leading-6 text-center
             ${today ? `bg-primary text-white` : null}
             hover:bg-primaryHover hover:text-white`}
             key={formattedDate}>
             { checkedMonth === currentMonth ?
               (
-                <div className="w-6 h-6 pt-1.5 pl-1.5">
+                <div className="h-6 w-6">
                   {formattedDate}
                 </div>
               )
             :
               (
-                <div className="w-6 h-6 pt-1.5 pl-1.5 text-mainGray">
+                <div className="h-6 w-6 text-mainGray">
                 {formattedDate}
               </div>
               )
@@ -100,7 +100,7 @@ export default function Calendar(){
     }
 
     return (
-      <div className="border">
+      <div>
         <div>
           {rows}
         </div>
@@ -112,13 +112,13 @@ export default function Calendar(){
     <>
       <div>
         {/* 헤더(년.월 형식 + 월 변경 버튼) */}
-        <div className="flex h-20 text-3xl">
-          <ChevronLeftIcon
-            className="w-10 h-10 top-0 bottom-0 m-auto cursor-pointer text-primary pl-1.5"
+        <div className="h-9 flex text-3xl pb-4">
+          <ArrowLeftCircleIcon
+            className="h-7 w-7 top-0 bottom-0 m-auto cursor-pointer text-primary pl-2"
             onClick={prevMonth} />
-          <div className="text-center grow top-0 bottom-0 m-auto">{currentYear}.{currentMonth}</div>
-          <ChevronRightIcon
-            className="w-10 h-10 top-0 bottom-0 m-auto cursor-pointer text-primary pr-1.5"
+          <div className="text-center grow top-0 bottom-0 m-auto text-xs">{currentYear}.{currentMonth}</div>
+          <ArrowRightCircleIcon
+            className="h-7 w-7 top-0 bottom-0 m-auto cursor-pointer text-primary pr-2"
             onClick={nextMonth} />
         </div>
         {/* 요일부분 */}
