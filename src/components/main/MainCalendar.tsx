@@ -67,7 +67,7 @@ export default function Calendar(){
         let today = moment(day).format('YYYY.MM.DD') === currentDayForm
         days.push(
           <div
-            className={`h-[7rem] grow border box-border last:border-r-0
+            className={`h-[7.5rem] grow border box-border last:border-r-0
             ${today ? `bg-primary text-white` : null}
             hover:bg-primaryHover hover:text-white`}
             key={formattedDate}>
