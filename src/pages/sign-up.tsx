@@ -1,7 +1,7 @@
 import Button from '@/components/common/Button';
 import { SIGNUP_INPUT_INFO } from '@/constants/constants';
-import AuthSignUpInput from '@/components/auth/signUp/AuthSignUpInput';
-import AuthSignUpTitle from '@/components/auth/signUp/AuthSignUpTitle';
+import AuthSignUpInput from '@/components/auth/sign-up/AuthSignUpInput';
+import AuthSignUpTitle from '@/components/auth/sign-up/AuthSignUpTitle';
 
 export default function SignUp() {
   return (
