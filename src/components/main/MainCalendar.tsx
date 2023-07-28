@@ -14,14 +14,14 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
 export default function Calendar(){
   // new Date 한국시간으로 변경
-  const offset = 1000 * 60 * 60 * 9
-  const koreaNow = new Date((new Date()).getTime() + offset)
+  // const offset = 1000 * 60 * 60 * 9
+  // const koreaNow = new Date((new Date()).getTime() + offset)
 
   //현재 달 state에 저장!
-  const [currentDate, setCurrentDate] = useState(koreaNow)
+  const [currentDate, setCurrentDate] = useState(new Date())
   const currentYear = moment(currentDate).format ('YYYY')
   const currentMonth = moment(currentDate).format('MM')
-  const currentDayForm = moment(currentDate).format('YYYY.MM.DD')
+  const currentDayForm = moment(new Date()).format('YYYY.MM.DD')
 
   //버튼 클릭시 월 바뀌는 로직
   const prevMonth = () => {
