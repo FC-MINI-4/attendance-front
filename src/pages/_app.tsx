@@ -8,7 +8,8 @@ export default function App({ Component, pageProps, router }: AppProps) {
     '/main',
     '/admin-duty',
     '/admin-manage',
-    '/admin-leave'
+    '/admin-leave',
+    '/admin-modify'
   ];
   const isSpecificPage = specificPages.includes(router.pathname);
   if (isSpecificPage) {
@@ -21,4 +22,3 @@ export default function App({ Component, pageProps, router }: AppProps) {
     </Layout>
   );
 }
-

@@ -3,16 +3,19 @@ import { SideBarIProps } from '@/types/IAdmin';
 import axios from 'axios';
 import { EmployeeIProps } from '@/types/IAdmin';
 
-export const EmployeeList: React.FC<SideBarIProps> = ({ isSidebarOpen }) => {
+export const EmployeeList: React.FC<
+  SideBarIProps & { selectedDepartment: string; selectedPosition: string }
+> = ({ isSidebarOpen, selectedDepartment, selectedPosition }) => {
   const [employees, setEmployees] = useState<EmployeeIProps[]>([]);
-
+  const [filteredEmployees, setFilteredEmployees] = useState<EmployeeIProps[]>(
+    []
+  );
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
         const response = await axios.get('/api/AdminRequest');
         const responseData = response.data;
         console.log('API 응답 데이터:', responseData);
-
         setEmployees(responseData.data?.employees || []);
       } catch (error) {
         console.error('API 호출 오류:', error);
