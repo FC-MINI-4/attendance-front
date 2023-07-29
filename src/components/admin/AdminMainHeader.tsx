@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MainHeaderIProps } from '@/types/IAdmin';
-import { CiMenuBurger } from 'react-icons/ci';
+import { HiOutlineBars4 } from 'react-icons/hi2';
 
 export default function MainHeader({ onToggleSidebar }: MainHeaderIProps) {
   const handleToggle = () => {
@@ -11,7 +11,7 @@ export default function MainHeader({ onToggleSidebar }: MainHeaderIProps) {
     <div className=" h-[4rem] border-solid border-b-2 border-mainGray  flex items-center justify-between">
       <div className="flex">
         <button className="ml-5 mr-[1rem] " onClick={handleToggle}>
-          <CiMenuBurger className="w-[36px] h-[36px] " />
+          <HiOutlineBars4 className="w-[36px] h-[36px] " />
         </button>
         <div className="flex items-center ml-4">회사로고</div>
       </div>

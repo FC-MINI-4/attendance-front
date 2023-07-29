@@ -1,9 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { RxHome } from 'react-icons/rx';
-import { BiBuildings } from 'react-icons/bi';
-import { GoPaperAirplane } from 'react-icons/go';
+import {
+  HiOutlineUsers,
+  HiOutlineHome,
+  HiOutlineBuildingOffice2,
+  HiOutlinePaperAirplane
+} from 'react-icons/hi2';
 
 export default function SideBar() {
   const router = useRouter();
@@ -17,7 +20,7 @@ export default function SideBar() {
               : ''
           }`}>
           <div className="flex flex-col items-center">
-            <RxHome className="w-[36px] h-[36px]" />
+            <HiOutlineHome className="w-[36px] h-[36px]" />
             <span>관리</span>
           </div>
         </button>
@@ -31,7 +34,7 @@ export default function SideBar() {
               : ''
           }`}>
           <div className="flex flex-col items-center">
-            <GoPaperAirplane className="w-[36px] h-[36px]" />
+            <HiOutlinePaperAirplane className="w-[36px] h-[36px]" />
             <span>휴가</span>
           </div>
         </button>
@@ -45,8 +48,22 @@ export default function SideBar() {
               : ''
           }`}>
           <div className="flex flex-col items-center">
-            <BiBuildings className="w-[36px] h-[36px]" />
+            <HiOutlineBuildingOffice2 className="w-[36px] h-[36px]" />
             <span>당직</span>
+          </div>
+        </button>
+      </Link>
+
+      <Link href="/admin-modify" as="/admin-modify">
+        <button
+          className={`text-white w-[5rem] h-[5rem] ${
+            router.asPath === '/admin-modify'
+              ? 'active bg-secondaryHover rounded-xl '
+              : ''
+          }`}>
+          <div className="flex flex-col items-center">
+            <HiOutlineUsers className="w-[36px] h-[36px]" />
+            <span>수정</span>
           </div>
         </button>
       </Link>

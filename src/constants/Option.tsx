@@ -28,3 +28,13 @@ export const employeePosition = [
   '대리',
   '사원'
 ];
+export const modifyPosition = ['부장', '과장', '차장', '대리', '사원'];
+
+export const modifyDepartment = [
+  '개발팀',
+  '기획팀',
+  '영업팀',
+  '인사팀',
+  '회계팀',
+  '법무팀'
+];
