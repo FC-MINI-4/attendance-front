@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { SideBarIProps } from '@/types/IAdmin';
+import { SideBarIProps, FilterIProps } from '@/types/IAdmin';
 import axios from 'axios';
-import { EmployeeIProps } from '@/types/IAdmin';
+import { ManageResIProps } from '@/types/IAdmin';
 
-export const EmployeeList: React.FC<
-  SideBarIProps & { selectedDepartment: string; selectedPosition: string }
-> = ({ isSidebarOpen, selectedDepartment, selectedPosition }) => {
-  const [employees, setEmployees] = useState<EmployeeIProps[]>([]);
-  const [filteredEmployees, setFilteredEmployees] = useState<EmployeeIProps[]>(
+export const EmployeeList: React.FC<SideBarIProps & FilterIProps> = ({
+  isSidebarOpen,
+  selectedDepartment,
+  selectedPosition,
+  searchValue
+}) => {
+  const [employees, setEmployees] = useState<ManageResIProps[]>([]);
+  const [filteredEmployees, setFilteredEmployees] = useState<ManageResIProps[]>(
     []
   );
+
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -24,9 +28,36 @@ export const EmployeeList: React.FC<
     fetchEmployees();
   }, []);
 
+  useEffect(() => {
+    const filterEmployees = () => {
+      let newFilteredEmployees = employees;
+
+      if (selectedDepartment !== '부서명') {
+        newFilteredEmployees = newFilteredEmployees.filter(
+          employee => employee.department === selectedDepartment
+        );
+      }
+
+      if (selectedPosition !== '직급') {
+        newFilteredEmployees = newFilteredEmployees.filter(
+          employee => employee.position === selectedPosition
+        );
+      }
+
+      if (searchValue !== '') {
+        newFilteredEmployees = newFilteredEmployees.filter(employee =>
+          employee.name.includes(searchValue.trim())
+        );
+      }
+
+      setFilteredEmployees(newFilteredEmployees);
+    };
+    filterEmployees();
+  }, [selectedDepartment, selectedPosition, searchValue, employees]);
+
   return (
     <>
-      {employees.map(employee => (
+      {filteredEmployees.map(employee => (
         <div
           key={employee.employeeId}
           className="flex justify-between border-solid border-b-[1px] h-[42px] items-center">
