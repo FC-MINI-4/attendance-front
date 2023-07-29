@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactHTMLElement, useState } from 'react';
 import { MainIProps } from '@/types/IAdmin';
 import MainHeader from './AdminMainHeader';
 import SideBar from './AdminSideBar';
@@ -23,6 +23,7 @@ export default function Main({ page }: MainIProps) {
   const [selectedStatus, setSelectedStatus] = useState<string>('상태');
   const [selectedRest, setSelectedRest] = useState<string>('요청');
   const [selectedDuty, setSelectedDuty] = useState<string>('요청');
+  const [searchValue, setSearchValue] = useState<string>('');
 
   const handleRestChange = (value: string) => {
     setSelectedRest(value);
@@ -42,6 +43,10 @@ export default function Main({ page }: MainIProps) {
 
   const handlePositionChange = (value: string) => {
     setSeletedPosition(value);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
   };
 
   const handleToggleSidebar = () => {
@@ -92,12 +97,14 @@ export default function Main({ page }: MainIProps) {
                         </div>
                       )}
 
-                      <div className="w-[12rem] flex justify-center ">
+                      <div className="w-[13rem] flex justify-center ">
                         이름:
                         <input
                           className="w-[5rem] ml-2 border-solid border-2 border-gray-400 rounded-md text-center h-[1.8rem] "
                           type="text"
                           placeholder="사원검색"
+                          value={searchValue}
+                          onChange={handleSearchChange}
                         />
                       </div>
 
@@ -111,14 +118,14 @@ export default function Main({ page }: MainIProps) {
                         value={selectedPosition}
                         onChange={handlePositionChange}
                       />
-                      <div className="text-center w-[11rem]">입사일</div>
+                      <div className="text-center w-[13rem]">입사일</div>
                       <div className="w-[19rem] text-center">요청내역</div>
                       <DropdownFilter
                         options={status}
                         value={selectedStatus}
                         onChange={handlestatusChange}
                       />
-                      <div className="w-[12rem]  text-center ">관리</div>
+                      <div className="w-[13rem]  text-center ">관리</div>
                     </>
                   )}
 
@@ -130,6 +137,8 @@ export default function Main({ page }: MainIProps) {
                           className="w-[5rem] ml-2 border-solid border-2 border-gray-400 rounded-md text-center h-[1.8rem] "
                           type="text"
                           placeholder="사원검색"
+                          value={searchValue}
+                          onChange={handleSearchChange}
                         />
                       </div>
                       <DropdownFilter
@@ -262,12 +271,28 @@ export default function Main({ page }: MainIProps) {
 
             <div>
               {page === 'admin-duty' && (
-                <RequestList isSidebarOpen={isSidebarOpen} />
+                <RequestList
+                  page={page}
+                  isSidebarOpen={isSidebarOpen}
+                  selectedDepartment={selectedDepartment}
+                  selectedPosition={selectedPosition}
+                  selectedDuty={selectedDuty}
+                  selectedStatus={selectedStatus}
+                  searchValue={searchValue}
+                />
               )}
             </div>
             <div>
               {page === 'admin-leave' && (
-                <RequestList isSidebarOpen={isSidebarOpen} />
+                <RequestList
+                  page={page}
+                  isSidebarOpen={isSidebarOpen}
+                  selectedDepartment={selectedDepartment}
+                  selectedPosition={selectedPosition}
+                  selectedRest={selectedRest}
+                  selectedStatus={selectedStatus}
+                  searchValue={searchValue}
+                />
               )}
             </div>
             <div>
@@ -276,6 +301,7 @@ export default function Main({ page }: MainIProps) {
                   isSidebarOpen={isSidebarOpen}
                   selectedDepartment={selectedDepartment}
                   selectedPosition={selectedPosition}
+                  searchValue={searchValue}
                 />
               )}
             </div>

@@ -15,7 +15,16 @@ export interface SideBarIProps {
   isSidebarOpen: boolean;
 }
 
-export interface EmployeeIProps {
+export interface FilterIProps {
+  selectedDepartment: string;
+  selectedPosition: string;
+  searchValue: string;
+  selectedDuty?: string;
+  selectedRest?: string;
+  selectedStatus?: string;
+}
+
+export interface ManageResIProps {
   employeeId: number;
   name: string;
   department: string;
@@ -26,16 +35,56 @@ export interface EmployeeIProps {
   dayOffRemains: number;
 }
 
-export interface DataIProps {
+export interface ManageIProps {
   success: boolean;
   code: string;
   message: string;
   data?: {
-    employees: EmployeeIProps[];
+    employees: ManageResIProps[];
   };
 }
 
-export interface RequestBody {
+export interface LeaveResIProps {
+  employeeId: number;
   name: string;
-  value: number;
+  department: string;
+  position: string;
+  hireDate: string;
+  dayOffId: number;
+  requestDate: string;
+  type: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+  reason: string;
+}
+
+export interface LeaveIProps {
+  success: boolean;
+  code: string;
+  message: string;
+  data?: {
+    employees: LeaveResIProps[];
+  };
+}
+
+export interface DutyResIProps {
+  dutyId: number;
+  employeeId: number;
+  name: string;
+  department: string;
+  position: string;
+  hireDate: string;
+  requestDate: string;
+  date: string;
+  status: '대기중';
+}
+
+export interface DutyIProps {
+  success: boolean;
+  code: string;
+  message: string;
+  data?: {
+    duties: DutyResIProps[];
+  };
 }
