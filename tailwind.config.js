@@ -19,7 +19,8 @@ module.exports = {
         secondaryGray: '#757575',
         subTextAndBorder: '#9CA3Af',
         mainOrange: '#FF8339', // main orange
-        mainBlack: '#525252'
+        mainBlack: '#525252',
+        modalBorder: '#A1A1A1'
       }
     }
   },
