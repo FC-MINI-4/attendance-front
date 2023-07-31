@@ -4,6 +4,7 @@ import { ISignUpItem } from '@/types/IAuth';
 export const rEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 // 영문+숫자로 이루어진 8자리 이상, 16자리 이하 유효성 정규식
+
 export const rPassword = /^(?=.*[A-Za-z])(?=.*\d).{8,16}$/;
 
 export const SIGNUP_INPUT_INFO: ISignUpItem[] = [
