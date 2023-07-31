@@ -13,6 +13,7 @@ export default function AuthChangePwBox() {
         재설정할 비밀번호를 <br /> 입력해주세요.
       </div>
       <AuthChangePwInput />
+
       <Button contents={'변경하기'} />
     </PwBox>
   );
