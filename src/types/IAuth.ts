@@ -1,6 +1,6 @@
 export interface IAuthSignUpInput {
-  info: string;
-  enLabel: string;
+  label: string;
+  name: string;
   button?: string;
   placeholder?: string;
   type: string;
@@ -8,13 +8,13 @@ export interface IAuthSignUpInput {
 
 export interface ISignUpItem {
   label: string;
-  enLabel: string;
+  name: string;
   button?: string;
   placeholder?: string;
   type: string;
 }
 
 export interface IAuthCheckPw {
-  pwd?: string;
-  checkedPwd?: string;
+  pwd: string;
+  checkedPwd: string;
 }
