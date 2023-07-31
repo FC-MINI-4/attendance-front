@@ -1,11 +1,11 @@
 import React from 'react';
 import { DropdownFilterIProps } from '@/types/IAdmin';
 
-export const DropdownFilter: React.FC<DropdownFilterIProps> = ({
+export default function DropdownFilter({
   options,
   value,
   onChange
-}) => {
+}: DropdownFilterIProps) {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
     onChange(selectedValue);
@@ -22,4 +22,4 @@ export const DropdownFilter: React.FC<DropdownFilterIProps> = ({
       </select>
     </div>
   );
-};
+}

@@ -1,10 +1,10 @@
-import React, { ReactHTMLElement, useState } from 'react';
+import React, { useState } from 'react';
 import { MainIProps } from '@/types/IAdmin';
 import MainHeader from './AdminMainHeader';
 import SideBar from './AdminSideBar';
-import { DropdownFilter } from './AdminDropDownFilter';
-import { RequestList } from './AdminRequestList';
-import { EmployeeList } from './AdminEmployeeList';
+import DropdownFilter from './AdminDropDownFilter';
+import RequestList from './AdminRequestList';
+import EmployeeList from './AdminManageList';
 import {
   modifyPosition,
   modifyDepartment,
@@ -24,6 +24,14 @@ export default function Main({ page }: MainIProps) {
   const [selectedRest, setSelectedRest] = useState<string>('요청');
   const [selectedDuty, setSelectedDuty] = useState<string>('요청');
   const [searchValue, setSearchValue] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
+
+  const itemsPerPage = 10;
+
+  const handlePageChange = (selectedPage: number) => {
+    setCurrentPage(selectedPage);
+  };
 
   const handleRestChange = (value: string) => {
     setSelectedRest(value);
@@ -165,7 +173,7 @@ export default function Main({ page }: MainIProps) {
             <>
               {page === 'admin-modify' && (
                 <div className="ml-[3rem] h-[37rem] w-[92rem] flex">
-                  <div className=" h-[37rem] w-[25rem] border-4  border-primary overflow-auto border-soild rounded-xl">
+                  <div className=" h-[37rem] w-[25rem] border-2  border-mainGray overflow-auto border-soild rounded-xl">
                     <div className="w-[25rem] h-[2.5rem] flex bg-primary ">
                       <div className="w-[5rem] border-r-2 border-white h-[2,5rem] "></div>
                       <div className="w-[10rem] border-r-2 border-white h-[2.5rem] justify-center items-center flex text-white">
@@ -176,11 +184,11 @@ export default function Main({ page }: MainIProps) {
                       </div>
                     </div>
 
-                    <div className="w-[25rem] h-[2.5rem] flex border-b-2 border-black mt-[0.2px]">
-                      <div className="w-[5rem] border-r-2 border-black h-[2,5rem]  justify-center items-center flex  ">
+                    <div className="w-[25rem] h-[2.5rem] flex border-b-2 border-mainGray mt-[0.2px]">
+                      <div className="w-[5rem] border-r-2 border-mainGray h-[2,5rem]  justify-center items-center flex  ">
                         1
                       </div>
-                      <div className="w-[10rem] border-r-2 border-black h-[2.5rem] justify-center items-center flex ">
+                      <div className="w-[10rem] border-r-2 border-mainGray h-[2.5rem] justify-center items-center flex ">
                         사원번호
                       </div>
                       <div className="w-[10rem] h-[2.5rem] flex justify-center items-center ">
@@ -189,7 +197,7 @@ export default function Main({ page }: MainIProps) {
                     </div>
                   </div>
                   <div className="h-[30rem] w-[20rem] ml-[3rem]">
-                    <div className=" h-[20rem] w-[20rem] border-4 border-primary  border-soild rounded-xl flex items-center justify-center ">
+                    <div className=" h-[20rem] w-[20rem] border-2 border-mainGray  border-soild rounded-xl flex items-center justify-center ">
                       <div className="flex  items-center  justify-center  font-semibold"></div>
                     </div>
                     <div className="w-[20rem] h-[3rem] flex items-center justify-center">
@@ -207,12 +215,12 @@ export default function Main({ page }: MainIProps) {
                     </div>
                   </div>
 
-                  <div className="ml-[3rem] h-[37rem] w-[30rem] border-4 border-primary  border-soild rounded-xl  ">
+                  <div className="ml-[3rem] h-[37rem] w-[30rem] border-2 border-mainGray  border-soild rounded-xl  ">
                     <div className="flex m-6 ml-16 mt-10 ">
                       <div className="text-lg font-semibold ">이름:</div>
                       <input
                         defaultValue="이창휘"
-                        className="w-[6rem] ml-2 border-2 border-primary rounded-sm pl-2 "
+                        className="w-[6rem] ml-2 border-2 border-mainGray rounded-sm pl-2 "
                       />
                     </div>
 
@@ -256,7 +264,7 @@ export default function Main({ page }: MainIProps) {
                       <div className="text-lg font-semibold ">전화번호:</div>
                       <input
                         defaultValue="010-1234-5678"
-                        className="ml-2 border-2 border-primary rounded-sm pl-2"
+                        className="ml-2 border-2 border-mainGray rounded-sm pl-2"
                       />
                     </div>
                     <div className="w-[30rem] mt-8 flex justify-center">
@@ -279,6 +287,9 @@ export default function Main({ page }: MainIProps) {
                   selectedDuty={selectedDuty}
                   selectedStatus={selectedStatus}
                   searchValue={searchValue}
+                  pageCount={Math.ceil(filteredEmployees.length / itemsPerPage)}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
                 />
               )}
             </div>
@@ -292,6 +303,9 @@ export default function Main({ page }: MainIProps) {
                   selectedRest={selectedRest}
                   selectedStatus={selectedStatus}
                   searchValue={searchValue}
+                  currentPage={currentPage}
+                  pageCount={Math.ceil(filteredEmployees.length / itemsPerPage)}
+                  onPageChange={handlePageChange}
                 />
               )}
             </div>
@@ -302,6 +316,9 @@ export default function Main({ page }: MainIProps) {
                   selectedDepartment={selectedDepartment}
                   selectedPosition={selectedPosition}
                   searchValue={searchValue}
+                  currentPage={currentPage}
+                  pageCount={Math.ceil(filteredEmployees.length / itemsPerPage)}
+                  onPageChange={handlePageChange}
                 />
               )}
             </div>
