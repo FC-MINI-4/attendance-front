@@ -26,13 +26,26 @@ export default function ApproveModal(modalProps : IModalProps){
   const MakeCheckBox = () =>{
     const box = []
     const checkBoxContents = ['반차(오전)', '반차(오후)' , '연차' , '경조휴가']
+    
+    const checkItem = (checkThis : HTMLInputElement) => {
+      const checkboxes = document.getElementsByTagName('input')
+      for(let i=0; i<checkboxes.length; i++){
+        if(checkboxes[i] !== checkThis){
+          checkboxes[i].checked = false
+        }
+      }
+    }
 
     for(let i=0; i<4; i++){
       box.push(
         <div
           key={i}
           className="px-3">
-          <input type="checkbox"/>{checkBoxContents[i]}
+          <input
+            type="checkbox"
+            onClick={(e)=>checkItem(e.target as HTMLInputElement)}
+            value={checkBoxContents[i]}/>
+            {checkBoxContents[i]}
         </div>
       )
     }
