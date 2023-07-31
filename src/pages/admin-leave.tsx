@@ -8,3 +8,4 @@ export default function adminLeave() {
     </div>
   );
 }
+// 오류확인용커밋
