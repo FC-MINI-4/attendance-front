@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import Main from '@/components/admin/AdminMain';
-import Layout from '@/components/common/Layout';
 
 export default function adminDuty() {
   return (

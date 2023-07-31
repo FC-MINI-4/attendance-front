@@ -1,5 +1,8 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import Pagination from '@/components/common/Pagination';
+
+import { PaginationIProps } from '@/types/ICommon';
 import {
   SideBarIProps,
   FilterIProps,
@@ -7,9 +10,7 @@ import {
   LeaveResIProps
 } from '@/types/IAdmin';
 
-export const RequestList: React.FC<
-  SideBarIProps & FilterIProps & MainIProps
-> = ({
+export default function RequestList({
   isSidebarOpen,
   searchValue,
   selectedDepartment,
@@ -17,13 +18,28 @@ export const RequestList: React.FC<
   selectedDuty,
   selectedRest,
   selectedStatus,
+  currentPage,
+  pageCount,
+  onPageChange,
   page
-}) => {
+}: SideBarIProps & FilterIProps & MainIProps & PaginationIProps) {
   const [employees, setEmployees] = useState<LeaveResIProps[]>([]);
-  const [status, setStatus] = useState('');
   const [filteredEmployees, setFilteredEmployees] = useState<LeaveResIProps[]>(
     []
   );
+  const itemsPerPage = 10;
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const currentPageData = filteredEmployees.slice(startIndex, endIndex);
+
+  const handlePageChange = useCallback(
+    (newPage: number) => {
+      onPageChange(newPage);
+    },
+    [onPageChange]
+  );
+
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -78,6 +94,10 @@ export const RequestList: React.FC<
       }
 
       setFilteredEmployees(newFilteredEmployees);
+      const totalPages = Math.ceil(newFilteredEmployees.length / itemsPerPage);
+      if (currentPage >= totalPages) {
+        onPageChange(totalPages > 0 ? 0 : 0);
+      }
     };
     filterEmployees();
   }, [
@@ -88,7 +108,9 @@ export const RequestList: React.FC<
     selectedDuty,
     selectedRest,
     employees,
-    page
+    page,
+    onPageChange,
+    currentPage
   ]);
 
   const handleApproval = () => {
@@ -109,10 +131,10 @@ export const RequestList: React.FC<
 
   return (
     <>
-      {filteredEmployees.map(employee => (
+      {currentPageData.map(employee => (
         <div
           key={employee.employeeId}
-          className={`flex border-solid border-b-[1px] justify-between h-[42px] items-center `}>
+          className={`flex border-solid border-b-[1px] justify-between h-[45px] items-center `}>
           {page === 'admin-duty' && (
             <div className="w-[8rem] text-center font-semibold">당직</div>
           )}
@@ -171,6 +193,13 @@ export const RequestList: React.FC<
           </div>
         </div>
       ))}
+      <div className="flex items-end justify-center ">
+        <Pagination
+          pageCount={Math.ceil(filteredEmployees.length / itemsPerPage)}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </>
   );
-};
+}

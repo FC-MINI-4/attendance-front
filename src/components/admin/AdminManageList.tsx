@@ -2,17 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { SideBarIProps, FilterIProps } from '@/types/IAdmin';
 import axios from 'axios';
 import { ManageResIProps } from '@/types/IAdmin';
+import Pagination from '@/components/common/Pagination';
+import { PaginationIProps } from '@/types/ICommon';
 
-export const EmployeeList: React.FC<SideBarIProps & FilterIProps> = ({
+export default function EmployeeList({
   isSidebarOpen,
   selectedDepartment,
   selectedPosition,
-  searchValue
-}) => {
+  searchValue,
+  currentPage,
+  pageCount,
+  onPageChange
+}: SideBarIProps & FilterIProps & PaginationIProps) {
   const [employees, setEmployees] = useState<ManageResIProps[]>([]);
   const [filteredEmployees, setFilteredEmployees] = useState<ManageResIProps[]>(
     []
   );
+  const itemsPerPage = 10;
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentPageData = filteredEmployees.slice(startIndex, endIndex);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -55,12 +64,16 @@ export const EmployeeList: React.FC<SideBarIProps & FilterIProps> = ({
     filterEmployees();
   }, [selectedDepartment, selectedPosition, searchValue, employees]);
 
+  const handlePageChange = (newPage: number) => {
+    onPageChange(newPage);
+  };
+
   return (
     <>
-      {filteredEmployees.map(employee => (
+      {currentPageData.map(employee => (
         <div
           key={employee.employeeId}
-          className="flex justify-between border-solid border-b-[1px] h-[42px] items-center">
+          className="flex justify-between border-solid border-b-[1px] h-[50px] items-center">
           <div className="w-[13.5rem] text-center">{employee.name}</div>
           <div className="w-[7rem] text-center">{employee.department}</div>
           <div className="w-[7rem] ml-2 mr-4 text-center">
@@ -84,6 +97,13 @@ export const EmployeeList: React.FC<SideBarIProps & FilterIProps> = ({
           </div>
         </div>
       ))}
+      <div className="flex items-end justify-center mt-[2rem]  ">
+        <Pagination
+          pageCount={Math.ceil(filteredEmployees.length / itemsPerPage)}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </>
   );
-};
+}
