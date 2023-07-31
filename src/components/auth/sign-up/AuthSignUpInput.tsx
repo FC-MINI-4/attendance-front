@@ -75,9 +75,10 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
       return true;
     }
 
-    return rEmail.test(signUpInfo.password);
+    return rPassword.test(signUpInfo.password);
   };
 
+  // 이메일 또는 비밀번호에 유효성 검사 렌더링
   const renderValid = () => {
     if (props.name === 'email') return emailCheck();
     else if (props.name === 'password') return passwordCheck();
