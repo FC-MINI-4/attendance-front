@@ -12,10 +12,6 @@ addDays
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from '@heroicons/react/24/solid'
 
 export default function MiniCalendar(){
-  // new Date 한국시간으로 변경
-  // const offset = 1000 * 60 * 60 * 9
-  // const koreaNow = new Date((new Date()).getTime() + offset)
-
 
   //현재 달 state에 저장!
   const [currentDate, setCurrentDate] = useState(new Date())
