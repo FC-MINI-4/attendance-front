@@ -1,4 +1,5 @@
 export default function MainHeader(){
+  //그냥 일단 데이터 없어서 하드코딩
   return(
     <div className="h-32 flex justify-between px-16">
       <div className="top-0 bottom-0 my-auto text-3xl font-bold">
