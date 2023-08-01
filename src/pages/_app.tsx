@@ -10,6 +10,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
     '/admin-duty',
     '/admin-manage',
     '/admin-leave',
+    '/member',
     '/admin-modify'
   ];
   const isSpecificPage = specificPages.includes(router.pathname);
