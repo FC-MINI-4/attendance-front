@@ -231,7 +231,7 @@ const dummyEmployees = [
         : '사원',
     hireDate: `20${7 + index}-0${1 + (index % 9)}-0${1 + (index % 9)}`,
     dayOffId: 15 + index,
-    requestDate: `2022-0${1 + (index % 9)}-0${1 + (index % 9)}`,
+    requestDate: `2023-0${1 + (index % 9)}-0${1 + (index % 9)}`,
     type:
       index % 6 === 0
         ? '연차취소'
@@ -245,8 +245,8 @@ const dummyEmployees = [
         ? '반차'
         : '반차취소',
     status: index % 3 === 0 ? '승인됨' : index % 3 === 1 ? '대기중' : '거절됨',
-    startDate: `2022-03-${20 + (index % 10)}`,
-    endDate: `2022-03-${22 + (index % 10)}`,
+    startDate: `2023-07-${20 + (index % 10)}`,
+    endDate: `2023-07-${22 + (index % 10)}`,
     reason: index % 2 === 0 ? '집가고 싶어요.' : '쉬고 싶어요.'
   }))
 ];

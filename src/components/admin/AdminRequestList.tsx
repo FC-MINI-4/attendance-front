@@ -1,8 +1,12 @@
 import axios from 'axios';
 import React, { useState, useEffect, useCallback } from 'react';
 import Pagination from '@/components/common/Pagination';
-
+import {
+  selectedStartDateState,
+  selectedEndDateState
+} from '@/recoil/common/datePicker';
 import { PaginationIProps } from '@/types/ICommon';
+import { useRecoilState, RecoilRoot } from 'recoil';
 import {
   SideBarIProps,
   FilterIProps,
@@ -30,7 +34,9 @@ export default function RequestList({
   const itemsPerPage = 10;
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-
+  const [selectedStartDate] = useRecoilState(selectedStartDateState);
+  const [selectedEndDate, setSelectedEndDate] =
+    useRecoilState(selectedEndDateState);
   const currentPageData = filteredEmployees.slice(startIndex, endIndex);
 
   const handlePageChange = useCallback(
@@ -57,6 +63,23 @@ export default function RequestList({
   useEffect(() => {
     const filterEmployees = () => {
       let newFilteredEmployees = employees;
+
+      if (selectedStartDate && selectedEndDate) {
+        const nextDay = new Date(selectedStartDate);
+        nextDay.setDate(selectedStartDate.getDate() - 1);
+
+        newFilteredEmployees = newFilteredEmployees.filter(employee => {
+          const startDate = new Date(employee.startDate);
+          const endDate = new Date(employee.endDate);
+
+          return (
+            nextDay <= startDate &&
+            startDate <= selectedEndDate &&
+            nextDay <= endDate &&
+            endDate <= selectedEndDate
+          );
+        });
+      }
 
       if (selectedDepartment !== '부서명') {
         newFilteredEmployees = newFilteredEmployees.filter(
@@ -109,6 +132,8 @@ export default function RequestList({
     selectedRest,
     employees,
     page,
+    selectedStartDate,
+    selectedEndDate,
     onPageChange,
     currentPage
   ]);
@@ -130,76 +155,78 @@ export default function RequestList({
   };
 
   return (
-    <>
-      {currentPageData.map(employee => (
-        <div
-          key={employee.employeeId}
-          className={`flex border-solid border-b-[1px] justify-between h-[45px] items-center `}>
-          {page === 'admin-duty' && (
-            <div className="w-[8rem] text-center font-semibold">당직</div>
-          )}
-          {page === 'admin-leave' && (
-            <div className="w-[8rem] text-center font-semibold">
-              {employee.type}
-            </div>
-          )}
-          <div className="w-[12rem] text-center">{employee.name}</div>
-          <div className="w-[8.5rem]  text-center">{employee.department}</div>
-          <div className="w-[7.5rem] text-center"> {employee.position}</div>
-          <div className="text-center w-[13rem]">{employee.hireDate}</div>
-          <button className="w-[18rem] justify-center flex hover:underline  text-secondaryGray text-center">
-            {`${employee.startDate} ~ ${employee.endDate}`}
-          </button>
-
-          <div className="w-[10rem] item-center flex justify-center">
-            {(() => {
-              if (employee.status === '대기중') {
-                return (
-                  <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-mainOrange">
-                    {employee.status}
-                  </div>
-                );
-              } else if (employee.status === '거절됨') {
-                return (
-                  <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-secondary">
-                    {employee.status}
-                  </div>
-                );
-              } else {
-                return (
-                  <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-primary">
-                    {employee.status}
-                  </div>
-                );
-              }
-            })()}
-          </div>
-
-          <div className="w-[12rem] text-center">
-            {employee.status === '대기중' && (
-              <>
-                <button
-                  onClick={handleApproval}
-                  className="w-[4rem] border-solid border-2 rounded-md mr-1 border-primary text-primary">
-                  승인
-                </button>
-                <button
-                  onClick={handleRejection}
-                  className="w-[4rem] border-solid border-2 rounded-md border-secondary text-secondary">
-                  거절
-                </button>
-              </>
+    <RecoilRoot>
+      <>
+        {currentPageData.map(employee => (
+          <div
+            key={employee.employeeId}
+            className={`flex border-solid border-b-[1px] justify-between h-[45px] items-center `}>
+            {page === 'admin-duty' && (
+              <div className="w-[8rem] text-center font-semibold">당직</div>
             )}
+            {page === 'admin-leave' && (
+              <div className="w-[8rem] text-center font-semibold">
+                {employee.type}
+              </div>
+            )}
+            <div className="w-[12rem] text-center">{employee.name}</div>
+            <div className="w-[8.5rem]  text-center">{employee.department}</div>
+            <div className="w-[7.5rem] text-center"> {employee.position}</div>
+            <div className="text-center w-[13rem]">{employee.hireDate}</div>
+            <button className="w-[18rem] justify-center flex hover:underline  text-secondaryGray text-center">
+              {`${employee.startDate} ~ ${employee.endDate}`}
+            </button>
+
+            <div className="w-[10rem] item-center flex justify-center">
+              {(() => {
+                if (employee.status === '대기중') {
+                  return (
+                    <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-mainOrange">
+                      {employee.status}
+                    </div>
+                  );
+                } else if (employee.status === '거절됨') {
+                  return (
+                    <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-secondary">
+                      {employee.status}
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-primary">
+                      {employee.status}
+                    </div>
+                  );
+                }
+              })()}
+            </div>
+
+            <div className="w-[12rem] text-center">
+              {employee.status === '대기중' && (
+                <>
+                  <button
+                    onClick={handleApproval}
+                    className="w-[4rem] border-solid border-2 rounded-md mr-1 border-primary text-primary">
+                    승인
+                  </button>
+                  <button
+                    onClick={handleRejection}
+                    className="w-[4rem] border-solid border-2 rounded-md border-secondary text-secondary">
+                    거절
+                  </button>
+                </>
+              )}
+            </div>
           </div>
+        ))}
+        <div className="flex items-end justify-center ">
+          <Pagination
+            pageCount={Math.ceil(filteredEmployees.length / itemsPerPage)}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
         </div>
-      ))}
-      <div className="flex items-end justify-center ">
-        <Pagination
-          pageCount={Math.ceil(filteredEmployees.length / itemsPerPage)}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
-      </div>
-    </>
+      </>
+    </RecoilRoot>
   );
 }
