@@ -10,7 +10,7 @@ export default function AuthSignInInput() {
           label={'이메일'}
           name={'email'}
           onChange={onClick}
-          placeholder={'예: dangyeon@dangyeon.com'}
+          placeholder={'예: jinyangchul@soonyang.com'}
           type="email"
         />
       </div>
