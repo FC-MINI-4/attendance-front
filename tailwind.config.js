@@ -9,8 +9,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#4050E0', // main blue
-        primaryHover: '#9fa6e0',
+        primary: '#96303A', // main
+        primaryHover: '#9fa6e0', // main burgundy
         secondaryHover: '#0000CC',
         secondary: '#E32636', // main red
         accent: '#51D285', // main green
@@ -20,7 +20,8 @@ module.exports = {
         subTextAndBorder: '#9CA3Af',
         mainOrange: '#FF8339', // main orange
         mainBlack: '#525252',
-        modalBorder: '#A1A1A1'
+        modalBorder: '#A1A1A1',
+        mainBlue: '#4050E0'
       }
     }
   },
