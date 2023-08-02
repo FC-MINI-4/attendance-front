@@ -24,13 +24,13 @@ export const SIGNUP_INPUT_INFO: ISignUpItem[] = [
     label: '이메일',
     name: 'email',
     button: '중복확인',
-    placeholder: '예: dangyeon@dangyeon.com',
+    placeholder: '예) dangyeon@dangyeon.com',
     type: 'email'
   },
   {
     label: '비밀번호',
     name: 'password',
-    placeholder: '영문+숫자로 이루어진 8자리 이상, 16자리 이하',
+    placeholder: '영문, 숫자 조합 8-16자',
     type: 'password'
   },
   {

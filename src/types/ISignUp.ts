@@ -11,4 +11,5 @@ export interface ISignUp {
 
 export interface IRegexCheck {
   valid?: boolean;
+  name?: string;
 }

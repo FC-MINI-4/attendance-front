@@ -1,12 +1,11 @@
 import { useRecoilState } from 'recoil';
-import AuthPwCheck from './AuthPwCheck';
-import AuthEmailCheck from './AuthEmailCheck';
 import { signUpState } from '@/recoil/signUp';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { IAuthSignUpInput } from '@/types/IAuth';
-import AuthCheckPw from '@/components/auth/AuthCheckPw';
+import AuthPwCheck from '@/components/auth/AuthPwCheck';
 import { rEmail, rPassword } from '@/constants/constants';
+import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 
 export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
   // 회원가입 정보 atom state 구독
@@ -52,7 +51,7 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
       // 비밀번호 확인일 경우
     } else if (props.label === '비밀번호 확인') {
       return (
-        <AuthCheckPw
+        <AuthPwCheck
           pwd={signUpInfo.password}
           checkedPwd={signUpInfo.checkedPwd}
         />
@@ -87,11 +86,10 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
 
   // 유효성에 따른 조건부 렌더링
   const renderRegex = () => {
-    if (props.label === '이메일') {
-      return <AuthEmailCheck valid={emailCheck()} />;
-    }
-    if (props.label === '비밀번호') {
-      return <AuthPwCheck valid={passwordCheck()} />;
+    if (props.name === 'email') {
+      return <AuthValidCheck valid={emailCheck()} name={props.name} />;
+    } else if (props.name === 'password') {
+      return <AuthValidCheck valid={passwordCheck()} name={props.name} />;
     }
   };
 
