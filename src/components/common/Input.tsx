@@ -13,7 +13,7 @@ export default function Input({ ...props }: IInputProps) {
   return (
     <div className="w-full">
       <label
-        className="text-xs sm:text-base min-w-[5rem] sm:min-w-[10rem] flex"
+        className="text-xs sm:text-base min-w-[5rem] sm:min-w-[10rem] flex font-semibold"
         htmlFor={props.label}>
         {props.label}
       </label>
@@ -22,7 +22,7 @@ export default function Input({ ...props }: IInputProps) {
         id={props.label}
         className={`${
           props.valid ? 'focus:border-primary' : 'focus:border-secondary'
-        } mt-1 h-10 w-full rounded-lg border-2 border-subTextAndBorder px-3 py-2 text-xs outline-none transition sm:h-12 sm:text-base`}
+        } h-10 w-full border-b-2 border-gray-200 pr-3 pt-2 text-xs outline-none transition sm:h-12 sm:text-base`}
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.onChange}
