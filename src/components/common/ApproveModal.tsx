@@ -10,28 +10,49 @@ export default function ApproveModal(modalProps : IModalProps){
   const [ isModalShow, setIsModalShow ] = useRecoilState(modalState)
   const [ startDate, setStartDate ] = useState<Date>(new Date())
   const [ endDate, setEndDate ] = useState<Date>(new Date())
-
-
-  // const ExampleCustomInput = forwardRef(({ value, onClick }, ref : ICustomInput) => (
-  //   <button className="example-custom-input" onClick={onClick} ref={ref}>
-  //     {value}
-  //   </button>
-  // ));
+  
+  const startDateMSec = startDate.getTime()
+  const endDateMSec = endDate.getTime()
+  const startDateMonth = startDate.getMonth()
+  const endDateMonth = endDate.getMonth()
 
   //잔여 연차보다 데이트피커로 선택한 날이 더 많을 경우
   useEffect(()=>{
-    const elapsedMSec = endDate.getTime() - startDate.getTime()
+    const elapsedMSec = endDateMSec - startDateMSec
     const elapsedDays = Math.abs(elapsedMSec/(1000*60*60*24)) + 1
-    if(elapsedDays > 15){
+    const sameMonth = startDateMonth - endDateMonth
+
+    // 시작월 = 마지막월, 연차 > 15
+    if(sameMonth === 0 && elapsedDays > 15){
       alert('선택일이 잔여 연차를 초과했습니다.')
       //시작일 기준 ~ +15일
-      const a = new Date(endDate.setDate(startDate.getDate() + 14))
-      setEndDate(a)
+      const adjustDate = new Date(endDate.setDate(startDate.getDate() + 14))
+      setEndDate(adjustDate)
+    }else if(sameMonth < 0 && elapsedDays > 15){
+      alert('선택일이 잔여 연차를 초과했습니다.')
+      setEndDate(startDate)
+    }else if(sameMonth > 0 && elapsedDays > 15){
+      alert('선택일이 잔여 연차를 초과했습니다.')
+      setEndDate(startDate)
     }
-    if(startDate === endDate){
-      
+  },[startDate])
+
+  useEffect(()=>{
+    const elapsedMSec = endDateMSec - startDateMSec
+    const elapsedDays = Math.abs(elapsedMSec/(1000*60*60*24)) + 1
+    const sameMonth = startDateMonth - endDateMonth
+
+    // 시작월 = 마지막월, 연차 > 15
+    if(sameMonth === 0 && elapsedDays > 15){
+      alert('선택일이 잔여 연차를 초과했습니다.')
+      //시작일 기준 ~ +15일
+      const adjustDate = new Date(endDate.setDate(startDate.getDate() + 14))
+      setEndDate(adjustDate)
+    }else if(sameMonth < 0 && elapsedDays > 15){
+      alert('선택일이 잔여 연차를 초과했습니다.')
+      setStartDate(endDate)
     }
-  },[startDate, endDate])
+  },[endDate])
 
   // 모달 외부 클릭시 모달창 닫히게 하는 로직
   const modalRef = useRef<HTMLInputElement | null>(null)
