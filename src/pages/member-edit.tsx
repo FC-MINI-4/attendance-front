@@ -5,6 +5,7 @@ import MemberSideBar from '@/components/member/MemberSideBar'
 import MemberEdit from '@/components/member/MemberEdit'
 import MemberInfo from '@/components/member/MemberInfo'
 
+
 export default function memberedit() {
   return (
     <>
