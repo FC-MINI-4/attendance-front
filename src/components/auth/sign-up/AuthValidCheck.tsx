@@ -16,6 +16,13 @@ export default function AuthValidCheck({ valid, name }: IRegexCheck) {
         </div>
       );
     }
+    if (!valid && name === 'confirmPassword') {
+      return (
+        <div className="text-secondary text-xs ml-1">
+          비밀번호가 일치하지 않습니다.
+        </div>
+      );
+    }
   };
   return <div>{validMessage()}</div>;
 }
