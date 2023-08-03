@@ -1,12 +1,14 @@
-import Input from '@/components/common/Input';
-import Button from '@/components/common/Button';
 import { useState } from 'react';
+import Input from '@/components/common/Input';
 import { rEmail } from '@/constants/constants';
+import Button from '@/components/common/Button';
+
 
 export default function AuthFindPwInput() {
   const [email, setEmail] = useState('');
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event?.target.value);
   };
 
@@ -21,7 +23,7 @@ export default function AuthFindPwInput() {
         <Input
           label={'이메일'}
           name={'email'}
-          onChange={onChange}
+          onChange={handleEmailChange}
           placeholder={'예: jindojoon@soonyang.com'}
           valid={true}
         />
