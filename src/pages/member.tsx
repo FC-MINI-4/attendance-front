@@ -18,6 +18,7 @@ export default function Member() {
             <MemberBoard />
             <MemberSideBar />
           </div>
+          <div></div>
           <MemberDetail />
         </div>
         <div>

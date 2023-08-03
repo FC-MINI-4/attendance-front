@@ -71,14 +71,14 @@ export default function MemberDetail() {
   return (
     <div>
       {Object.entries(memberDetail).map(([key, value]) => (
-        <>
-          <div key={key} className="sm:text-sm sm:pb-2 text-subTextAndBorder">
+        <div key={key}>
+          <div className="sm:text-sm sm:pb-2 text-subTextAndBorder">
             {key}
           </div>
           <div className="sm:mb-6 sm:min-w-[20rem] sm:pb-2 text-xl border-b border-mainGray">
             {value}
           </div>
-        </>
+        </div>
       ))}
     </div>
   );
