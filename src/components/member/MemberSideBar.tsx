@@ -6,8 +6,8 @@ export default function MemberSideBar() {
 
   const sideList = {
     마이페이지: '/member',
-    개인정보수정: '/member/edit',
-    '연차/반차 신청 리스트': '/member/list'
+    개인정보수정: '/member-edit',
+    '연차/반차 신청 리스트': '/member-list'
   };
   return (
     <div className="sm:mt-8">
