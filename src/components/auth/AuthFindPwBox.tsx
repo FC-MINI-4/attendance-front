@@ -6,7 +6,7 @@ export default function AuthFindPwBox() {
   return (
     <PwBox>
       <div className="sm:mb-8 sm:text-3xl">
-        계정의
+        순양 계정의
         <br /> 비밀번호를 재설정 합니다.
       </div>
       <div className="text-subTextAndBorder  sm:mb-8">
