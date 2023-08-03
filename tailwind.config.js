@@ -10,7 +10,7 @@ module.exports = {
     extend: {
       colors: {
         primary: '#96303A', // main
-        primaryHover: '#9fa6e0', // main burgundy
+        primaryHover: '#d4858d', // main burgundy
         secondaryHover: '#0000CC',
         secondary: '#E32636', // main red
         accent: '#51D285', // main green

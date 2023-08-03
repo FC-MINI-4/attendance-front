@@ -1,6 +1,6 @@
 import { IModalProps } from "@/types/IModal"
-import { useState, useEffect, useRef, useMemo } from 'react'
-import { modalState } from "@/recoil/common/atoms"
+import { useState, useEffect, useRef } from 'react'
+import { modalState } from "@/recoil/common/modal"
 import { useRecoilState } from 'recoil'
 import DatePicker from "react-datepicker"
 import { format } from 'date-fns'
