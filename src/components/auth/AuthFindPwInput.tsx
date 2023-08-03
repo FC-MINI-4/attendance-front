@@ -8,7 +8,7 @@ export default function AuthFindPwInput() {
         label={'이메일'}
         name={'email'}
         onChange={onClick}
-        placeholder={'예: dangyeon@dangyeon.com'}
+        placeholder={'예: jindojoon@soonyang.com'}
       />
     </div>
   );
