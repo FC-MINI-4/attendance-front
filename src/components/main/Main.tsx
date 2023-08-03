@@ -1,7 +1,7 @@
 import Calendar from '@/components/main/MainCalendar';
 import MainHeader from '@/components/main/MainHeader';
 import SideMenu from '@/components/main/MainSideMenu';
-import { modalState } from '@/recoil/common/atoms';
+import { modalState } from '@/recoil/common/modal';
 import { useRecoilState } from 'recoil'
 
 export default function Main(){
