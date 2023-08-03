@@ -22,7 +22,7 @@ export default function Input({ ...props }: IInputProps) {
         id={props.label}
         className={`${
           props.valid ? 'focus:border-primary' : 'focus:border-secondary'
-        } h-10 w-full border-b-2 border-gray-200 pr-3 pt-2 text-xs outline-none transition sm:h-12 sm:text-base`}
+        } h-10 pt-3 w-full border-b-2 border-gray-200 pr-3 text-xs outline-none transition sm:h-12 sm:text-base`}
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.onChange}

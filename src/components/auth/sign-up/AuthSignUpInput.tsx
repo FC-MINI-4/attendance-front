@@ -1,23 +1,47 @@
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { signUpState } from '@/recoil/signUp';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { IAuthSignUpInput } from '@/types/IAuth';
-import AuthPwCheck from '@/components/auth/AuthPwCheck';
 import { rEmail, rPassword } from '@/constants/constants';
 import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 
 export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
   // 회원가입 정보 atom state 구독
   const [signUpInfo, setSignUpInfo] = useRecoilState(signUpState);
+  // 휴대폰 번호를 저장하는 state
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   // input 입력 값 atom state 업데이트
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setSignUpInfo(prevInformation => ({
       ...prevInformation,
       [name]: value
     }));
+  };
+
+  // 휴대폰 번호 입력 핸들러
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+
+    // 숫자 이외 문자 제거
+    const onlyNumber = value.replace(/\D/g, '');
+
+    // 숫자를 3-4-4 형식으로 변환
+    const match = onlyNumber.match(/^(\d{3})(\d{4})(\d{4})$/);
+    if (match) {
+      setPhoneNumber(`${match[1]}-${match[2]}-${match[3]}`);
+    } else {
+      setPhoneNumber(onlyNumber);
+    }
+
+    // 휴대폰 번호가 11자 초과하는 것을 막음
+
+    if (onlyNumber.length > 11) {
+      setPhoneNumber(onlyNumber.slice(0, 11));
+    }
   };
 
   // 이메일 중복 체크 (업데이트 전)
@@ -49,13 +73,6 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
         );
       }
       // 비밀번호 확인일 경우
-    } else if (props.label === '비밀번호 확인') {
-      return (
-        <AuthPwCheck
-          pwd={signUpInfo.password}
-          checkedPwd={signUpInfo.checkedPwd}
-        />
-      );
     } else return;
   };
 
@@ -77,6 +94,14 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
     return rPassword.test(signUpInfo.password);
   };
 
+  // 비밀번호 확인 유효성 체크
+  const confirmPasswordCheck = () => {
+    if (signUpInfo.confirmPassword.trim() === '') {
+      return true;
+    }
+    return signUpInfo.password === signUpInfo.confirmPassword;
+  };
+
   // 이메일 또는 비밀번호에 유효성 검사 렌더링
   const renderValid = () => {
     if (props.name === 'email') return emailCheck();
@@ -90,6 +115,10 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
       return <AuthValidCheck valid={emailCheck()} name={props.name} />;
     } else if (props.name === 'password') {
       return <AuthValidCheck valid={passwordCheck()} name={props.name} />;
+    } else if (props.name === 'confirmPassword') {
+      return (
+        <AuthValidCheck valid={confirmPasswordCheck()} name={props.name} />
+      );
     }
   };
 
@@ -99,12 +128,15 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
         <Input
           label={`${props.label}`}
           name={props.name}
-          onChange={handleChange}
+          onChange={
+            props.name === 'phone' ? handlePhoneChange : handleInputChange
+          }
           placeholder={props.placeholder}
-          type={props.type}
+          value={props.name === 'phone' ? phoneNumber : signUpInfo[props.name]}
           valid={renderValid()}
+          type={props.type}
         />
-        <div className="flex sm:min-w-[5rem] min-w-[4rem] items-end justify-cente ml-4">
+        <div className="flex sm:min-w-[5rem] min-w-[4rem] items-end justify-center ml-4">
           {renderButton()}
         </div>
       </div>

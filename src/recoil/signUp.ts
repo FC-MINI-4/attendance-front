@@ -9,7 +9,7 @@ export const signUpState = atom<ISignUp>({
     name: '',
     email: '',
     password: '',
-    checkedPwd: '',
+    confirmPassword: '',
     phone: '',
     hireDate: ''
   }

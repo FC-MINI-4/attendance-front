@@ -4,9 +4,10 @@ export interface ISignUp {
   name: string;
   email: string;
   password: string;
-  checkedPwd: string;
+  confirmPassword: string;
   phone: string;
   hireDate: string;
+  [key: string]: string;
 }
 
 export interface IRegexCheck {
