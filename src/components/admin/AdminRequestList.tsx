@@ -193,7 +193,7 @@ export default function RequestList({
                   );
                 } else {
                   return (
-                    <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-primary">
+                    <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-mainBlue">
                       {employee.status}
                     </div>
                   );
@@ -206,7 +206,7 @@ export default function RequestList({
                 <>
                   <button
                     onClick={handleApproval}
-                    className="w-[4rem] border-solid border-2 rounded-md mr-1 border-primary text-primary">
+                    className="w-[4rem] border-solid border-2 rounded-md mr-1 border-mainBlue text-mainBlue">
                     승인
                   </button>
                   <button
