@@ -3,8 +3,10 @@ import Input from '@/components/common/Input';
 import { rEmail } from '@/constants/constants';
 import Button from '@/components/common/Button';
 
+
 export default function AuthFindPwInput() {
   const [email, setEmail] = useState('');
+
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event?.target.value);
