@@ -16,7 +16,7 @@ export default function SideBar() {
         <button
           className={`text-white w-[5rem] h-[5rem] ${
             router.asPath === '/admin-manage'
-              ? 'active bg-secondaryHover rounded-xl '
+              ? 'active bg-primaryHover rounded-xl '
               : ''
           }`}>
           <div className="flex flex-col items-center">
@@ -30,7 +30,7 @@ export default function SideBar() {
         <button
           className={`text-white w-[5rem] h-[5rem] ${
             router.asPath === '/admin-leave'
-              ? 'active bg-secondaryHover rounded-xl'
+              ? 'active bg-primaryHover rounded-xl'
               : ''
           }`}>
           <div className="flex flex-col items-center">
@@ -44,7 +44,7 @@ export default function SideBar() {
         <button
           className={`text-white w-[5rem] h-[5rem] ${
             router.asPath === '/admin-duty'
-              ? 'active bg-secondaryHover rounded-xl'
+              ? 'active bg-primaryHover rounded-xl'
               : ''
           }`}>
           <div className="flex flex-col items-center">
@@ -58,7 +58,7 @@ export default function SideBar() {
         <button
           className={`text-white w-[5rem] h-[5rem] ${
             router.asPath === '/admin-modify'
-              ? 'active bg-secondaryHover rounded-xl '
+              ? 'active bg-primaryHover rounded-xl '
               : ''
           }`}>
           <div className="flex flex-col items-center">

@@ -29,6 +29,7 @@ export default function Main({ page }: MainIProps) {
   const [searchValue, setSearchValue] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(0);
   const [filteredEmployees, setFilteredEmployees] = useState([]);
+  const [profileImage, setProfileImage] = useState('');
 
   const itemsPerPage = 10;
 
@@ -64,6 +65,26 @@ export default function Main({ page }: MainIProps) {
     setIsSidebarOpen(prevIsSidebarOpen => !prevIsSidebarOpen);
   };
 
+  const handleChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result;
+        if (base64) {
+          const str = base64?.toString();
+          if (str && str.length > 1048576) {
+            alert('이미지는 1MB이하여야합니다!');
+            return;
+          }
+          setProfileImage(base64.toString());
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <RecoilRoot>
       <div className="w-[96rem] h-[52.25rem] bg-white mx-auto my-auto rounded-2xl ">
@@ -71,7 +92,7 @@ export default function Main({ page }: MainIProps) {
         <div className=" flex">
           {isSidebarOpen && <SideBar />}
           <div className="">
-            <div className="w-[10rem] h-[2rem]  font-400 mb-[4rem] text-3xl flex ml-[3.5rem] mt-[2rem] font-semibold">
+            <div className="w-[12rem] h-[2rem]  font-400 mb-[4rem] text-3xl flex ml-[3.5rem] mt-[2rem] font-semibold ">
               {page === 'admin-manage' && '관리'}
               {page === 'admin-leave' && '연차요청관리'}
               {page === 'admin-duty' && '당직요청관리'}
@@ -132,8 +153,10 @@ export default function Main({ page }: MainIProps) {
                           value={selectedPosition}
                           onChange={handlePositionChange}
                         />
-                        <div className="text-center w-[13rem]">입사일</div>
-                        <div className="w-[19rem] text-center">요청내역</div>
+                        <div className="text-center pr-4 w-[13rem]">입사일</div>
+                        <div className="w-[19rem] pr-8 text-center">
+                          요청내역
+                        </div>
                         <DropdownFilter
                           options={status}
                           value={selectedStatus}
@@ -179,7 +202,7 @@ export default function Main({ page }: MainIProps) {
               <>
                 {page === 'admin-modify' && (
                   <div className="ml-[3rem] h-[37rem] w-[92rem] flex">
-                    <div className=" h-[37rem] w-[25rem] border-2  border-mainGray overflow-auto border-soild rounded-xl">
+                    <div className=" h-[37rem] w-[25rem] border-2  border-primaryHover overflow-auto border-soild rounded-xl">
                       <div className="w-[25rem] h-[2.5rem] flex bg-primary ">
                         <div className="w-[5rem] border-r-2 border-white h-[2,5rem] "></div>
                         <div className="w-[10rem] border-r-2 border-white h-[2.5rem] justify-center items-center flex text-white">
@@ -190,11 +213,11 @@ export default function Main({ page }: MainIProps) {
                         </div>
                       </div>
 
-                      <div className="w-[25rem] h-[2.5rem] flex border-b-2 border-mainGray mt-[0.2px]">
-                        <div className="w-[5rem] border-r-2 border-mainGray h-[2,5rem]  justify-center items-center flex  ">
+                      <div className="w-[25rem] h-[2.5rem] flex border-b-2 border-primaryHover mt-[0.2px]">
+                        <div className="w-[5rem] border-r-2 border-primaryHover h-[2,5rem]  justify-center items-center flex  ">
                           1
                         </div>
-                        <div className="w-[10rem] border-r-2 border-mainGray h-[2.5rem] justify-center items-center flex ">
+                        <div className="w-[10rem] border-r-2 border-primaryHover h-[2.5rem] justify-center items-center flex ">
                           사원번호
                         </div>
                         <div className="w-[10rem] h-[2.5rem] flex justify-center items-center ">
@@ -203,7 +226,16 @@ export default function Main({ page }: MainIProps) {
                       </div>
                     </div>
                     <div className="h-[30rem] w-[20rem] ml-[3rem]">
-                      <div className=" h-[20rem] w-[20rem] border-2 border-mainGray  border-soild rounded-xl flex items-center justify-center ">
+                      <div className=" h-[20rem] w-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
+                        {profileImage ? (
+                          <img
+                            className="h-[20rem] w-[20rem]  rounded-xl"
+                            src={profileImage}
+                            alt="이미지"
+                          />
+                        ) : (
+                          <img />
+                        )}
                         <div className="flex  items-center  justify-center  font-semibold"></div>
                       </div>
                       <div className="w-[20rem] h-[3rem] flex items-center justify-center">
@@ -216,17 +248,18 @@ export default function Main({ page }: MainIProps) {
                           id="imageUpload"
                           className="hidden"
                           type="file"
-                          accept="image/*"
+                          onChange={handleChangeFile}
+                          accept="image/jpeg, image/png, image/gif, image/svg+xml"
                         />
                       </div>
                     </div>
 
-                    <div className="ml-[3rem] h-[37rem] w-[30rem] border-2 border-mainGray  border-soild rounded-xl  ">
+                    <div className="ml-[3rem] h-[37rem] w-[30rem] border-2 border-primaryHover border-soild rounded-xl  ">
                       <div className="flex m-6 ml-16 mt-10 ">
                         <div className="text-lg font-semibold ">이름:</div>
                         <input
                           defaultValue="이창휘"
-                          className="w-[6rem] ml-2 border-2 border-mainGray rounded-sm pl-2 "
+                          className="w-[6rem]  border-2 border-primaryHover border-none rounded-sm pl-2 text-lg"
                         />
                       </div>
 
@@ -270,7 +303,7 @@ export default function Main({ page }: MainIProps) {
                         <div className="text-lg font-semibold ">전화번호:</div>
                         <input
                           defaultValue="010-1234-5678"
-                          className="ml-2 border-2 border-mainGray rounded-sm pl-2"
+                          className="border-2 border-primaryHover border-none rounded-sm pl-2 text-lg"
                         />
                       </div>
                       <div className="w-[30rem] mt-8 flex justify-center">
