@@ -1,21 +1,21 @@
-export interface MainIProps {
+export interface IMainProps {
   page: string;
 }
 
-export interface MainHeaderIProps {
+export interface IMainHeaderProps {
   onToggleSidebar: () => void;
 }
 
-export interface DropdownFilterIProps {
+export interface IDropdownFilterProps {
   options: string[];
   value: string;
   onChange: (value: string) => void;
 }
-export interface SideBarIProps {
+export interface ISideBarProps {
   isSidebarOpen: boolean;
 }
 
-export interface FilterIProps {
+export interface IFilterProps {
   selectedDepartment: string;
   selectedPosition: string;
   searchValue: string;
@@ -24,7 +24,7 @@ export interface FilterIProps {
   selectedStatus?: string;
 }
 
-export interface ManageResIProps {
+export interface IManageResProps {
   employeeId: number;
   name: string;
   department: string;
@@ -35,16 +35,16 @@ export interface ManageResIProps {
   dayOffRemains: number;
 }
 
-export interface ManageIProps {
+export interface IManageProps {
   success: boolean;
   code: string;
   message: string;
   data?: {
-    employees: ManageResIProps[];
+    employees: IManageResProps[];
   };
 }
 
-export interface LeaveResIProps {
+export interface ILeaveResProps {
   employeeId: number;
   name: string;
   department: string;
@@ -59,16 +59,16 @@ export interface LeaveResIProps {
   reason: string;
 }
 
-export interface LeaveIProps {
+export interface ILeaveProps {
   success: boolean;
   code: string;
   message: string;
   data?: {
-    employees: LeaveResIProps[];
+    employees: ILeaveResProps[];
   };
 }
 
-export interface DutyResIProps {
+export interface IDutyResProps {
   dutyId: number;
   employeeId: number;
   name: string;
@@ -80,11 +80,45 @@ export interface DutyResIProps {
   status: '대기중';
 }
 
-export interface DutyIProps {
+export interface IDutyProps {
   success: boolean;
   code: string;
   message: string;
   data?: {
-    duties: DutyResIProps[];
+    duties: IDutyResProps[];
   };
+}
+
+export interface IDayOffDetailProps {
+  success: boolean;
+  code: string;
+  message: string;
+  data?: {
+    data: IDayOffDetailResProps[];
+  };
+}
+export interface IDayOffDetailResProps {
+  dayOffId: number;
+  requestDate: string;
+  type: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+  reason: string;
+}
+
+export interface IDutyDetailProps {
+  success: boolean;
+  code: string;
+  message: string;
+  data?: {
+    data: IDayOffDetailResProps[];
+  };
+}
+
+export interface IDutyDetailResProps {
+  dutyId: number;
+  requestDate: string;
+  date: string;
+  status: string;
 }

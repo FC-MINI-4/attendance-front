@@ -4,10 +4,8 @@ import { RecoilRoot } from 'recoil';
 
 export default function adminLeave() {
   return (
-    <RecoilRoot>
-      <div className="w-full h-screen bg-mainGray flex items-center mx-auto ">
-        <Main page="admin-leave" />
-      </div>
-    </RecoilRoot>
+    <div className="w-full h-screen bg-mainGray flex items-center mx-auto ">
+      <Main page="admin-leave" />
+    </div>
   );
 }

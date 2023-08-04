@@ -15,7 +15,7 @@ export interface ILayout {
   [key: string]: any;
 }
 
-export interface PaginationIProps {
+export interface IPaginationProps {
   pageCount: number;
   currentPage: number;
   onPageChange: (selected: number) => void;
