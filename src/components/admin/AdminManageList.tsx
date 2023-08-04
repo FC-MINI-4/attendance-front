@@ -1,38 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { SideBarIProps, FilterIProps } from '@/types/IAdmin';
+import {
+  ISideBarProps,
+  IFilterProps,
+  IDayOffDetailResProps,
+  IManageResProps
+} from '@/types/IAdmin';
 import axios from 'axios';
-import { ManageResIProps } from '@/types/IAdmin';
 import Pagination from '@/components/common/Pagination';
-import { PaginationIProps } from '@/types/ICommon';
+import { IPaginationProps } from '@/types/ICommon';
+import ManageModal from '@/components/common/ManagerModal';
+import { useRecoilState } from 'recoil';
+import { manageState } from '@/recoil/common/modal';
 
 export default function EmployeeList({
-  isSidebarOpen,
   selectedDepartment,
   selectedPosition,
   searchValue,
   currentPage,
-  pageCount,
   onPageChange
-}: SideBarIProps & FilterIProps & PaginationIProps) {
-  const [employees, setEmployees] = useState<ManageResIProps[]>([]);
-  const [filteredEmployees, setFilteredEmployees] = useState<ManageResIProps[]>(
+}: ISideBarProps & IFilterProps & IPaginationProps) {
+  const [employees, setEmployees] = useState<IManageResProps[]>([]);
+  const [filteredEmployees, setFilteredEmployees] = useState<IManageResProps[]>(
     []
   );
+  const [selectDetail, setSelectDetail] = useState<IDayOffDetailResProps[]>([]);
   const itemsPerPage = 10;
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentPageData = filteredEmployees.slice(startIndex, endIndex);
+  const [isManageShow, setIsManageShow] = useRecoilState(manageState);
 
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get('/api/AdminRequest');
+        const response = await axios.get('/api/ManageRequest');
         const responseData = response.data;
-        console.log('API 응답 데이터:', responseData);
+
         setEmployees(responseData.data?.employees || []);
-      } catch (error) {
-        console.error('API 호출 오류:', error);
-      }
+      } catch (error) {}
     };
     fetchEmployees();
   }, []);
@@ -41,7 +46,7 @@ export default function EmployeeList({
     const filterEmployees = () => {
       let newFilteredEmployees = employees;
 
-      if (selectedDepartment !== '부서명') {
+      if (selectedDepartment !== '계열사') {
         newFilteredEmployees = newFilteredEmployees.filter(
           employee => employee.department === selectedDepartment
         );
@@ -70,6 +75,9 @@ export default function EmployeeList({
 
   return (
     <>
+      {isManageShow && (
+        <ManageModal type="" label="개인사유" date="" value="" />
+      )}
       {currentPageData.map(employee => (
         <div
           key={employee.employeeId}
@@ -81,12 +89,16 @@ export default function EmployeeList({
           </div>
           <div className="text-center w-[10rem]">{employee.hireDate}</div>
           <div className="w-[10rem] flex justify-center">
-            <button className="w-[10rem] text-center hover:underline text-secondaryGray">
+            <button
+              className="w-[10rem] text-center hover:underline text-secondaryGray"
+              onClick={() => setIsManageShow(true)}>
               상세보기
             </button>
           </div>
           <div className="w-[10rem] justify-center flex">
-            <button className="w-[10rem] text-center hover:underline text-secondaryGray">
+            <button
+              className="w-[10rem] text-center hover:underline text-secondaryGray"
+              onClick={() => setIsManageShow(true)}>
               상세보기
             </button>
           </div>

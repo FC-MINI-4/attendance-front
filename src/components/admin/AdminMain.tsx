@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
-import { MainIProps } from '@/types/IAdmin';
-import MainHeader from './AdminMainHeader';
-import SideBar from './AdminSideBar';
-import DropdownFilter from './AdminDropDownFilter';
-import RequestList from './AdminRequestList';
-import EmployeeList from './AdminManageList';
-import CustomPicker from '../common/CustomPicker';
+import { IMainProps } from '@/types/IAdmin';
+import MainHeader from '@/components/admin//AdminMainHeader';
+import SideBar from '@/components/admin//AdminSideBar';
+import DropdownFilter from '@/components/admin/AdminDropDownFilter';
+import RequestList from '@/components/admin/AdminRequestList';
+import EmployeeList from '@/components/admin/AdminManageList';
+import CustomPicker from '@/components/common/CustomPicker';
+import Image from 'next/image';
 import { RecoilRoot } from 'recoil';
 
 import {
-  modifyPosition,
-  modifyDepartment,
-  restRequest,
-  dutyRequest,
-  department,
-  status,
-  employeePosition
-} from '@/constants/Option';
+  MODIFY_POSITION,
+  MODIFY_DEPARTMENT,
+  EMPLOYEE_POSITION,
+  DUTY_REQUEST,
+  DEPARTMENT,
+  STATUS,
+  REST_REQUEST
+} from '@/constants/option';
 
-export default function Main({ page }: MainIProps) {
+export default function Main({ page }: IMainProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
   const [selectedDepartment, setSelectedDepartment] =
-    useState<string>('부서명');
+    useState<string>('계열사');
   const [selectedPosition, setSeletedPosition] = useState<string>('직급');
   const [selectedStatus, setSelectedStatus] = useState<string>('상태');
   const [selectedRest, setSelectedRest] = useState<string>('요청');
@@ -109,13 +110,13 @@ export default function Main({ page }: MainIProps) {
               <>
                 {page !== 'admin-modify' && (
                   <div
-                    className={`flex border-solid border-b-2 justify-between h-[3rem] items-center text-lg font-medium `}>
+                    className={`flex border-solid border-b-2 justify-between h-[3rem]  items-center text-lg font-medium `}>
                     {(page === 'admin-duty' || page === 'admin-leave') && (
                       <>
                         {page === 'admin-duty' && (
-                          <div className="">
+                          <div className="flex justify-center ml-4 w-[7rem]">
                             <DropdownFilter
-                              options={dutyRequest}
+                              options={DUTY_REQUEST}
                               value={selectedDuty}
                               onChange={handleDutyChange}
                             />
@@ -123,16 +124,16 @@ export default function Main({ page }: MainIProps) {
                         )}
 
                         {page === 'admin-leave' && (
-                          <div className="">
+                          <div className="flex justify-center ml-4 w-[7rem]">
                             <DropdownFilter
-                              options={restRequest}
+                              options={REST_REQUEST}
                               value={selectedRest}
                               onChange={handleRestChange}
                             />
                           </div>
                         )}
 
-                        <div className="w-[13rem] flex justify-center ">
+                        <div className="w-[12rem] flex justify-center ">
                           이름:
                           <input
                             className="w-[5rem] ml-2 border-solid border-2 border-gray-400 rounded-md text-center h-[1.8rem] "
@@ -142,26 +143,31 @@ export default function Main({ page }: MainIProps) {
                             onChange={handleSearchChange}
                           />
                         </div>
-
-                        <DropdownFilter
-                          options={department}
-                          value={selectedDepartment}
-                          onChange={handleDepartmentChange}
-                        />
-                        <DropdownFilter
-                          options={employeePosition}
-                          value={selectedPosition}
-                          onChange={handlePositionChange}
-                        />
-                        <div className="text-center pr-4 w-[13rem]">입사일</div>
-                        <div className="w-[19rem] pr-8 text-center">
+                        <div className="flex justify-center w-[7rem]">
+                          <DropdownFilter
+                            options={DEPARTMENT}
+                            value={selectedDepartment}
+                            onChange={handleDepartmentChange}
+                          />
+                        </div>
+                        <div className="flex justify-center ml-2 w-[6rem]">
+                          <DropdownFilter
+                            options={EMPLOYEE_POSITION}
+                            value={selectedPosition}
+                            onChange={handlePositionChange}
+                          />
+                        </div>
+                        <div className="text-center pr-2 w-[13rem]">입사일</div>
+                        <div className="w-[19rem] pr-14 text-center">
                           요청내역
                         </div>
-                        <DropdownFilter
-                          options={status}
-                          value={selectedStatus}
-                          onChange={handlestatusChange}
-                        />
+                        <div className="flex justify-center w-[6rem]">
+                          <DropdownFilter
+                            options={STATUS}
+                            value={selectedStatus}
+                            onChange={handlestatusChange}
+                          />
+                        </div>
                         <div className="w-[13rem]  text-center ">관리</div>
                       </>
                     )}
@@ -178,16 +184,20 @@ export default function Main({ page }: MainIProps) {
                             onChange={handleSearchChange}
                           />
                         </div>
-                        <DropdownFilter
-                          options={department}
-                          value={selectedDepartment}
-                          onChange={handleDepartmentChange}
-                        />
-                        <DropdownFilter
-                          options={employeePosition}
-                          value={selectedPosition}
-                          onChange={handlePositionChange}
-                        />
+                        <div className="flex justify-center w-[8rem]">
+                          <DropdownFilter
+                            options={DEPARTMENT}
+                            value={selectedDepartment}
+                            onChange={handleDepartmentChange}
+                          />
+                        </div>
+                        <div className="flex justify-center w-[8rem]">
+                          <DropdownFilter
+                            options={EMPLOYEE_POSITION}
+                            value={selectedPosition}
+                            onChange={handlePositionChange}
+                          />
+                        </div>
                         <div className="text-center w-[10rem]">입사일</div>
                         <div className="w-[10rem] text-center">연차내역</div>
                         <div className="w-[10rem] text-center">당직내역</div>
@@ -213,8 +223,8 @@ export default function Main({ page }: MainIProps) {
                         </div>
                       </div>
 
-                      <div className="w-[25rem] h-[2.5rem] flex border-b-2 border-primaryHover mt-[0.2px]">
-                        <div className="w-[5rem] border-r-2 border-primaryHover h-[2,5rem]  justify-center items-center flex  ">
+                      <button className="w-[25rem] h-[2.5rem] flex border-b-2 border-primaryHover mt-[0.2px]">
+                        <div className="w-[5rem] border-r-2 h-[2.5rem]  border-primaryHover justify-center items-center flex  ">
                           1
                         </div>
                         <div className="w-[10rem] border-r-2 border-primaryHover h-[2.5rem] justify-center items-center flex ">
@@ -223,18 +233,18 @@ export default function Main({ page }: MainIProps) {
                         <div className="w-[10rem] h-[2.5rem] flex justify-center items-center ">
                           이름
                         </div>
-                      </div>
+                      </button>
                     </div>
                     <div className="h-[30rem] w-[20rem] ml-[3rem]">
                       <div className=" h-[20rem] w-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
                         {profileImage ? (
-                          <img
+                          <Image
                             className="h-[20rem] w-[20rem]  rounded-xl"
                             src={profileImage}
                             alt="이미지"
                           />
                         ) : (
-                          <img />
+                          <Image src="" alt="이미지" />
                         )}
                         <div className="flex  items-center  justify-center  font-semibold"></div>
                       </div>
@@ -255,59 +265,59 @@ export default function Main({ page }: MainIProps) {
                     </div>
 
                     <div className="ml-[3rem] h-[37rem] w-[30rem] border-2 border-primaryHover border-soild rounded-xl  ">
-                      <div className="flex m-6 ml-16 mt-10 ">
-                        <div className="text-lg font-semibold ">이름:</div>
-                        <input
-                          defaultValue="이창휘"
-                          className="w-[6rem]  border-2 border-primaryHover border-none rounded-sm pl-2 text-lg"
-                        />
-                      </div>
-
-                      <div className="flex m-6 mt-10 ml-12">
-                        <div className="text-lg font-semibold ">부서명:</div>
-                        <div className="font-small w-[2rem] text-lg flex ml-3">
-                          <DropdownFilter
-                            options={modifyDepartment}
-                            value={selectedDepartment}
-                            onChange={handleDepartmentChange}
+                      <div>
+                        <div className=" m-6 ml-16 mt-4 ">
+                          <div className="text-md font-semibold ">이름</div>
+                          <input
+                            defaultValue="이창휘"
+                            className="w-[20rem]  border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md"
                           />
                         </div>
+
+                        <div className=" m-6 mt-4 ml-16">
+                          <div className="text-md font-semibold ">계열사</div>
+                          <div className="font-small w-[21rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex ">
+                            <DropdownFilter
+                              options={MODIFY_DEPARTMENT}
+                              value={selectedDepartment}
+                              onChange={handleDepartmentChange}
+                            />
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex  ml-16 mt-10 ">
-                        <div className="text-lg font-semibold ">직급:</div>
-                        <div className="font-small w-[2rem] text-lg flex ml-3">
+                      <div className="  ml-16 mt-4 ">
+                        <div className="text-md font-semibold ">직급</div>
+                        <div className="font-small w-[21rem]  border-b-2 pt-2   border-gray-200 text-md ">
                           <DropdownFilter
-                            options={modifyPosition}
+                            options={MODIFY_POSITION}
                             value={selectedPosition}
                             onChange={handlePositionChange}
                           />
                         </div>
                       </div>
-                      <div className="flex m-6 mt-10 ml-12 ">
-                        <div className="text-lg font-semibold ">입사일:</div>
-                        <div className="ml-2 text-lg font-small">
-                          2023년 7월 23일 달력
-                        </div>
+                      <div className=" m-6 mt-4 ml-16 ">
+                        <div className="text-md font-semibold ">입사일</div>
+                        <input
+                          defaultValue="2023년 07월 30일"
+                          className="  border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
+                        />
                       </div>
-                      <div className="flex m-6  mt-10 ml-8 ">
-                        <div className="text-lg font-semibold ">근속기간:</div>
-                        <div className="ml-2 text-lg font-small">5일</div>
-                      </div>
-                      <div className="flex m-6 mt-10 ml-12 ">
-                        <div className="text-lg font-semibold ">이메일:</div>
-                        <div className="ml-2 text-lg font-small">
+
+                      <div className=" m-6 mt-4 ml-16 ">
+                        <div className="text-md font-semibold ">이메일</div>
+                        <div className=" text-md  border-b-2 w-[20rem] pt-2 border-gray-200 font-small">
                           dummy@naver.com
                         </div>
                       </div>
-                      <div className="flex m-6 ml-8 mt-10  ">
-                        <div className="text-lg font-semibold ">전화번호:</div>
+                      <div className=" m-6 ml-16 mt-4  ">
+                        <div className="text-md font-semibold ">전화번호</div>
                         <input
                           defaultValue="010-1234-5678"
-                          className="border-2 border-primaryHover border-none rounded-sm pl-2 text-lg"
+                          className="  border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
                         />
                       </div>
-                      <div className="w-[30rem] mt-8 flex justify-center">
-                        <button className=" h-[3rem] w-[10rem] text-white bg-primary rounded-3xl">
+                      <div className="w-[30rem]  justify-center flex">
+                        <button className=" h-[3rem] w-[10rem] text-white   bg-primary rounded-3xl">
                           수정
                         </button>
                       </div>

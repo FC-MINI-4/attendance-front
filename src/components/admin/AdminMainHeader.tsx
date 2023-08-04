@@ -1,9 +1,9 @@
 import React from 'react';
-import { MainHeaderIProps } from '@/types/IAdmin';
+import { IMainHeaderProps } from '@/types/IAdmin';
 import { HiOutlineBars4 } from 'react-icons/hi2';
 import Image from 'next/image';
 
-export default function MainHeader({ onToggleSidebar }: MainHeaderIProps) {
+export default function MainHeader({ onToggleSidebar }: IMainHeaderProps) {
   const handleToggle = () => {
     onToggleSidebar();
   };

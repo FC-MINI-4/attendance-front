@@ -5,17 +5,18 @@ import {
   selectedStartDateState,
   selectedEndDateState
 } from '@/recoil/common/datePicker';
-import { PaginationIProps } from '@/types/ICommon';
+import { IPaginationProps } from '@/types/ICommon';
 import { useRecoilState, RecoilRoot } from 'recoil';
 import {
-  SideBarIProps,
-  FilterIProps,
-  MainIProps,
-  LeaveResIProps
+  ISideBarProps,
+  IFilterProps,
+  IMainProps,
+  ILeaveResProps
 } from '@/types/IAdmin';
+import { adminState } from '@/recoil/common/modal';
+import AdminModal from '@/components/admin/AdminModal';
 
 export default function RequestList({
-  isSidebarOpen,
   searchValue,
   selectedDepartment,
   selectedPosition,
@@ -23,14 +24,15 @@ export default function RequestList({
   selectedRest,
   selectedStatus,
   currentPage,
-  pageCount,
   onPageChange,
   page
-}: SideBarIProps & FilterIProps & MainIProps & PaginationIProps) {
-  const [employees, setEmployees] = useState<LeaveResIProps[]>([]);
-  const [filteredEmployees, setFilteredEmployees] = useState<LeaveResIProps[]>(
+}: ISideBarProps & IFilterProps & IMainProps & IPaginationProps) {
+  const [employees, setEmployees] = useState<ILeaveResProps[]>([]);
+  const [filteredEmployees, setFilteredEmployees] = useState<ILeaveResProps[]>(
     []
   );
+  const [selectedEmployeeReason, setSelectedEmployeeReason] = useState('');
+  const [isAdminShow, setIsAdminShow] = useRecoilState(adminState);
   const itemsPerPage = 10;
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -51,11 +53,9 @@ export default function RequestList({
       try {
         const response = await axios.get('/api/RestRequest');
         const responseData = response.data;
-        console.log('API 응답 데이터:', responseData);
+
         setEmployees(responseData.data?.employees || []);
-      } catch (error) {
-        console.error('API 호출 오류:', error);
-      }
+      } catch (error) {}
     };
     fetchEmployees();
   }, []);
@@ -81,7 +81,7 @@ export default function RequestList({
         });
       }
 
-      if (selectedDepartment !== '부서명') {
+      if (selectedDepartment !== '계열사') {
         newFilteredEmployees = newFilteredEmployees.filter(
           employee => employee.department === selectedDepartment
         );
@@ -155,78 +155,82 @@ export default function RequestList({
   };
 
   return (
-    <RecoilRoot>
-      <>
-        {currentPageData.map(employee => (
-          <div
-            key={employee.employeeId}
-            className={`flex border-solid border-b-[1px] justify-between h-[45px] items-center `}>
-            {page === 'admin-duty' && (
-              <div className="w-[8rem] text-center font-semibold">당직</div>
-            )}
-            {page === 'admin-leave' && (
-              <div className="w-[8rem] text-center font-semibold">
-                {employee.type}
-              </div>
-            )}
-            <div className="w-[12rem] text-center">{employee.name}</div>
-            <div className="w-[8.5rem]  text-center">{employee.department}</div>
-            <div className="w-[7.5rem] text-center"> {employee.position}</div>
-            <div className="text-center w-[13rem]">{employee.hireDate}</div>
-            <button className="w-[18rem] justify-center flex hover:underline  text-secondaryGray text-center">
-              {`${employee.startDate} ~ ${employee.endDate}`}
-            </button>
-
-            <div className="w-[10rem] item-center flex justify-center">
-              {(() => {
-                if (employee.status === '대기중') {
-                  return (
-                    <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-mainOrange">
-                      {employee.status}
-                    </div>
-                  );
-                } else if (employee.status === '거절됨') {
-                  return (
-                    <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-secondary">
-                      {employee.status}
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-mainBlue">
-                      {employee.status}
-                    </div>
-                  );
-                }
-              })()}
+    <>
+      {isAdminShow && <AdminModal reason={selectedEmployeeReason} />}
+      {currentPageData.map(employee => (
+        <div
+          key={employee.employeeId}
+          className={`flex border-solid border-b-[1px] justify-between h-[45px] items-center `}>
+          {page === 'admin-duty' && (
+            <div className="w-[8rem] text-center font-semibold">당직</div>
+          )}
+          {page === 'admin-leave' && (
+            <div className="w-[8rem] text-center font-semibold">
+              {employee.type}
             </div>
+          )}
+          <div className="w-[12rem] text-center">{employee.name}</div>
+          <div className="w-[8.5rem]  text-center">{employee.department}</div>
+          <div className="w-[7.5rem] text-center"> {employee.position}</div>
+          <div className="text-center w-[13rem]">{employee.hireDate}</div>
+          <button
+            onClick={() => {
+              setSelectedEmployeeReason(employee.reason);
+              setIsAdminShow(true);
+            }}
+            className="w-[18rem] justify-center flex hover:underline text-secondaryGray text-center">
+            {`${employee.startDate} ~ ${employee.endDate}`}
+          </button>
 
-            <div className="w-[12rem] text-center">
-              {employee.status === '대기중' && (
-                <>
-                  <button
-                    onClick={handleApproval}
-                    className="w-[4rem] border-solid border-2 rounded-md mr-1 border-mainBlue text-mainBlue">
-                    승인
-                  </button>
-                  <button
-                    onClick={handleRejection}
-                    className="w-[4rem] border-solid border-2 rounded-md border-secondary text-secondary">
-                    거절
-                  </button>
-                </>
-              )}
-            </div>
+          <div className="w-[10rem] item-center flex justify-center">
+            {(() => {
+              if (employee.status === '대기중') {
+                return (
+                  <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-mainOrange">
+                    {employee.status}
+                  </div>
+                );
+              } else if (employee.status === '거절됨') {
+                return (
+                  <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-secondary">
+                    {employee.status}
+                  </div>
+                );
+              } else {
+                return (
+                  <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-mainBlue">
+                    {employee.status}
+                  </div>
+                );
+              }
+            })()}
           </div>
-        ))}
-        <div className="flex items-end justify-center ">
-          <Pagination
-            pageCount={Math.ceil(filteredEmployees.length / itemsPerPage)}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
+
+          <div className="w-[12rem] text-center">
+            {employee.status === '대기중' && (
+              <>
+                <button
+                  onClick={handleApproval}
+                  className="w-[4rem] border-solid border-2 rounded-md mr-1 border-mainBlue text-mainBlue">
+                  승인
+                </button>
+                <button
+                  onClick={handleRejection}
+                  className="w-[4rem] border-solid border-2 rounded-md border-secondary text-secondary">
+                  거절
+                </button>
+              </>
+            )}
+          </div>
         </div>
-      </>
-    </RecoilRoot>
+      ))}
+      <div className="flex items-end justify-center ">
+        <Pagination
+          pageCount={Math.ceil(filteredEmployees.length / itemsPerPage)}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
+    </>
   );
 }
