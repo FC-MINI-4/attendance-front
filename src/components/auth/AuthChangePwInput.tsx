@@ -28,11 +28,18 @@ export default function AuthChangePwInput() {
 
   // 비밀번호 확인 유효성 체크
   const confirmPasswordCheck = () => {
+    if (confirmPw.trim() === '' && confirmPw.length > 0) {
+      return false;
+    }
     return password === confirmPw;
   };
 
-  // 버튼 활성화 여부
-  const isDisabled = passwordCheck() && confirmPasswordCheck();
+  // 비밀번호 변경 버튼 활성화 여부
+  const isDisabled =
+    passwordCheck() &&
+    confirmPasswordCheck() &&
+    password.length > 7 &&
+    password.length < 17;
 
   // 유효성 검사
   const renderCheck = (isPassword: boolean) => {

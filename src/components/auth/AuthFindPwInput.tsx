@@ -25,7 +25,7 @@ export default function AuthFindPwInput() {
           name={'email'}
           onChange={handleEmailChange}
           placeholder={'예: jindojoon@soonyang.com'}
-          valid={true}
+          valid={emailCheck()}
         />
       </div>
       <Button contents={'이메일 전송'} disabled={!emailCheck()} />
