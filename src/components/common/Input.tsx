@@ -13,7 +13,9 @@ export default function Input({ ...props }: IInputProps) {
   return (
     <div className="w-full">
       <label
-        className="text-xs sm:text-base min-w-[5rem] sm:min-w-[10rem] flex font-semibold"
+        className={`${
+          props.valid ? 'text-primary' : 'text-secondary'
+        } text-xs sm:text-base min-w-[5rem] sm:min-w-[10rem] flex font-semibold`}
         htmlFor={props.label}>
         {props.label}
       </label>
