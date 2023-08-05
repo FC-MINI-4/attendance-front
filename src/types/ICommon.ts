@@ -14,3 +14,9 @@ export interface ILayout {
   children: ReactNode;
   [key: string]: any;
 }
+
+export interface IPaginationProps {
+  pageCount: number;
+  currentPage: number;
+  onPageChange: (selected: number) => void;
+}
