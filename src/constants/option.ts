@@ -47,3 +47,12 @@ export const ENGLISH_DEPARTMENT = [
   'medical',
   'micro'
 ];
+
+export const TEMP_DEPARTMENT = {
+  automobile: '순양 자동차',
+  store: '순양 백화점',
+  securities: '순양 증권',
+  semicon: '순양 반도체',
+  medical: '순양 의료원',
+  micro: '순양 마이크로'
+};
