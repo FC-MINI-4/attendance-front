@@ -5,12 +5,13 @@ export const signUpState = atom<ISignUp>({
   key: 'signUpState',
   default: {
     profileUrl: '',
-    position: '',
+    position: '사원',
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
     phone: '',
-    hireDate: ''
+    hireDate: '',
+    department: 'automatic'
   }
 });

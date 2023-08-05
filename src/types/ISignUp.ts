@@ -7,6 +7,7 @@ export interface ISignUp {
   confirmPassword: string;
   phone: string;
   hireDate: string;
+  department: string;
   [key: string]: string;
 }
 
