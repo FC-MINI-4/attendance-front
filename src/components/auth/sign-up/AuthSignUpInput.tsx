@@ -24,24 +24,18 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
 
   // 휴대폰 번호 입력 핸들러
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
+    const { name, value } = event.target;
 
-    // 숫자 이외 문자 제거
-    const onlyNumber = value.replace(/\D/g, '');
+    const hyphenNumber = value
+      .replace(/[^0-9]/g, '')
+      .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 
-    // 숫자를 3-4-4 형식으로 변환
-    const match = onlyNumber.match(/^(\d{3})(\d{4})(\d{4})$/);
-    if (match) {
-      setPhoneNumber(`${match[1]}-${match[2]}-${match[3]}`);
-    } else {
-      setPhoneNumber(onlyNumber);
-    }
+    setPhoneNumber(hyphenNumber);
 
-    // 휴대폰 번호가 11자 초과하는 것을 막음
-
-    if (onlyNumber.length > 11) {
-      setPhoneNumber(onlyNumber.slice(0, 11));
-    }
+    setSignUpInfo(prevInformation => ({
+      ...prevInformation,
+      [name]: hyphenNumber
+    }));
   };
 
   // 이메일 중복 체크 (업데이트 전)
