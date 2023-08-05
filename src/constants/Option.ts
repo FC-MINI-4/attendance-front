@@ -38,3 +38,12 @@ export const MODIFY_DEPARTMENT = [
   '순양의료원',
   '순양마이크로'
 ];
+
+export const ENGLISH_DEPARTMENT = [
+  'automobile',
+  'store',
+  'securities',
+  'semicon',
+  'medical',
+  'micro'
+];
