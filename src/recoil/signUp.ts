@@ -12,6 +12,6 @@ export const signUpState = atom<ISignUp>({
     confirmPassword: '',
     phone: '',
     hireDate: '',
-    department: 'automatic'
+    department: ''
   }
 });

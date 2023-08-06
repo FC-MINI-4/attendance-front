@@ -17,19 +17,6 @@ export interface ILayout {
 
 // Dropdown Interface
 export interface IDropdown {
-  value: string;
-  onChange: (value: string) => void;
-  admin: boolean;
-  label?: string;
-  options: {
-    [key: string]: string;
-  };
-}
-
-// Dropdown Interface
-export interface IDropdown {
-  value: string;
-  onChange: (value: string) => void;
   admin: boolean;
   label?: string;
   options: {
