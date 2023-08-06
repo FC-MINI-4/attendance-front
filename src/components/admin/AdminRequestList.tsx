@@ -6,12 +6,13 @@ import {
   selectedEndDateState
 } from '@/recoil/common/datePicker';
 import { IPaginationProps } from '@/types/ICommon';
-import { useRecoilState, RecoilRoot } from 'recoil';
+import { useRecoilState } from 'recoil';
 import {
   ISideBarProps,
   IFilterProps,
   IMainProps,
-  ILeaveResProps
+  ILeaveResProps,
+  IDutyResProps
 } from '@/types/IAdmin';
 import { adminState } from '@/recoil/common/modal';
 import AdminModal from '@/components/admin/AdminModal';
@@ -27,10 +28,12 @@ export default function RequestList({
   onPageChange,
   page
 }: ISideBarProps & IFilterProps & IMainProps & IPaginationProps) {
-  const [employees, setEmployees] = useState<ILeaveResProps[]>([]);
-  const [filteredEmployees, setFilteredEmployees] = useState<ILeaveResProps[]>(
-    []
-  );
+  const [employees, setEmployees] = useState<
+    (ILeaveResProps | IDutyResProps)[]
+  >([]);
+  const [filteredEmployees, setFilteredEmployees] = useState<
+    (ILeaveResProps | IDutyResProps)[]
+  >([]);
   const [selectedEmployeeReason, setSelectedEmployeeReason] = useState('');
   const [isAdminShow, setIsAdminShow] = useRecoilState(adminState);
   const itemsPerPage = 10;
@@ -51,14 +54,21 @@ export default function RequestList({
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get('/api/RestRequest');
-        const responseData = response.data;
-
-        setEmployees(responseData.data?.employees || []);
+        if (page === 'admin-leave') {
+          const responseLeave = await axios.get('/api/RestRequest');
+          const responseDataLeave = responseLeave.data;
+          const leaveEmployees = responseDataLeave.data?.employees || [];
+          setEmployees(leaveEmployees);
+        } else if (page === 'admin-duty') {
+          const responseDuty = await axios.get('/api/DutyRequest');
+          const responseDataDuty = responseDuty.data;
+          const dutyEmployees = responseDataDuty.data?.employees || [];
+          setEmployees(dutyEmployees);
+        }
       } catch (error) {}
     };
     fetchEmployees();
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     const filterEmployees = () => {
@@ -69,15 +79,29 @@ export default function RequestList({
         nextDay.setDate(selectedStartDate.getDate() - 1);
 
         newFilteredEmployees = newFilteredEmployees.filter(employee => {
-          const startDate = new Date(employee.startDate);
-          const endDate = new Date(employee.endDate);
+          if (page === 'admin-leave') {
+            const startDate = (employee as ILeaveResProps).startDate
+              ? new Date((employee as ILeaveResProps).startDate)
+              : null;
+            const endDate = (employee as ILeaveResProps).endDate
+              ? new Date((employee as ILeaveResProps).endDate)
+              : null;
 
-          return (
-            nextDay <= startDate &&
-            startDate <= selectedEndDate &&
-            nextDay <= endDate &&
-            endDate <= selectedEndDate
-          );
+            return (
+              startDate &&
+              endDate &&
+              nextDay <= startDate &&
+              startDate <= selectedEndDate &&
+              nextDay <= endDate &&
+              endDate <= selectedEndDate
+            );
+          } else {
+            const date = (employee as IDutyResProps).date
+              ? new Date((employee as IDutyResProps).date)
+              : null;
+
+            return date && nextDay <= date && date <= selectedEndDate;
+          }
         });
       }
 
@@ -162,7 +186,9 @@ export default function RequestList({
           key={employee.employeeId}
           className={`flex border-solid border-b-[1px] justify-between h-[45px] items-center `}>
           {page === 'admin-duty' && (
-            <div className="w-[8rem] text-center font-semibold">당직</div>
+            <div className="w-[8rem] text-center font-semibold">
+              {employee.type}
+            </div>
           )}
           {page === 'admin-leave' && (
             <div className="w-[8rem] text-center font-semibold">
@@ -173,14 +199,21 @@ export default function RequestList({
           <div className="w-[8.5rem]  text-center">{employee.department}</div>
           <div className="w-[7.5rem] text-center"> {employee.position}</div>
           <div className="text-center w-[13rem]">{employee.hireDate}</div>
-          <button
-            onClick={() => {
-              setSelectedEmployeeReason(employee.reason);
-              setIsAdminShow(true);
-            }}
-            className="w-[18rem] justify-center flex hover:underline text-secondaryGray text-center">
-            {`${employee.startDate} ~ ${employee.endDate}`}
-          </button>
+
+          {page === 'admin-duty' && 'date' in employee ? (
+            <div className="w-[18rem] justify-center flex pr-4 text-center">
+              {employee.date}
+            </div>
+          ) : 'startDate' in employee && 'endDate' in employee ? (
+            <button
+              onClick={() => {
+                setSelectedEmployeeReason(employee.reason);
+                setIsAdminShow(true);
+              }}
+              className="w-[18rem] justify-center flex hover:underline text-secondaryGray text-center">
+              {`${employee.startDate} ~ ${employee.endDate}`}
+            </button>
+          ) : null}
 
           <div className="w-[10rem] item-center flex justify-center">
             {(() => {
