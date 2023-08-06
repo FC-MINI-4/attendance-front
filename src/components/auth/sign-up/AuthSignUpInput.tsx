@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { signUpState } from '@/recoil/signUp';
+import { signupState } from '@/recoil/signup';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { IAuthSignUpInput } from '@/types/IAuth';
@@ -9,7 +9,7 @@ import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 
 export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
   // 회원가입 정보 atom state 구독
-  const [signUpInfo, setSignUpInfo] = useRecoilState(signUpState);
+  const [signUpInfo, setSignUpInfo] = useRecoilState(signupState);
   // 휴대폰 번호를 저장하는 state
   const [phoneNumber, setPhoneNumber] = useState('');
 
