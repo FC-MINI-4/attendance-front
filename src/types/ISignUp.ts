@@ -1,4 +1,4 @@
-export interface ISignUp {
+export interface ISignup {
   profileUrl: string;
   position: string;
   name: string;
