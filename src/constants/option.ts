@@ -49,10 +49,10 @@ export const ENGLISH_DEPARTMENT = [
 ];
 
 export const TEMP_DEPARTMENT = {
-  automobile: '순양 자동차',
-  store: '순양 백화점',
-  securities: '순양 증권',
-  semicon: '순양 반도체',
-  medical: '순양 의료원',
-  micro: '순양 마이크로'
+  '순양 자동차': 'automobile',
+  '순양 백화점': 'store',
+  '순양 증권': 'securities',
+  '순양 반도체': 'semicon',
+  '순양 의료원': 'medical',
+  '순양 마이크로': 'micro'
 };
