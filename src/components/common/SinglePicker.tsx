@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import ko from 'date-fns/locale/ko'; // 한국어 locale import
 import DatePicker from 'react-datepicker';
 import { useSetRecoilState } from 'recoil';
-import { signUpState } from '@/recoil/signUp';
+import { signUpState } from '@/recoil/signup';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default function SinglePicker({ ...props }) {
