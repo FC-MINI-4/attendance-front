@@ -69,17 +69,27 @@ const memberDetail = {
 
 export default function MemberDetail() {
   return (
-    <div>
-      {Object.entries(memberDetail).map(([key, value]) => (
-        <div key={key}>
-          <div className="sm:text-sm sm:pb-2 text-subTextAndBorder">
-            {key}
-          </div>
-          <div className="sm:mb-6 sm:min-w-[20rem] sm:pb-2 text-xl border-b border-mainGray">
-            {value}
-          </div>
+    <div className="items-center justify-center">
+      <div className="w-full max-w-lg p-8 bg-white rounded shadow">
+        <div className="pb-6">
+        <div className="relative bg-gray-300 rounded-sm-lg font-bold sm:text-2xl sm:pb-8 h-7">
+        <span className="bg-primary absolute top-0 left-0 w-4 h-8 z-0"></span>
+        <span className="relative z-10 pl-4">사용자 정보</span>
         </div>
-      ))}
+      </div>
+        <div className="grid grid-cols-2 gap-8">
+          {Object.entries(memberDetail).map(([key, value]) => (
+            <div key={key}>
+              <div className="text-sm pb-2 font-semibold text-gray-500">
+                {key}
+              </div>
+              <div className="mb-6 pb-2 text-base border-b border-gray-300 max-w-full">
+                {value}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
