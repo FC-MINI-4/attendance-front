@@ -1,4 +1,4 @@
-import { IRegexCheck } from '@/types/ISignup';
+import { IRegexCheck } from '@/types/ISignUp';
 
 export default function AuthValidCheck({ valid, name }: IRegexCheck) {
   const validMessage = () => {

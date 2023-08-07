@@ -31,20 +31,11 @@ export const MODIFY_DEPARTMENT = [
   '순양그룹'
 ];
 
-export const ENGLISH_DEPARTMENT = [
-  'automobile',
-  'store',
-  'securities',
-  'semicon',
-  'medical',
-  'micro'
-];
-
 export const TEMP_DEPARTMENT = {
-  '순양 자동차': 'automobile',
-  '순양 백화점': 'store',
-  '순양 증권': 'securities',
-  '순양 반도체': 'semicon',
-  '순양 의료원': 'medical',
-  '순양 마이크로': 'micro'
+  '순양 자동차': 'AUTOMOBILE',
+  '순양 백화점': 'STORE',
+  '순양 증권': 'SECURITIES',
+  '순양 반도체': 'SEMICON',
+  '순양 의료원': 'MEDICAL',
+  '순양 마이크로': 'MICRO'
 };

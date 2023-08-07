@@ -1,12 +1,12 @@
-export interface ISigninRequestBody {
-  email: string;
-  password: string;
+export interface ISignInRequestBody {
+  email?: string;
+  password?: string;
 }
 
-export interface ISigninUser {
+export interface ISignInUser {
   accessToken: string;
   refreshToken: string;
   accessTokenExpireDate: number;
 }
 
-export type ILocalUser = Omit<ISigninUser, 'userId'>;
+export type ILocalUser = Omit<ISignInUser, 'userId'>;

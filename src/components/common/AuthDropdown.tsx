@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { IDropdown } from '@/types/ICommon';
-import { signUpState } from '@/recoil/signup';
+import { signUpState } from '@/recoil/signUp';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
