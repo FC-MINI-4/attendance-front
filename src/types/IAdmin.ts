@@ -147,7 +147,7 @@ export interface IModifyProps {
   success: boolean;
   code: string;
   message: string;
-  data: any;
+  data: null;
 }
 
 // 수정응답
