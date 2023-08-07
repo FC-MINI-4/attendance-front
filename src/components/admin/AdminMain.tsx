@@ -39,10 +39,6 @@ export default function Main({ page }: IMainProps) {
     setSelectedRest(value);
   };
 
-  const handleDutyChange = (value: string) => {
-    setSelectedDuty(value);
-  };
-
   const handleDepartmentChange = (value: string) => {
     setSelectedDepartment(value);
   };
@@ -136,7 +132,7 @@ export default function Main({ page }: IMainProps) {
                             onChange={handleSearchChange}
                           />
                         </div>
-                        <div className="flex justify-center w-[7rem]">
+                        <div className="flex justify-center w-[11rem]">
                           <DropdownFilter
                             options={DEPARTMENT}
                             value={selectedDepartment}
@@ -207,9 +203,7 @@ export default function Main({ page }: IMainProps) {
                   <AdminModify
                     profileImage={profileImage}
                     handleChangeFile={handleChangeFile}
-                    selectedDepartment={selectedDepartment}
                     handleDepartmentChange={handleDepartmentChange}
-                    selectedPosition={selectedPosition}
                     handlePositionChange={handlePositionChange}
                   />
                 )}

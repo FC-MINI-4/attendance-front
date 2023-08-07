@@ -3,14 +3,17 @@ import {
   ISideBarProps,
   IFilterProps,
   IDayOffDetailResProps,
-  IManageResProps
+  IManageResProps,
+  IDutyDetailResProps
 } from '@/types/IAdmin';
-import axios from 'axios';
 import Pagination from '@/components/common/Pagination';
 import { IPaginationProps } from '@/types/ICommon';
 import ManageModal from '@/components/common/ManagerModal';
 import { useRecoilState } from 'recoil';
 import { manageState } from '@/recoil/common/modal';
+import reqManage from '@/api/admin/manage';
+import detailDayOff from '@/api/admin/modalDayOff';
+import detailDuty from '@/api/admin/modalDuty';
 
 export default function EmployeeList({
   selectedDepartment,
@@ -23,7 +26,11 @@ export default function EmployeeList({
   const [filteredEmployees, setFilteredEmployees] = useState<IManageResProps[]>(
     []
   );
-  const [selectDetail, setSelectDetail] = useState<IDayOffDetailResProps[]>([]);
+  const [dayOffDetails, setDayOffDetails] = useState<IDayOffDetailResProps[]>(
+    []
+  );
+  const [dutyDetails, setDutyDetails] = useState<IDutyDetailResProps[]>([]);
+
   const itemsPerPage = 10;
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -32,15 +39,23 @@ export default function EmployeeList({
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      try {
-        const response = await axios.get('/api/admin/ManageRequest');
-        const responseData = response.data;
-
-        setEmployees(responseData.data?.employees || []);
-      } catch (error) {}
+      const response = await reqManage();
+      setEmployees(response.data || []);
     };
     fetchEmployees();
   }, []);
+
+  const handleDayOffDetails = async (employeeId: number) => {
+    const res = await detailDayOff(employeeId);
+    setDayOffDetails(res.data || []);
+    setIsManageShow(true);
+  };
+
+  const handleDutyDetails = async (employeeId: number) => {
+    const res = await detailDuty(employeeId);
+    setDutyDetails(res.data || []);
+    setIsManageShow(true);
+  };
 
   useEffect(() => {
     const filterEmployees = () => {
@@ -91,14 +106,14 @@ export default function EmployeeList({
           <div className="w-[10rem] flex justify-center">
             <button
               className="w-[10rem] text-center hover:underline text-secondaryGray"
-              onClick={() => setIsManageShow(true)}>
+              onClick={() => handleDayOffDetails(employee.employeeId)}>
               상세보기
             </button>
           </div>
           <div className="w-[10rem] justify-center flex">
             <button
               className="w-[10rem] text-center hover:underline text-secondaryGray"
-              onClick={() => setIsManageShow(true)}>
+              onClick={() => handleDutyDetails(employee.employeeId)}>
               상세보기
             </button>
           </div>
