@@ -7,48 +7,37 @@ import {
   IManageResProps,
   IModifyDetailProps
 } from '@/types/IAdmin';
-import axios from 'axios';
+import reqManage from '@/api/admin/manage';
+import modifyDetail from '@/api/admin/modifyDetail';
 
 export default function AdminModify({
   profileImage,
   handleChangeFile,
-  selectedDepartment,
   handleDepartmentChange,
-  selectedPosition,
   handlePositionChange
 }: IAdminModifyProps) {
   const [modifyEmployees, setModifyEmployees] = useState<IManageResProps[]>([]);
-  const [selectedEmployee, setSelectedEmployee] =
-    useState<IModifyDetailProps | null>(null);
-  const [ModifyName, setModifyName] = useState('');
-  const [ModifyHireDate, setModifyHireDate] = useState('');
-  const [ModifyEmail, setModifyEmail] = useState('');
-  const [ModifyPhone, setModifyPhone] = useState('');
-  const [ModifyDepartment, setModifyDepartment] = useState('');
-  const [ModifyPosition, setModifyPosition] = useState('');
+  const [selectedEmployee, setSelectedEmployee] = useState<IModifyDetailProps>({
+    employeeId: 0,
+    name: '진양철',
+    department: '순양그룹',
+    position: '회장',
+    hireDate: '1999-10-01',
+    email: 'jinyc@naver.com',
+    phone: '010-1234-5678'
+  });
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      try {
-        const response = await axios.get('/api/admin/ManageRequest');
-        const responseData = response.data;
-
-        setModifyEmployees(responseData.data?.employees || []);
-      } catch (error) {}
+      const response = await reqManage();
+      setModifyEmployees(response.data || []);
     };
     fetchEmployees();
   }, []);
 
   const handleButtonClick = async (employee: IManageResProps) => {
-    try {
-      const response = await axios.get(
-        `/api/admin/ModifyDetail?employeeId=${employee.employeeId}`
-      );
-      const responseData: IModifyDetailProps = response.data; // 응답 타입을 IModifyDetailProps로 설정
-      setSelectedEmployee(responseData);
-    } catch (error) {
-      console.error('Error handling button click:', error);
-    }
+    const response = await modifyDetail(employee.employeeId);
+    setSelectedEmployee(response);
   };
 
   return (
@@ -103,6 +92,7 @@ export default function AdminModify({
               이미지를 선택해주세요
             </label>
             <input
+              // defaultValue={selectedEmployee.profileImagePath}
               id="imageUpload"
               className="hidden"
               type="file"
@@ -117,7 +107,7 @@ export default function AdminModify({
             <div className=" m-6 ml-16 mt-4 ">
               <div className="text-md font-semibold ">이름</div>
               <input
-                defaultValue="이창휘"
+                defaultValue={selectedEmployee.name}
                 className="w-[20rem]  border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md"
               />
             </div>
@@ -127,7 +117,7 @@ export default function AdminModify({
               <div className="font-small w-[21rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex ">
                 <DropdownFilter
                   options={MODIFY_DEPARTMENT}
-                  value={selectedDepartment}
+                  value={selectedEmployee.department}
                   onChange={handleDepartmentChange}
                 />
               </div>
@@ -138,7 +128,7 @@ export default function AdminModify({
             <div className="font-small w-[21rem]  border-b-2 pt-2   border-gray-200 text-md ">
               <DropdownFilter
                 options={MODIFY_POSITION}
-                value={selectedPosition}
+                value={selectedEmployee.position}
                 onChange={handlePositionChange}
               />
             </div>
@@ -146,7 +136,7 @@ export default function AdminModify({
           <div className=" m-6 mt-4 ml-16 ">
             <div className="text-md font-semibold ">입사일</div>
             <input
-              defaultValue="2023년 07월 30일"
+              defaultValue={selectedEmployee.hireDate}
               className="  border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
             />
           </div>
@@ -154,13 +144,13 @@ export default function AdminModify({
           <div className=" m-6 mt-4 ml-16 ">
             <div className="text-md font-semibold ">이메일</div>
             <input
-              defaultValue="010"
-              className=" text-md  border-b-2 w-[20rem] pt-2 border-gray-200 font-small"></input>
+              defaultValue={selectedEmployee.email}
+              className=" border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"></input>
           </div>
           <div className=" m-6 ml-16 mt-4  ">
             <div className="text-md font-semibold ">전화번호</div>
             <input
-              defaultValue="010"
+              defaultValue={selectedEmployee.phone}
               className="  border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
             />
           </div>

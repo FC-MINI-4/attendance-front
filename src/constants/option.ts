@@ -19,7 +19,7 @@ export const EMPLOYEE_POSITION = [
   '대리',
   '사원'
 ];
-export const MODIFY_POSITION = ['부장', '과장', '차장', '대리', '사원'];
+export const MODIFY_POSITION = ['부장', '과장', '차장', '대리', '사원', '회장'];
 
 export const MODIFY_DEPARTMENT = [
   '순양자동차',
@@ -27,7 +27,8 @@ export const MODIFY_DEPARTMENT = [
   '순양증권',
   '순양반도체',
   '순양의료원',
-  '순양마이크로'
+  '순양마이크로',
+  '순양그룹'
 ];
 
 export const ENGLISH_DEPARTMENT = [

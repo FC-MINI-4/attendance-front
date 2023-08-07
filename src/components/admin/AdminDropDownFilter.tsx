@@ -13,7 +13,7 @@ export default function DropdownFilter({
 
   return (
     <div className=" flex  ">
-      <select className="  text-center" value={value} onChange={handleChange}>
+      <select className="  " value={value} onChange={handleChange}>
         {options.map(option => (
           <option key={option} value={option}>
             {option}

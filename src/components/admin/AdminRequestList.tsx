@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState, useEffect, useCallback } from 'react';
 import Pagination from '@/components/common/Pagination';
 import {
@@ -16,6 +15,10 @@ import {
 } from '@/types/IAdmin';
 import { adminState } from '@/recoil/common/modal';
 import AdminModal from '@/components/admin/AdminModal';
+import dayOffList from '@/api/admin/dayOff';
+import dutyOffList from '@/api/admin/duty';
+import dayOffRes from '@/api/admin/dayOffStatus';
+import dutyRes from '@/api/admin/dutyStatus';
 
 export default function RequestList({
   searchValue,
@@ -53,19 +56,17 @@ export default function RequestList({
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      try {
-        if (page === 'admin-leave') {
-          const responseLeave = await axios.get('/api/admin/RestRequest');
-          const responseDataLeave = responseLeave.data;
-          const leaveEmployees = responseDataLeave.data?.employees || [];
-          setEmployees(leaveEmployees);
-        } else if (page === 'admin-duty') {
-          const responseDuty = await axios.get('/api/admin/DutyRequest');
-          const responseDataDuty = responseDuty.data;
-          const dutyEmployees = responseDataDuty.data?.employees || [];
-          setEmployees(dutyEmployees);
-        }
-      } catch (error) {}
+      if (page === 'admin-leave') {
+        const responseLeave = await dayOffList();
+        const responseDataLeave = responseLeave.data;
+        const leaveEmployees = responseDataLeave?.employees || [];
+        setEmployees(leaveEmployees);
+      } else if (page === 'admin-duty') {
+        const responseDuty = await dutyOffList();
+        const responseDataDuty = responseDuty.data;
+        const dutyEmployees = responseDataDuty?.employees || [];
+        setEmployees(dutyEmployees);
+      }
     };
     fetchEmployees();
   }, [page]);
@@ -156,19 +157,40 @@ export default function RequestList({
     currentPage
   ]);
 
-  const handleApproval = () => {
-    if (window.confirm('승인 후 수정불가능합니다. 승인하시겠습니까?')) {
-      alert('수정되었습니다.');
-    } else {
-      alert('취소되었습니다.');
+  // 함수를 생성하고 직원 정보를 인자로 받는다.
+  const handleApproval = async (employee: ILeaveResProps | IDutyResProps) => {
+    try {
+      if (window.confirm('승인 후 수정불가능합니다. 승인하시겠습니까?')) {
+        if ('dayOffId' in employee) {
+          await dayOffRes({ dayOffId: employee.dayOffId, status: '승인됨' });
+          alert('승인되었습니다.');
+        } else {
+          await dutyRes({ dutyId: employee.dutyId, status: '승인됨' });
+          alert('승인되었습니다.');
+        }
+      } else {
+        alert('취소되었습니다.');
+      }
+    } catch (error) {
+      alert('승인 실패하였습니다.');
     }
   };
 
-  const handleRejection = () => {
-    if (window.confirm('거절 후 수정불가능합니다. 거절하시겠습니까?')) {
-      alert('거절되었습니다.');
-    } else {
-      alert('취소되었습니다.');
+  const handleRejection = async (employee: ILeaveResProps | IDutyResProps) => {
+    try {
+      if (window.confirm('거절 후 수정불가능합니다. 거절하시겠습니까?')) {
+        if ('dayOffId' in employee) {
+          await dayOffRes({ dayOffId: employee.dayOffId, status: '거절됨' });
+          alert('거절되었습니다.');
+        } else {
+          await dutyRes({ dutyId: employee.dutyId, status: '거절됨' });
+          alert('거절되었습니다.');
+        }
+      } else {
+        alert('취소되었습니다.');
+      }
+    } catch (error) {
+      alert('거절 실패하였습니다.');
     }
   };
 
@@ -230,12 +252,12 @@ export default function RequestList({
             {employee.status === '대기중' && (
               <>
                 <button
-                  onClick={handleApproval}
+                  onClick={() => handleApproval(employee)}
                   className="w-[4rem] border-solid border-2 rounded-md mr-1 border-mainBlue text-mainBlue">
                   승인
                 </button>
                 <button
-                  onClick={handleRejection}
+                  onClick={() => handleRejection(employee)}
                   className="w-[4rem] border-solid border-2 rounded-md border-secondary text-secondary">
                   거절
                 </button>
