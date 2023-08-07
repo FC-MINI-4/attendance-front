@@ -1,14 +1,14 @@
 import { useRecoilState } from 'recoil';
 import Input from '@/components/common/Input';
-import { signinState } from '@/recoil/signin';
+import { signInState } from '@/recoil/signIn';
 
 export default function AuthSignInInput() {
   // 회원가입 정보 atom state 구독
-  const [signinInfo, setSigninInfo] = useRecoilState(signinState);
+  const [signInInfo, setSignInInfo] = useRecoilState(signInState);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setSigninInfo(prevInformation => ({
+    setSignInInfo(prevInformation => ({
       ...prevInformation,
       [name]: value
     }));
@@ -24,7 +24,7 @@ export default function AuthSignInInput() {
           placeholder={'예: jinyangchul@soonyang.com'}
           type="email"
           valid={true}
-          value={signinInfo.email}
+          value={signInInfo.email}
         />
       </div>
       <div className="sm:mb-16 mb-8">
@@ -35,7 +35,7 @@ export default function AuthSignInInput() {
           placeholder={'영문+숫자, 8자리 이상 16자리 이하'}
           type="password"
           valid={true}
-          value={signinInfo.password}
+          value={signInInfo.password}
         />
       </div>
     </>

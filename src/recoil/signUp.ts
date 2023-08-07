@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
-import { ISignup } from '@/types/ISignup';
+import { ISignUp } from '@/types/ISignUp';
 
-export const signupState = atom<ISignup>({
-  key: 'signupState',
+export const signUpState = atom<ISignUp>({
+  key: 'signUpState',
   default: {
     profileUrl: '',
     position: '사원',
