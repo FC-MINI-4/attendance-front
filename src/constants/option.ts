@@ -1,13 +1,4 @@
-export const REST_REQUEST = [
-  '요청',
-  '연차',
-  '연차취소',
-  '반차',
-  '반차취소',
-  '특별휴가',
-  '특별휴가취소'
-];
-export const DUTY_REQUEST = ['요청', '당직', '당직취소'];
+export const REST_REQUEST = ['요청', '연차', '반차', '특별휴가'];
 
 export const DEPARTMENT = [
   '계열사',
@@ -18,7 +9,7 @@ export const DEPARTMENT = [
   '순양의료원',
   '순양마이크로'
 ];
-export const STATUS = ['상태', '대기중', '승인됨', '거절됨'];
+export const STATUS = ['상태', '대기중', '승인됨', '거절됨', '취소됨'];
 
 export const EMPLOYEE_POSITION = [
   '직급',
