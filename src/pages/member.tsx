@@ -9,20 +9,23 @@ export default function Member() {
   return (
     <>
       <MemberHeader />
-      <div className="mx-24 mt-8 font-bold sm:text-4xl border-b-black border-b-4 sm:pb-1">
-        마이페이지
-      </div>
-      <div className="flex mx-24 my-12 justify-between">
-        <div className="flex">
-          <div className="flex flex-col sm:mr-32">
+      <div className='flex mx-24 my-24'>
+        <div className='pb-10 mr-20'>
             <MemberBoard />
-            <MemberSideBar />
-          </div>
-          <div></div>
-          <MemberDetail />
+            <div className='mt-16'>
+                <MemberSideBar />
+                </div>
         </div>
         <div>
-          <MemberInfo />
+
+        </div>
+        <div className="flex bg-gray-200 p-4 rounded">
+          <div className="mr-4 pr-4 w-[600px]">
+            <MemberDetail />
+          </div>
+          <div>
+            <MemberInfo />
+          </div>
         </div>
       </div>
     </>
