@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { signupState } from '@/recoil/signup';
+import { signUpState } from '@/recoil/signUp';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { IAuthSignUpInput } from '@/types/IAuth';
+import { requestEmailCheck } from '@/api/auth/signUp';
 import { rEmail, rPassword } from '@/constants/constants';
 import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 
 export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
   // 회원가입 정보 atom state 구독
-  const [signUpInfo, setSignUpInfo] = useRecoilState(signupState);
+  const [signUpInfo, setSignUpInfo] = useRecoilState(signUpState);
   // 휴대폰 번호를 저장하는 state
   const [phoneNumber, setPhoneNumber] = useState('');
 
@@ -39,8 +40,17 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
   };
 
   // 이메일 중복 체크 (업데이트 전)
-  const onDuplicateClick = () => {
-    alert('사용 가능한 이메일입니다.');
+  const handleEmailCheck = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const response = await requestEmailCheck({
+        email: signUpInfo.email
+      });
+      if (response.status === 200) {
+        const userData = response.data;
+      }
+    } catch (error) {}
   };
 
   // 버튼 & 비밀번호 확인 조건부 렌더링
@@ -50,23 +60,10 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
       // 중복확인 버튼일 경우
       if (props.button === '중복확인')
         return (
-          <Button
-            contents={props.button}
-            onClick={onDuplicateClick}
-            secondary
-          />
+          <form onSubmit={handleEmailCheck}>
+            <Button contents={props.button} secondary submit />
+          </form>
         );
-      // 업로드 버튼일 경우
-      else {
-        return (
-          <Button
-            contents={props.button}
-            onClick={onDuplicateClick}
-            secondary
-          />
-        );
-      }
-      // 비밀번호 확인일 경우
     } else return;
   };
 
