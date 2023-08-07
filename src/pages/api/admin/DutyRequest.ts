@@ -61,7 +61,7 @@ const dummyEmployees = [
     hireDate: '2017-05-25',
     dutyId: 5,
     requestDate: '2023-03-09',
-    type: '당직취소',
+    type: '당직',
     status: '승인됨',
     date: '2023-03-20'
   },
@@ -74,7 +74,7 @@ const dummyEmployees = [
     hireDate: '2004-04-23',
     dutyId: 6,
     requestDate: '2023-02-09',
-    type: '당직취소',
+    type: '당직',
     status: '거절됨',
     date: '2023-04-20'
   },
@@ -86,7 +86,7 @@ const dummyEmployees = [
     hireDate: '2007-03-07',
     dutyId: 7,
     requestDate: '2022-01-09',
-    type: '당직취소',
+    type: '당직',
     status: '승인됨',
     date: '2022-03-20'
   },
@@ -98,7 +98,7 @@ const dummyEmployees = [
     hireDate: '2007-03-07',
     dutyId: 8,
     requestDate: '2022-1-09',
-    type: '당직취소',
+    type: '당직',
     status: '대기중',
     date: '2022-03-20'
   },
@@ -110,7 +110,7 @@ const dummyEmployees = [
     hireDate: '2007-03-07',
     dutyId: 9,
     requestDate: '2022-01-09',
-    type: '당직취소',
+    type: '당직',
     status: '대기중',
     date: '2022-03-20'
   },
@@ -122,7 +122,7 @@ const dummyEmployees = [
     hireDate: '2007-03-07',
     dutyId: 10,
     requestDate: '2022-01-09',
-    type: '당직취소',
+    type: '당직',
     status: '대기중',
     date: '2022-03-20'
   },
@@ -134,7 +134,7 @@ const dummyEmployees = [
     hireDate: '2007-03-07',
     dutyId: 11,
     requestDate: '2022-01-09',
-    type: '당직취소',
+    type: '당직',
     status: '대기중',
     date: '2022-03-20'
   },
@@ -146,7 +146,7 @@ const dummyEmployees = [
     hireDate: '2007-03-07',
     dutyId: 12,
     requestDate: '2022-01-09',
-    type: '당직취소',
+    type: '당직',
     status: '대기중',
     date: '2022-03-20'
   },
@@ -158,7 +158,7 @@ const dummyEmployees = [
     hireDate: '2007-03-07',
     dutyId: 13,
     requestDate: '2022-01-09',
-    type: '당직취소',
+    type: '당직',
     status: '대기중',
     date: '2022-03-20'
   },
@@ -170,7 +170,7 @@ const dummyEmployees = [
     hireDate: '2007-03-07',
     dutyId: 14,
     requestDate: '2022-01-09',
-    type: '당직취소',
+    type: '당직',
     status: '대기중',
     date: '2022-03-20'
   },
@@ -204,7 +204,7 @@ const dummyEmployees = [
     hireDate: `20${7 + index}-0${1 + (index % 9)}-0${1 + (index % 9)}`,
     dutyId: 15 + index,
     requestDate: `2023-0${1 + (index % 9)}-0${1 + (index % 9)}`,
-    type: index % 2 === 0 ? '당직' : '당직취소',
+    type: '당직',
     status: index % 3 === 0 ? '승인됨' : index % 3 === 1 ? '대기중' : '거절됨',
     date: `2023-07-${20 + (index % 10)}`
   }))

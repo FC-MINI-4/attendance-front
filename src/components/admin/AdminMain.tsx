@@ -11,7 +11,6 @@ import { RecoilRoot } from 'recoil';
 
 import {
   EMPLOYEE_POSITION,
-  DUTY_REQUEST,
   DEPARTMENT,
   STATUS,
   REST_REQUEST
@@ -112,12 +111,8 @@ export default function Main({ page }: IMainProps) {
                     {(page === 'admin-duty' || page === 'admin-leave') && (
                       <>
                         {page === 'admin-duty' && (
-                          <div className="flex justify-center ml-4 w-[7rem]">
-                            <DropdownFilter
-                              options={DUTY_REQUEST}
-                              value={selectedDuty}
-                              onChange={handleDutyChange}
-                            />
+                          <div className="flex justify-center ml-4 w-[7rem] pr-4">
+                            요청
                           </div>
                         )}
 

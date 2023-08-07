@@ -55,12 +55,12 @@ export default function RequestList({
     const fetchEmployees = async () => {
       try {
         if (page === 'admin-leave') {
-          const responseLeave = await axios.get('/api/RestRequest');
+          const responseLeave = await axios.get('/api/admin/RestRequest');
           const responseDataLeave = responseLeave.data;
           const leaveEmployees = responseDataLeave.data?.employees || [];
           setEmployees(leaveEmployees);
         } else if (page === 'admin-duty') {
-          const responseDuty = await axios.get('/api/DutyRequest');
+          const responseDuty = await axios.get('/api/admin/DutyRequest');
           const responseDataDuty = responseDuty.data;
           const dutyEmployees = responseDataDuty.data?.employees || [];
           setEmployees(dutyEmployees);
@@ -122,12 +122,6 @@ export default function RequestList({
         );
       }
 
-      if (page === 'admin-duty' && selectedDuty !== '요청') {
-        newFilteredEmployees = newFilteredEmployees.filter(
-          employee => employee.type === selectedDuty
-        );
-      }
-
       if (selectedStatus !== '상태') {
         newFilteredEmployees = newFilteredEmployees.filter(
           employee => employee.status === selectedStatus
@@ -185,16 +179,9 @@ export default function RequestList({
         <div
           key={employee.employeeId}
           className={`flex border-solid border-b-[1px] justify-between h-[45px] items-center `}>
-          {page === 'admin-duty' && (
-            <div className="w-[8rem] text-center font-semibold">
-              {employee.type}
-            </div>
-          )}
-          {page === 'admin-leave' && (
-            <div className="w-[8rem] text-center font-semibold">
-              {employee.type}
-            </div>
-          )}
+          <div className="w-[8rem] text-center font-semibold">
+            {employee.type}
+          </div>
           <div className="w-[12rem] text-center">{employee.name}</div>
           <div className="w-[8.5rem]  text-center">{employee.department}</div>
           <div className="w-[7.5rem] text-center"> {employee.position}</div>

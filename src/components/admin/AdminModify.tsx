@@ -30,7 +30,7 @@ export default function AdminModify({
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get('/api/ManageRequest');
+        const response = await axios.get('/api/admin/ManageRequest');
         const responseData = response.data;
 
         setModifyEmployees(responseData.data?.employees || []);
