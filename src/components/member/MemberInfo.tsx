@@ -42,28 +42,23 @@ export default function MemberInfo() {
   }
 
   return (
-    <div className="flex flex-col text-lg">
-      <div className='flex justfiy-center items-center relative'>
+    <div className='flex flex-col text-lg bg-white rounded shadow'>
+      <div className='flex justfiy-center items-center relative pl-5 my-6 w-[200px]'>
         {dummyData.profileUrl.length > 0 ? (
           <img className="w-40 h-40 rounded-full bg-contain" src={ dummyData.profileUrl } alt="image" ref={imgRef}/>
         ) : (
-          <HiOutlineUserCircle className='w-40 h-40'/>
+          <HiOutlineUserCircle className='items-centerw-40 h-40'/>
         )}
-        <input
-          type='file'
-          id='modify'
-          onChange={(e)=> readImage(e)}
-          className='absolute w-0 h-0 p-0 overflow:hidden border-0'/>
-        <label
-          htmlFor='modify'
-          className='cursor-pointer inline-block text-xs border absolute right-3 bottom-0 px-2 py-px'>수정</label>
+        
       </div>
-      <div className="text-2xl my-10 text-center">
+      <div className='text-lg my-6 text-center'>
         {dummyData.name}님, 반갑습니다.
       </div>
+      <div className='text-lg my-2 text-center'>
       <button onClick={handleClick}>
         <Link href={'/sign-in'}>로그아웃</Link>
       </button>
+      </div>
     </div>
   );
 }

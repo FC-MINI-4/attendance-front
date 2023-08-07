@@ -55,18 +55,18 @@ const list = {
 
 export default function MemberBoard() {
   return (
-    <div className="sm:w-60 sm:mb-4 flex justify-between border-2 rounded border-primary p-2">
+    <div className="sm:w-60 sm:mb-4 flex justify-between">
       <div>
         <div className="font-bold mb-2">총 연차</div>
-        <div className="text-center">{list.total}</div>
+        <div className="text-center">{list.total}일</div>
       </div>
       <div>
         <div className="font-bold mb-2">사용일수</div>
-        <div className="text-center">{list.used}</div>
+        <div className="text-center">{list.used}일</div>
       </div>
       <div>
         <div className="font-bold mb-2">잔여 연차</div>
-        <div className="text-center">{list.remains}</div>
+        <div className="text-center">{list.remains}일</div>
       </div>
     </div>
   );
