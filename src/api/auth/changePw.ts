@@ -1,17 +1,17 @@
 import axios from 'axios';
 import { clientInstance } from '@/api/axios';
-import { ISignInRequestBody } from '@/types/ISignIn';
+import { IAuthCheckPw } from '@/types/IAuth';
 
-// * [POST]로그인 요청
-export async function requestSignIn(signinData: ISignInRequestBody) {
+// * [POST] 비밀번호 변경
+export async function requestChangePw(changePwData: IAuthCheckPw) {
   try {
     const response = await axios.post(
-      `${clientInstance.defaults.baseURL}/api/auth/login`,
-      signinData
+      `${clientInstance.defaults.baseURL}/api/auth/users/:${changePwData.authToken}/password/change`,
+      changePwData
     );
     return response;
   } catch (error) {
-    console.error('LOGIN_FAILURE', error);
+    console.error('INVALID_PASSWORD', error);
     throw error;
   }
 }
