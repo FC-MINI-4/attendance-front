@@ -20,12 +20,14 @@ export default function AuthSignInBox() {
         email: signInInfo.email,
         password: signInInfo.password
       });
+
       if (response.data.success) {
         alert(response.data.message);
 
         router.push('/main');
       } else {
         alert(response.data.message);
+
       }
     } catch (error) {}
   };
