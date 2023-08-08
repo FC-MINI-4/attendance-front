@@ -20,10 +20,10 @@ export default function Main({ page }: IMainProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
   const [selectedDepartment, setSelectedDepartment] =
     useState<string>('계열사');
-  const [selectedPosition, setSeletedPosition] = useState<string>('직급');
+  const [selectedPosition, setSelectedPosition] = useState<string>('직급');
   const [selectedStatus, setSelectedStatus] = useState<string>('상태');
   const [selectedRest, setSelectedRest] = useState<string>('요청');
-  const [selectedDuty, setSelectedDuty] = useState<string>('요청');
+
   const [searchValue, setSearchValue] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(0);
   const [filteredEmployees, setFilteredEmployees] = useState([]);
@@ -43,12 +43,12 @@ export default function Main({ page }: IMainProps) {
     setSelectedDepartment(value);
   };
 
-  const handlestatusChange = (value: string) => {
+  const handleStatusChange = (value: string) => {
     setSelectedStatus(value);
   };
 
   const handlePositionChange = (value: string) => {
-    setSeletedPosition(value);
+    setSelectedPosition(value);
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,26 +57,6 @@ export default function Main({ page }: IMainProps) {
 
   const handleToggleSidebar = () => {
     setIsSidebarOpen(prevIsSidebarOpen => !prevIsSidebarOpen);
-  };
-
-  const handleChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64 = reader.result;
-        if (base64) {
-          const str = base64?.toString();
-          if (str && str.length > 1048576) {
-            alert('이미지는 1MB이하여야합니다!');
-            return;
-          }
-          setProfileImage(base64.toString());
-        }
-      };
-      reader.readAsDataURL(file);
-    }
   };
 
   return (
@@ -156,7 +136,7 @@ export default function Main({ page }: IMainProps) {
                           <DropdownFilter
                             options={STATUS}
                             value={selectedStatus}
-                            onChange={handlestatusChange}
+                            onChange={handleStatusChange}
                           />
                         </div>
                         <div className="w-[13rem]  text-center ">관리</div>
@@ -203,8 +183,6 @@ export default function Main({ page }: IMainProps) {
               <>
                 {page === 'admin-modify' && (
                   <AdminModify
-                    profileImage={profileImage}
-                    handleChangeFile={handleChangeFile}
                     handleDepartmentChange={handleDepartmentChange}
                     handlePositionChange={handlePositionChange}
                   />
@@ -218,7 +196,6 @@ export default function Main({ page }: IMainProps) {
                     isSidebarOpen={isSidebarOpen}
                     selectedDepartment={selectedDepartment}
                     selectedPosition={selectedPosition}
-                    selectedDuty={selectedDuty}
                     selectedStatus={selectedStatus}
                     searchValue={searchValue}
                     pageCount={Math.ceil(

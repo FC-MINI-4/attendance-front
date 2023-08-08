@@ -21,7 +21,8 @@ module.exports = {
         mainOrange: '#FF8339', // main orange
         mainBlack: '#525252',
         modalBorder: '#A1A1A1',
-        mainBlue: '#4050E0'
+        mainBlue: '#4050E0',
+        subHover: '#e8bec2'
       }
     }
   },

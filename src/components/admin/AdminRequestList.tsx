@@ -25,7 +25,6 @@ export default function RequestList({
   searchValue,
   selectedDepartment,
   selectedPosition,
-  selectedDuty,
   selectedRest,
   selectedStatus,
   currentPage,
@@ -151,7 +150,6 @@ export default function RequestList({
     selectedPosition,
     searchValue,
     selectedStatus,
-    selectedDuty,
     selectedRest,
     employees,
     page,
@@ -217,11 +215,10 @@ export default function RequestList({
                 {employee.type}
               </div>
               <div className="w-[12rem] text-center">{employee.name}</div>
-              <div className="w-[10rem] pl-8 text-center">
+              <div className="w-[10rem] pl-10 text-center">
                 {employee.department}
               </div>
               <div className="w-[8rem] pl-8 text-center">
-                {' '}
                 {employee.position}
               </div>
               <div className="text-center pl-6 w-[13rem]">
