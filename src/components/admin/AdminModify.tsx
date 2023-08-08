@@ -86,6 +86,7 @@ export default function AdminModify({
   }, []);
 
   const handleButtonClick = async (employee: IManageResProps) => {
+    setIsLoading(true);
     const response = await modifyDetail(employee.employeeId);
     setIsLoading(true);
     if (response.success && response.data) {
