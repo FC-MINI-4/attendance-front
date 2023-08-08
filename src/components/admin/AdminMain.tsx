@@ -39,10 +39,6 @@ export default function Main({ page }: IMainProps) {
     setSelectedRest(value);
   };
 
-  const handleDutyChange = (value: string) => {
-    setSelectedDuty(value);
-  };
-
   const handleDepartmentChange = (value: string) => {
     setSelectedDepartment(value);
   };
@@ -117,7 +113,7 @@ export default function Main({ page }: IMainProps) {
                         )}
 
                         {page === 'admin-leave' && (
-                          <div className="flex justify-center ml-4 w-[7rem]">
+                          <div className="flex justify-center ml-6 w-[7rem]">
                             <DropdownFilter
                               options={REST_REQUEST}
                               value={selectedRest}
@@ -136,7 +132,7 @@ export default function Main({ page }: IMainProps) {
                             onChange={handleSearchChange}
                           />
                         </div>
-                        <div className="flex justify-center w-[7rem]">
+                        <div className="flex justify-center pl-6 w-[10rem]">
                           <DropdownFilter
                             options={DEPARTMENT}
                             value={selectedDepartment}
@@ -150,7 +146,9 @@ export default function Main({ page }: IMainProps) {
                             onChange={handlePositionChange}
                           />
                         </div>
-                        <div className="text-center pr-2 w-[13rem]">입사일</div>
+                        <div className="text-center pr-2 w-[13rem] pl-4">
+                          입사일
+                        </div>
                         <div className="w-[19rem] pr-14 text-center">
                           요청내역
                         </div>
@@ -177,7 +175,7 @@ export default function Main({ page }: IMainProps) {
                             onChange={handleSearchChange}
                           />
                         </div>
-                        <div className="flex justify-center w-[8rem]">
+                        <div className="flex justify-center w-[8rem] pl-14">
                           <DropdownFilter
                             options={DEPARTMENT}
                             value={selectedDepartment}
@@ -207,9 +205,7 @@ export default function Main({ page }: IMainProps) {
                   <AdminModify
                     profileImage={profileImage}
                     handleChangeFile={handleChangeFile}
-                    selectedDepartment={selectedDepartment}
                     handleDepartmentChange={handleDepartmentChange}
-                    selectedPosition={selectedPosition}
                     handlePositionChange={handlePositionChange}
                   />
                 )}

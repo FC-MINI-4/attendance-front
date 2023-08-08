@@ -1,4 +1,10 @@
-export const REST_REQUEST = ['요청', '연차', '반차', '특별휴가'];
+export const REST_REQUEST = [
+  '요청',
+  '연차',
+  '오전 반차',
+  '오후 반차',
+  '특별휴가'
+];
 
 export const DEPARTMENT = [
   '계열사',
@@ -19,7 +25,7 @@ export const EMPLOYEE_POSITION = [
   '대리',
   '사원'
 ];
-export const MODIFY_POSITION = ['부장', '과장', '차장', '대리', '사원'];
+export const MODIFY_POSITION = ['부장', '과장', '차장', '대리', '사원', '회장'];
 
 export const MODIFY_DEPARTMENT = [
   '순양자동차',
@@ -27,23 +33,15 @@ export const MODIFY_DEPARTMENT = [
   '순양증권',
   '순양반도체',
   '순양의료원',
-  '순양마이크로'
-];
-
-export const ENGLISH_DEPARTMENT = [
-  'automobile',
-  'store',
-  'securities',
-  'semicon',
-  'medical',
-  'micro'
+  '순양마이크로',
+  '순양그룹'
 ];
 
 export const TEMP_DEPARTMENT = {
-  '순양 자동차': 'automobile',
-  '순양 백화점': 'store',
-  '순양 증권': 'securities',
-  '순양 반도체': 'semicon',
-  '순양 의료원': 'medical',
-  '순양 마이크로': 'micro'
+  '순양 자동차': 'AUTOMOBILE',
+  '순양 백화점': 'STORE',
+  '순양 증권': 'SECURITIES',
+  '순양 반도체': 'SEMICON',
+  '순양 의료원': 'MEDICAL',
+  '순양 마이크로': 'MICRO'
 };

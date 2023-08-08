@@ -27,9 +27,7 @@ export interface IFilterProps {
 export interface IAdminModifyProps {
   profileImage: string;
   handleChangeFile: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  selectedDepartment: string;
   handleDepartmentChange: (value: string) => void;
-  selectedPosition: string;
   handlePositionChange: (value: string) => void;
 }
 
@@ -40,9 +38,7 @@ export interface IManageProps {
   success: boolean;
   code: string;
   message: string;
-  data?: {
-    employees: IManageResProps[];
-  };
+  data?: IManageResProps[];
 }
 
 export interface IManageResProps {
@@ -60,9 +56,7 @@ export interface IDayOffDetailProps {
   success: boolean;
   code: string;
   message: string;
-  data?: {
-    data: IDayOffDetailResProps[];
-  };
+  data?: IDayOffDetailResProps[];
 }
 export interface IDayOffDetailResProps {
   dayOffId: number;
@@ -78,12 +72,11 @@ export interface IDutyDetailProps {
   success: boolean;
   code: string;
   message: string;
-  data?: {
-    data: IDayOffDetailResProps[];
-  };
+  data?: IDutyDetailResProps[];
 }
 
 export interface IDutyDetailResProps {
+  type: string;
   dutyId: number;
   requestDate: string;
   date: string;
@@ -95,9 +88,7 @@ export interface ILeaveProps {
   success: boolean;
   code: string;
   message: string;
-  data?: {
-    employees: ILeaveResProps[];
-  };
+  data?: ILeaveResProps[];
 }
 export interface ILeaveResProps {
   employeeId: number;
@@ -119,9 +110,7 @@ export interface IDutyProps {
   success: boolean;
   code: string;
   message: string;
-  data?: {
-    employees: IDutyResProps[];
-  };
+  data?: IDutyResProps[];
 }
 export interface IDutyResProps {
   dutyId: number;
@@ -146,13 +135,36 @@ export interface IModifyDetailProps {
   hireDate: string;
   email: string;
   phone: string;
-  profileImagePath: string;
+  profileImagePath?: File;
 }
 
 //수정 및 요청에 대한 응답
 export interface IModifyProps {
   success: boolean;
   code: string;
-  data: any | null;
   message: string;
+  data: null;
+}
+
+// 수정응답
+export interface IModifyReqProps {
+  employeeId: number;
+  department: string;
+  position: string;
+  profileImagePath?: File;
+  name: string;
+  phone: string;
+  hireDate: string;
+}
+
+//당직요청
+export interface IDutyReqProps {
+  dutyId: number;
+  status: string;
+}
+
+//연차요청
+export interface IDayOffReqProps {
+  dayOffId: number;
+  status: string;
 }
