@@ -21,7 +21,7 @@ export default function memberEdit() {
 
         </div>
 
-        <div className='mr-80 flex bg-gray-200 p-4 rounded'>
+        <div className='mr-80 flex bg-gray-100 p-12 rounded ml-40'>
         <div className="mr-4 pr-4 w-[800px]">
             <MemberEdit />
             </div>
