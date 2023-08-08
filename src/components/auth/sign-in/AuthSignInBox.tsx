@@ -4,11 +4,12 @@ import { signInState } from '@/recoil/signIn';
 import PwBox from '@/components/common/PwBox';
 import Button from '@/components/common/Button';
 import { requestSignIn } from '@/api/auth/signIn';
-import { ILocalUser, ISignInUser } from '@/types/ISignIn';
+import { ISignInUser } from '@/types/ISignIn';
 import AuthSignInInput from '@/components/auth/sign-in/AuthSignInInput';
 
 export default function AuthSignInBox() {
   const signInInfo = useRecoilValue(signInState);
+
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -19,7 +20,7 @@ export default function AuthSignInBox() {
       });
       if (response.status === 200) {
         const userData: ISignInUser = response.data;
-        const localUserData: ILocalUser = {
+        const localUserData: ISignInUser = {
           accessToken: userData.accessToken,
           refreshToken: userData.refreshToken,
           accessTokenExpireDate: userData.accessTokenExpireDate
