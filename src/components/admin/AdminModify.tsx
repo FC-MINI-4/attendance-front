@@ -86,7 +86,6 @@ export default function AdminModify({
   }, []);
 
   const handleButtonClick = async (employee: IManageResProps) => {
-    setIsLoading(true);
     const response = await modifyDetail(employee.employeeId);
     setIsLoading(true);
     if (response.success && response.data) {
@@ -235,7 +234,7 @@ export default function AdminModify({
                   <div className="font-small w-[21rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex ">
                     <DropdownFilter
                       options={MODIFY_DEPARTMENT}
-                      value={selectedEmployee.department}
+                      value={selectedEmployee.data.department}
                       onChange={handleDepartmentChange}
                     />
                   </div>
@@ -247,7 +246,7 @@ export default function AdminModify({
                 <div className="font-small w-[21rem]  border-b-2 pt-2   border-gray-200 text-md ">
                   <DropdownFilter
                     options={MODIFY_POSITION}
-                    value={selectedEmployee.position}
+                    value={selectedEmployee.data.position}
                     onChange={handlePositionChange}
                   />
                 </div>
