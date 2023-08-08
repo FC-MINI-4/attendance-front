@@ -19,8 +19,8 @@ export default function Member() {
         <div>
 
         </div>
-        <div className="flex bg-gray-200 p-4 rounded">
-          <div className="mr-4 pr-4 w-[600px]">
+        <div className="flex bg-gray-100 p-8 rounded ml-40">
+          <div className="mr-8 pr-4 w-[600px]">
             <MemberDetail />
           </div>
           <div>
