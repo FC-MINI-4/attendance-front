@@ -55,6 +55,7 @@ export default function AuthSignUpBox() {
         <SinglePicker name={'hireDate'} />
       </div>
       <form onSubmit={handleSignUp} encType="multipart/form-data">
+
         <Button contents={'회원가입'} submit />
       </form>
     </div>
