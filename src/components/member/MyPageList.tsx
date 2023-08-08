@@ -29,7 +29,11 @@ export default function MyPageList() {
   return (
     <div className='w-[64rem] h-[36.67rem]'>
   
-      <div className='text-2xl'>연차 리스트</div>
+      <div className='relative bg-white w-1/6 rounded-sm-lg font-bold sm:text-2xl sm:pb-8 h-10'>
+            <span className='bg-primary absolute top-0 left-0 w-4 h-10 z-0'></span>
+            <span className="relative z-10 pl-4">연차 리스트</span>
+          </div>
+
       <div className='flex justify-between border-y-2 border-solid mt-6 text-1.5xl font-semibold py-3 text-center'>
         <div className='w-[13.33rem] '>요청</div>
         <div className='w-[16.67rem]'>사용날짜</div>
@@ -48,7 +52,11 @@ export default function MyPageList() {
       ))}
     </div>
   
-    <div className='text-2xl mt-10'>당직 리스트</div>
+
+    <div className='relative bg-white w-1/6 rounded-sm font-bold sm:text-2xl sm:pb-8 h-10 mt-10'>
+  <span className='bg-primary absolute top-0 left-0 w-4 h-10 z-0'></span>
+  <span className="relative z-10 pl-4">당직 리스트</span>
+</div>
     <div>
       <div className='flex justify-between border-y-2 border-solid mt-6 text-1.5xl font-semibold py-3 text-center'>
         <div className='w-[13.33rem]' >요청</div>
