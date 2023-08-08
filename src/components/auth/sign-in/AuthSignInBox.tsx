@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import { signInState } from '@/recoil/signIn';
 import PwBox from '@/components/common/PwBox';
@@ -8,6 +9,7 @@ import { ISignInUser } from '@/types/ISignIn';
 import AuthSignInInput from '@/components/auth/sign-in/AuthSignInInput';
 
 export default function AuthSignInBox() {
+  const router = useRouter();
   const signInInfo = useRecoilValue(signInState);
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -18,13 +20,12 @@ export default function AuthSignInBox() {
         email: signInInfo.email,
         password: signInInfo.password
       });
-      if (response.status === 200) {
-        const userData: ISignInUser = response.data;
-        const localUserData: ISignInUser = {
-          accessToken: userData.accessToken,
-          refreshToken: userData.refreshToken,
-          accessTokenExpireDate: userData.accessTokenExpireDate
-        };
+      if (response.data.success) {
+        alert(response.data.message);
+
+        router.push('/main');
+      } else {
+        alert(response.data.message);
       }
     } catch (error) {}
   };
