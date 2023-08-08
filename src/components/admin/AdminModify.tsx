@@ -234,7 +234,7 @@ export default function AdminModify({
                   <div className="font-small w-[21rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex ">
                     <DropdownFilter
                       options={MODIFY_DEPARTMENT}
-                      value={selectedEmployee.data.department}
+                      value={selectedEmployee.department}
                       onChange={handleDepartmentChange}
                     />
                   </div>
@@ -246,7 +246,7 @@ export default function AdminModify({
                 <div className="font-small w-[21rem]  border-b-2 pt-2   border-gray-200 text-md ">
                   <DropdownFilter
                     options={MODIFY_POSITION}
-                    value={selectedEmployee.data.position}
+                    value={selectedEmployee.position}
                     onChange={handlePositionChange}
                   />
                 </div>
