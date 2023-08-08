@@ -88,9 +88,7 @@ export interface ILeaveProps {
   success: boolean;
   code: string;
   message: string;
-  data?: {
-    employees: ILeaveResProps[];
-  };
+  data?: ILeaveResProps[];
 }
 export interface ILeaveResProps {
   employeeId: number;
@@ -112,9 +110,7 @@ export interface IDutyProps {
   success: boolean;
   code: string;
   message: string;
-  data?: {
-    employees: IDutyResProps[];
-  };
+  data?: IDutyResProps[];
 }
 export interface IDutyResProps {
   dutyId: number;
@@ -155,14 +151,13 @@ export interface IModifyReqProps {
   employeeId: number;
   department: string;
   position: string;
-  profileImagePath: File;
+  profileImagePath?: File;
   name: string;
   phone: string;
   hireDate: string;
 }
 
 //당직요청
-// 요청 본문 인터페이스
 export interface IDutyReqProps {
   dutyId: number;
   status: string;
