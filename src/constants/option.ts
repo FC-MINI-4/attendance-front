@@ -1,4 +1,10 @@
-export const REST_REQUEST = ['요청', '연차', '반차', '특별휴가'];
+export const REST_REQUEST = [
+  '요청',
+  '연차',
+  '오전 반차',
+  '오후 반차',
+  '특별휴가'
+];
 
 export const DEPARTMENT = [
   '계열사',

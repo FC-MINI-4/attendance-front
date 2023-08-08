@@ -14,6 +14,7 @@ import { manageState } from '@/recoil/common/modal';
 import reqManage from '@/api/admin/manage';
 import detailDayOff from '@/api/admin/modalDayOff';
 import detailDuty from '@/api/admin/modalDuty';
+import Loading from '@/components/common/Loading';
 
 export default function EmployeeList({
   selectedDepartment,
@@ -30,7 +31,7 @@ export default function EmployeeList({
     []
   );
   const [dutyDetails, setDutyDetails] = useState<IDutyDetailResProps[]>([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = 10;
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -38,10 +39,14 @@ export default function EmployeeList({
   const [isManageShow, setIsManageShow] = useRecoilState(manageState);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchEmployees = async () => {
       const response = await reqManage();
       setEmployees(response.data || []);
     };
+    {
+      setTimeout(() => setIsLoading(false), 500);
+    }
     fetchEmployees();
   }, []);
 
@@ -91,39 +96,61 @@ export default function EmployeeList({
   return (
     <>
       {isManageShow && (
-        <ManageModal type="" label="개인사유" date="" value="" />
+        <>
+          {dayOffDetails.map((detail, dayOffId) => (
+            <ManageModal
+              key={dayOffId}
+              type={detail.type}
+              date={`${detail.startDate} ~ ${detail.endDate}`}
+              value={detail.reason}
+            />
+          ))}
+          {dutyDetails.map((detail, dutyId) => (
+            <ManageModal key={dutyId} type={detail.type} date={detail.date} />
+          ))}
+        </>
       )}
-      {currentPageData.map(employee => (
-        <div
-          key={employee.employeeId}
-          className="flex justify-between border-solid border-b-[1px] h-[50px] items-center">
-          <div className="w-[13.5rem] text-center">{employee.name}</div>
-          <div className="w-[7rem] text-center">{employee.department}</div>
-          <div className="w-[7rem] ml-2 mr-4 text-center">
-            {employee.position}
-          </div>
-          <div className="text-center w-[10rem]">{employee.hireDate}</div>
-          <div className="w-[10rem] flex justify-center">
-            <button
-              className="w-[10rem] text-center hover:underline text-secondaryGray"
-              onClick={() => handleDayOffDetails(employee.employeeId)}>
-              상세보기
-            </button>
-          </div>
-          <div className="w-[10rem] justify-center flex">
-            <button
-              className="w-[10rem] text-center hover:underline text-secondaryGray"
-              onClick={() => handleDutyDetails(employee.employeeId)}>
-              상세보기
-            </button>
-          </div>
-          <div className="w-[10rem] text-center">{employee.dayOffTotal}일</div>
-          <div className="w-[10rem] text-center">{employee.dayOffUsed}일</div>
-          <div className="w-[10rem] text-center">
-            {employee.dayOffRemains}일
-          </div>
-        </div>
-      ))}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          {currentPageData.map(employee => (
+            <div
+              key={employee.employeeId}
+              className="flex justify-between border-solid border-b-[1px] h-[50px] items-center">
+              <div className="w-[13.5rem] text-center">{employee.name}</div>
+              <div className="w-[7rem] text-center">{employee.department}</div>
+              <div className="w-[7rem] ml-2 mr-4 text-center">
+                {employee.position}
+              </div>
+              <div className="text-center w-[10rem]">{employee.hireDate}</div>
+              <div className="w-[10rem] flex justify-center">
+                <button
+                  className="w-[10rem] text-center hover:underline text-secondaryGray"
+                  onClick={() => handleDayOffDetails(employee.employeeId)}>
+                  상세보기
+                </button>
+              </div>
+              <div className="w-[10rem] justify-center flex">
+                <button
+                  className="w-[10rem] text-center hover:underline text-secondaryGray"
+                  onClick={() => handleDutyDetails(employee.employeeId)}>
+                  상세보기
+                </button>
+              </div>
+              <div className="w-[10rem] text-center">
+                {employee.dayOffTotal}일
+              </div>
+              <div className="w-[10rem] text-center">
+                {employee.dayOffUsed}일
+              </div>
+              <div className="w-[10rem] text-center">
+                {employee.dayOffRemains}일
+              </div>
+            </div>
+          ))}
+        </>
+      )}
       <div className="flex items-end justify-center mt-[2rem]  ">
         <Pagination
           pageCount={Math.ceil(filteredEmployees.length / itemsPerPage)}
