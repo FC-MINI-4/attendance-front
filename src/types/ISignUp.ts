@@ -1,6 +1,5 @@
 export interface ISignUp {
   profileUrl: string;
-  position: string;
   name: string;
   email: string;
   password: string;
@@ -13,7 +12,6 @@ export interface ISignUp {
 
 export interface ISignUpRequestBody {
   profileUrl?: string;
-  position: string;
   name: string;
   email: string;
   password: string;
