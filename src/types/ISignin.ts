@@ -8,5 +8,3 @@ export interface ISignInUser {
   refreshToken: string;
   accessTokenExpireDate: number;
 }
-
-export type ILocalUser = Omit<ISignInUser, 'userId'>;
