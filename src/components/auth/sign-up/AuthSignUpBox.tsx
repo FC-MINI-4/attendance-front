@@ -15,21 +15,23 @@ export default function AuthSignUpBox() {
     event.preventDefault();
 
     try {
-      const response = await requestSignUp({
-        email: signUpData.email,
-        department: signUpData.department,
-        position: signUpData.position,
-        password: signUpData.password,
-        confirmPassword: signUpData.confirmPassword,
-        hireDate: signUpData.hireDate,
-        name: signUpData.name,
-        phone: signUpData.phone
-      });
+      const formData = new FormData();
+      formData.append('email', signUpData.email);
+      formData.append('department', signUpData.department);
+      formData.append('password', signUpData.password);
+      formData.append('confirmPassword', signUpData.confirmPassword);
+      formData.append('hireDate', signUpData.hireDate);
+      formData.append('name', signUpData.name);
+      formData.append('phone', signUpData.phone);
+      formData.append('profileImageFile', signUpData.profileUrl);
+
+      const response = await requestSignUp(formData);
       if (response.status === 200) {
-        const userData = response.data.data;
+        const userData = response.data;
       }
     } catch (error) {}
   };
+
   return (
     <div>
       <div className="text-xs sm:text-base font-semibold pl-1 text-mainBlack">
@@ -52,7 +54,8 @@ export default function AuthSignUpBox() {
       <div className="border-b-2 border-gray-200 mb-4 sm:w-full sm:max-w-[calc(100%-6rem)] pl-1">
         <SinglePicker name={'hireDate'} />
       </div>
-      <form onSubmit={handleSignUp}>
+      <form onSubmit={handleSignUp} encType="multipart/form-data">
+
         <Button contents={'회원가입'} submit />
       </form>
     </div>
