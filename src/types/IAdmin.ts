@@ -151,10 +151,10 @@ export interface IModifyProps {
 
 // 수정응답
 export interface IModifyReqProps {
-  employeeId: number;
+  employeeId: string;
   department: string;
   position: string;
-  profileImagePath?: File;
+  profileImage?: File;
   name: string;
   phone: string;
   hireDate: string;

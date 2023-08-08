@@ -20,53 +20,51 @@ export default function AdminModify({
 }: IAdminModifyProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [modifyEmployees, setModifyEmployees] = useState<IManageResProps[]>([]);
-  const [selectedEmployee, setSelectedEmployee] = useState<IModifyDetailProps>({
-    success: false,
-    code: '',
-    message: '',
-    data: {
-      employeeId: 0,
-      department: '순양그룹',
-      position: '회장',
-      name: '진양철',
-      phone: '010-1234-1234',
-      hireDate: '1943-10-06',
-      email: 'jinyc@naver.com'
-    }
+  const [selectedEmployee, setSelectedEmployee] = useState({
+    employeeId: 0,
+    department: '순양그룹',
+    position: '회장',
+    name: '진양철',
+    phone: '010-1234-1234',
+    hireDate: '1943-10-06',
+    email: 'jinyc@naver.com'
   });
-  const [employeeId, setEmployeeId] = useState<number>(0);
-  const [department, setDepartment] = useState<string>('');
-  const [position, setPosition] = useState<string>('');
-  const [profileImage, setProfileImage] = useState<File | null>(null);
-  const [name, setName] = useState<string>('');
-  const [phone, setPhone] = useState<string>('');
-  const [hireDate, setHireDate] = useState<string>('');
+  const [employeeId, setEmployeeId] = useState<string>('0');
+  const [department, setDepartment] = useState<string>('순양그룹');
+  const [position, setPosition] = useState<string>('회장');
+  const [profileImage, setProfileImage] = useState<File>();
+  const [name, setName] = useState<string>('진양철');
+  const [phone, setPhone] = useState<string>('010-1234-1234');
+  const [hireDate, setHireDate] = useState<string>('1943-10-06');
+  const [email, setEmail] = useState('jinyc@naver.com');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (employeeId && department && position && hireDate && name && phone) {
-      const data: IModifyReqProps = {
-        employeeId,
-        department,
-        position,
-        name,
-        phone,
-        hireDate
-      };
-
-      // const formData = new FormData();
-      // formData.append(
-      //   'dto',
-      //   new Blob([JSON.stringify(data)], { type: 'application/json' })
-      // );
-      // if (profileImage) {
-      //   formData.append('image', profileImage);
-      // }
-
+    if (
+      (employeeId && department && hireDate && name && phone && position) ||
+      profileImage
+    ) {
       try {
-        await modifyRes(data);
-        alert('수정에 성공하였습니다.');
+        const formData = new FormData();
+        formData.append('employeeId', employeeId);
+        formData.append('department', department);
+        formData.append('hireDate', hireDate);
+        formData.append('name', name);
+        formData.append('phone', phone);
+        formData.append('position', position);
+
+        if (profileImage) {
+          formData.append('key', profileImage);
+        }
+        const entries = formData.entries();
+        let entry = entries.next();
+        while (!entry.done) {
+          console.log(entry.value);
+          entry = entries.next();
+        }
+        const response = await modifyRes(formData);
+        alert(response.message);
       } catch (error) {
         alert('수정에 실패했습니다.');
       }
@@ -95,18 +93,13 @@ export default function AdminModify({
         response.data;
 
       setSelectedEmployee({
-        success: response.success,
-        code: response.code,
-        message: response.message,
-        data: {
-          employeeId,
-          department,
-          position,
-          name,
-          email,
-          phone,
-          hireDate
-        }
+        employeeId,
+        department,
+        position,
+        name,
+        email,
+        phone,
+        hireDate
       });
       {
         setTimeout(() => setIsLoading(false), 500);
@@ -115,7 +108,7 @@ export default function AdminModify({
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
+    if (event.target.files) {
       const file = event.target.files[0];
       setProfileImage(file);
     }
@@ -150,7 +143,7 @@ export default function AdminModify({
   };
 
   <input
-    value={selectedEmployee.data.hireDate}
+    value={selectedEmployee.hireDate}
     onChange={e => handleHireDateChange(e.target.value)}
     className="border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
   />;
@@ -230,7 +223,7 @@ export default function AdminModify({
                 <div className=" m-6 ml-16 mt-4 ">
                   <div className="text-md font-semibold ">이름</div>
                   <input
-                    value={selectedEmployee.data.name}
+                    value={selectedEmployee.name}
                     onChange={e => handleNameChange(e.target.value)}
                     className="w-[20rem]  border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md"
                   />
@@ -241,7 +234,7 @@ export default function AdminModify({
                   <div className="font-small w-[21rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex ">
                     <DropdownFilter
                       options={MODIFY_DEPARTMENT}
-                      value={selectedEmployee.data.department}
+                      value={selectedEmployee.department}
                       onChange={handleDepartmentChange}
                     />
                   </div>
@@ -253,7 +246,7 @@ export default function AdminModify({
                 <div className="font-small w-[21rem]  border-b-2 pt-2   border-gray-200 text-md ">
                   <DropdownFilter
                     options={MODIFY_POSITION}
-                    value={selectedEmployee.data.position}
+                    value={selectedEmployee.position}
                     onChange={handlePositionChange}
                   />
                 </div>
@@ -261,7 +254,7 @@ export default function AdminModify({
               <div className=" m-6 mt-4 ml-16 ">
                 <div className="text-md font-semibold ">입사일</div>
                 <input
-                  value={selectedEmployee.data.hireDate}
+                  value={selectedEmployee.hireDate}
                   className="  border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
                   onChange={e => handleHireDateChange(e.target.value)}
                 />
@@ -270,14 +263,14 @@ export default function AdminModify({
               <div className=" m-6 mt-4 ml-16 ">
                 <div className="text-md font-semibold ">이메일</div>
                 <input
-                  value={selectedEmployee.data.email}
+                  value={selectedEmployee.email}
                   className=" border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
                   onChange={e => handleEmailChange(e.target.value)}></input>
               </div>
               <div className=" m-6 ml-16 mt-4  ">
                 <div className="text-md font-semibold ">전화번호</div>
                 <input
-                  value={selectedEmployee.data.phone}
+                  value={selectedEmployee.phone}
                   className="  border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
                   onChange={e => handlePhoneChange(e.target.value)}
                 />
