@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { adminInstance } from '@/api/axios';
+import { clientInstance } from '@/api/axios';
 import { IModifyDetailProps } from '@/types/IAdmin';
 
 export default async function modifyDetail(
@@ -7,7 +7,7 @@ export default async function modifyDetail(
 ): Promise<IModifyDetailProps> {
   try {
     const response = await axios.get<IModifyDetailProps>(
-      `${adminInstance.defaults.baseURL}/api/admin/employee/${id}`
+      `${clientInstance.defaults.baseURL}/api/admin/employee/${id}`
     );
     return response.data;
   } catch (error) {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { adminInstance } from '@/api/axios';
+import { clientInstance } from '@/api/axios';
 import { IModifyProps, IDayOffReqProps } from '@/types/IAdmin';
 
 export default async function dayOffRes(
@@ -7,7 +7,7 @@ export default async function dayOffRes(
 ): Promise<IModifyProps> {
   try {
     const response = await axios.put<IModifyProps>(
-      `${adminInstance.defaults.baseURL}/api/admin/day-offs`,
+      `${clientInstance.defaults.baseURL}/api/admin/day-offs`,
       requestBody
     );
     return response.data;

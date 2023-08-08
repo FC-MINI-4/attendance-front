@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { adminInstance } from '@/api/axios';
+import { clientInstance } from '@/api/axios';
 import { ILeaveProps } from '@/types/IAdmin';
 
 export default async function dayOffList(): Promise<ILeaveProps> {
   try {
     const response = await axios.get<ILeaveProps>(
-      `${adminInstance.defaults.baseURL}/api/admin/day-offs`
+      `${clientInstance.defaults.baseURL}/api/admin/day-offs`
     );
     return response.data;
   } catch (error) {

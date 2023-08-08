@@ -25,8 +25,6 @@ export interface IFilterProps {
 }
 
 export interface IAdminModifyProps {
-  profileImage: string;
-  handleChangeFile: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleDepartmentChange: (value: string) => void;
   handlePositionChange: (value: string) => void;
 }
@@ -128,14 +126,19 @@ export interface IDutyResProps {
 //수정페이지 직원 상세정보
 
 export interface IModifyDetailProps {
-  employeeId: number;
-  name: string;
-  department: string;
-  position: string;
-  hireDate: string;
-  email: string;
-  phone: string;
-  profileImagePath?: File;
+  success: boolean;
+  code: string;
+  message: string;
+  data: {
+    employeeId: number;
+    name: string;
+    department: string;
+    position: string;
+    hireDate: string;
+    email: string;
+    phone: string;
+    profileImagePath?: File;
+  };
 }
 
 //수정 및 요청에 대한 응답

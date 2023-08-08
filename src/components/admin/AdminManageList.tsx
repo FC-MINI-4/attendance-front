@@ -52,14 +52,26 @@ export default function EmployeeList({
 
   const handleDayOffDetails = async (employeeId: number) => {
     const res = await detailDayOff(employeeId);
-    setDayOffDetails(res.data || []);
-    setIsManageShow(true);
+    const dayOffDetail = res.data || [];
+
+    if (dayOffDetail.length > 0) {
+      setDayOffDetails(dayOffDetail);
+      setIsManageShow(true);
+    } else {
+      alert('해당 직원의 휴가 내역이 없습니다.');
+    }
   };
 
   const handleDutyDetails = async (employeeId: number) => {
     const res = await detailDuty(employeeId);
-    setDutyDetails(res.data || []);
-    setIsManageShow(true);
+    const dutyDetail = res.data || [];
+
+    if (dutyDetail.length > 0) {
+      setDutyDetails(dutyDetail);
+      setIsManageShow(true);
+    } else {
+      alert('해당 직원의 당직 내역이 없습니다.');
+    }
   };
 
   useEffect(() => {
@@ -105,8 +117,13 @@ export default function EmployeeList({
               value={detail.reason}
             />
           ))}
-          {dutyDetails.map((detail, dutyId) => (
-            <ManageModal key={dutyId} type={detail.type} date={detail.date} />
+          {dutyDetails.map(detail => (
+            <ManageModal
+              key={detail.dutyId}
+              type={detail.type}
+              date={detail.date}
+              value={detail.status}
+            />
           ))}
         </>
       )}

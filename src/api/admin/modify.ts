@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { adminInstance } from '@/api/axios';
+import { clientInstance } from '@/api/axios';
 import { IModifyProps, IModifyReqProps } from '@/types/IAdmin';
 
 export default async function modifyRes(
@@ -7,7 +7,7 @@ export default async function modifyRes(
 ): Promise<IModifyProps> {
   try {
     const response = await axios.put<IModifyProps>(
-      `${adminInstance.defaults.baseURL}/api/admin/employee`,
+      `${clientInstance.defaults.baseURL}/api/admin/employee`,
       data
     );
     return response.data;
