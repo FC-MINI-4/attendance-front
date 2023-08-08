@@ -1,4 +1,5 @@
 import { useRecoilValue } from 'recoil';
+import { useRouter } from 'next/router';
 import { signUpState } from '@/recoil/signUp';
 import Button from '@/components/common/Button';
 import { requestSignUp } from '@/api/auth/signUp';
@@ -10,26 +11,31 @@ import AuthSignUpInput from '@/components/auth/sign-up/AuthSignUpInput';
 
 export default function AuthSignUpBox() {
   const signUpData = useRecoilValue(signUpState);
-
+  const router = useRouter();
   const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      const formData = new FormData();
-      formData.append('email', signUpData.email);
-      formData.append('department', signUpData.department);
-      formData.append('password', signUpData.password);
-      formData.append('confirmPassword', signUpData.confirmPassword);
-      formData.append('hireDate', signUpData.hireDate);
-      formData.append('name', signUpData.name);
-      formData.append('phone', signUpData.phone);
-      formData.append('profileImageFile', signUpData.profileUrl);
+      const response = await requestSignUp({
+        confirmPassword: signUpData.confirmPassword,
+        name: signUpData.name,
+        email: signUpData.email,
+        password: signUpData.password,
+        phone: signUpData.phone,
+        hireDate: signUpData.hireDate,
+        department: signUpData.department
+      });
 
-      const response = await requestSignUp(formData);
-      if (response.status === 200) {
-        const userData = response.data;
+      if (response.data.success === true) {
+        alert('회원가입이 완료되었습니다!');
+        // 페이지를 로그인 페이지로 이동시키기
+        router.push('/sign-in');
+      } else {
+        alert(response.data.message);
       }
-    } catch (error) {}
+    } catch (error: any) {
+      alert(error.response.data.message);
+    }
   };
 
   return (
@@ -55,7 +61,6 @@ export default function AuthSignUpBox() {
         <SinglePicker name={'hireDate'} />
       </div>
       <form onSubmit={handleSignUp} encType="multipart/form-data">
-
         <Button contents={'회원가입'} submit />
       </form>
     </div>

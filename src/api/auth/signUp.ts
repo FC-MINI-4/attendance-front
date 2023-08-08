@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { clientInstance } from '../axios';
 import { ISignInRequestBody } from '@/types/ISignIn';
+import { ISignUpRequestBody } from '@/types/ISignUp';
 
 // * [POST] 이메일 중복체크
 export async function requestEmailCheck(signUpData: ISignInRequestBody) {
@@ -16,16 +17,11 @@ export async function requestEmailCheck(signUpData: ISignInRequestBody) {
   }
 }
 
-export async function requestSignUp(signUpData: FormData) {
+export async function requestSignUp(signUpData: ISignUpRequestBody) {
   try {
     const response = await axios.post(
       `${clientInstance.defaults.baseURL}/api/auth/signup`,
-      signUpData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }
+      signUpData
     );
     return response;
   } catch (error) {

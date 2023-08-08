@@ -161,7 +161,6 @@ export interface IModifyReqProps {
 }
 
 //당직요청
-// 요청 본문 인터페이스
 export interface IDutyReqProps {
   dutyId: number;
   status: string;

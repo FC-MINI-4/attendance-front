@@ -29,6 +29,7 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
 
     const hyphenNumber = value
       .replace(/[^0-9]/g, '')
+      .substring(0, 11)
       .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 
     setPhoneNumber(hyphenNumber);
@@ -39,7 +40,7 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
     }));
   };
 
-  // 이메일 중복 체크 (업데이트 전)
+  // 이메일 중복 체크
   const handleEmailCheck = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -47,10 +48,15 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
       const response = await requestEmailCheck({
         email: signUpInfo.email
       });
-      if (response.status === 200) {
-        const userData = response.data;
+      if (response.data.success) {
+        alert(response.data.message);
       }
-    } catch (error) {}
+      if (!response.data.success) {
+        alert(response.data.message);
+      }
+    } catch (error: any) {
+      alert(error.response.data.message);
+    }
   };
 
   // 버튼 & 비밀번호 확인 조건부 렌더링

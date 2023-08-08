@@ -37,11 +37,5 @@ export const SIGNUP_INPUT_INFO: ISignUpItem[] = [
     name: 'phone',
     placeholder: '숫자만 입력해주세요',
     type: 'tel'
-  },
-  {
-    label: '프로필 사진',
-    name: 'profileUrl',
-    placeholder: '선택된 이미지 없음.',
-    type: 'file'
   }
 ];
