@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { adminInstance } from '@/api/axios';
+import { clientInstance } from '@/api/axios';
 import { IDutyDetailProps } from '@/types/IAdmin';
 
 export default async function detailDuty(
@@ -7,7 +7,7 @@ export default async function detailDuty(
 ): Promise<IDutyDetailProps> {
   try {
     const response = await axios.get<IDutyDetailProps>(
-      `${adminInstance.defaults.baseURL}/api/admin/employees/${employeeId}/duties`
+      `${clientInstance.defaults.baseURL}/api/admin/employees/${employeeId}/duties`
     );
     return response.data;
   } catch (error) {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { adminInstance } from '@/api/axios';
+import { clientInstance } from '@/api/axios';
 import { IDayOffDetailProps } from '@/types/IAdmin';
 
 export default async function detailDayOff(
@@ -7,7 +7,7 @@ export default async function detailDayOff(
 ): Promise<IDayOffDetailProps> {
   try {
     const response = await axios.get<IDayOffDetailProps>(
-      `${adminInstance.defaults.baseURL}/api/admin/employees/${employeeId}/day-offs`
+      `${clientInstance.defaults.baseURL}/api/admin/employees/${employeeId}/day-offs`
     );
     return response.data;
   } catch (error) {
