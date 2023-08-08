@@ -7,7 +7,12 @@ export async function requestFindPw(findPwData: ISignInRequestBody) {
   try {
     const response = await axios.post(
       `${clientInstance.defaults.baseURL}/api/auth/users/password/find`,
-      findPwData
+      findPwData,
+      {
+        headers: {
+          Authorization: `Bearer ${findPwData.accessToken}`
+        }
+      }
     );
     return response;
   } catch (error) {
