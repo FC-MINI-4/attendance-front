@@ -1,9 +1,35 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
+import { signInState } from '@/recoil/signIn';
 import PwBox from '@/components/common/PwBox';
 import Button from '@/components/common/Button';
 import AuthSignInInput from '@/components/auth/sign-in/AuthSignInInput';
 
 export default function AuthSignInBox() {
+  const router = useRouter();
+  const signInInfo = useRecoilValue(signInState);
+
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const response = await requestSignIn({
+        email: signInInfo.email,
+        password: signInInfo.password
+      });
+
+      if (response.data.success) {
+        alert(response.data.message);
+
+        router.push('/main');
+      } else {
+        alert(response.data.message);
+
+      }
+    } catch (error) {}
+  };
+
   return (
     <PwBox>
       <AuthSignInInput />
