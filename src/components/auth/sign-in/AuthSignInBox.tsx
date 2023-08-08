@@ -4,8 +4,8 @@ import { useRecoilValue } from 'recoil';
 import { signInState } from '@/recoil/signIn';
 import PwBox from '@/components/common/PwBox';
 import Button from '@/components/common/Button';
+
 import { requestSignIn } from '@/api/auth/signIn';
-import { ISignInUser } from '@/types/ISignIn';
 import AuthSignInInput from '@/components/auth/sign-in/AuthSignInInput';
 
 export default function AuthSignInBox() {
@@ -21,15 +21,30 @@ export default function AuthSignInBox() {
         password: signInInfo.password
       });
 
+      // 로그인 성공 시
       if (response.data.success) {
+        // 성공 메시지 alert
         alert(response.data.message);
-
+        // 액세스 토큰
+        const accessToken = response.data.data.token.accessToken;
+        // 현재 시간 + 만료 시간 = 만료일
+        const expireDate = new Date(
+          Date.now() + response.data.data.token.accessTokenExpireDate
+        );
+        // 쿠키 생성
+        document.cookie = `accessToken=${accessToken}; expires=${expireDate.toUTCString()}; path=/`;
+        console.log(`cookie: ${document.cookie}`);
+        // main 페이지로 라우팅
         router.push('/main');
-      } else {
-        alert(response.data.message);
-
       }
-    } catch (error) {}
+      // 로그인 실패 시
+      else {
+        // 실패 메시지 alert
+        alert(response.data.message);
+      }
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (

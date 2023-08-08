@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import useAccessToken from '@/hooks/useToken';
 import Input from '@/components/common/Input';
 import { rEmail } from '@/constants/constants';
 import Button from '@/components/common/Button';
 import { requestFindPw } from '@/api/auth/findPw';
 
 export default function AuthFindPwInput() {
+  const accessToken = useAccessToken(); // 액세스 토큰 가져오기
   const [email, setEmail] = useState('');
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,12 +22,10 @@ export default function AuthFindPwInput() {
     event.preventDefault();
 
     try {
-      const response = await requestFindPw({
-        email: email
+      await requestFindPw({
+        email: email,
+        accessToken: accessToken
       });
-      if (response.status === 200) {
-        const userData = response.data;
-      }
     } catch (error) {}
   };
 
