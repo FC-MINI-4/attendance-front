@@ -4,6 +4,7 @@ import { ISignUpItem } from '@/types/IAuth';
 export const rEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 // 영문+숫자로 이루어진 8자리 이상, 16자리 이하 유효성 정규식
+
 export const rPassword = /^(?=.*[A-Za-z])(?=.*\d).{8,16}$/;
 
 export const SIGNUP_INPUT_INFO: ISignUpItem[] = [
@@ -17,7 +18,7 @@ export const SIGNUP_INPUT_INFO: ISignUpItem[] = [
     label: '이메일*',
     name: 'email',
     button: '중복확인',
-    placeholder: '예) jindojoon@soonyang.com',
+    placeholder: '예) dangyeon@dangyeon.com',
     type: 'email'
   },
   {
@@ -35,7 +36,7 @@ export const SIGNUP_INPUT_INFO: ISignUpItem[] = [
   {
     label: '휴대폰 번호*',
     name: 'phone',
-    placeholder: '숫자만 입력해주세요',
+    placeholder: '010-1234-5678',
     type: 'tel'
   }
 ];
