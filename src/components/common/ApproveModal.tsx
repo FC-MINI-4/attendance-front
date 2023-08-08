@@ -1,13 +1,13 @@
 import { IModalProps } from "@/types/IModal"
 import { useState, useEffect, useRef } from 'react'
-import { modalState } from "@/recoil/common/modal"
+import { dutyState, modalState } from "@/recoil/common/modal"
 import { useRecoilState } from 'recoil'
 import DatePicker from "react-datepicker"
-import { format } from 'date-fns'
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default function ApproveModal(modalProps : IModalProps){
   const [ isModalShow, setIsModalShow ] = useRecoilState(modalState)
+  const [ isDutyShow, setIsDutyShow ] = useRecoilState(dutyState)
   const [ startDate, setStartDate ] = useState<Date>(new Date())
   const [ endDate, setEndDate ] = useState<Date>(new Date())
   
@@ -62,6 +62,7 @@ export default function ApproveModal(modalProps : IModalProps){
       // current.contains(e.target) : 컴포넌트 특정 영역 외 클릭 감지를 위해 사용
       if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
         setIsModalShow(false)
+        setIsDutyShow(false)
       }
     }
     document.addEventListener('mousedown', handleOutside)
@@ -69,6 +70,7 @@ export default function ApproveModal(modalProps : IModalProps){
       document.removeEventListener('mousedown', handleOutside)
     }
   }, [modalRef])
+  
 
   //체크박스
   const MakeCheckBox = () =>{
