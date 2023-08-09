@@ -45,4 +45,3 @@ export const TEMP_DEPARTMENT = {
   '순양 의료원': 'MEDICAL',
   '순양 마이크로': 'MICRO'
 };
-//커밋용
