@@ -31,8 +31,14 @@ export default function AuthSignInBox() {
         const expireDate = new Date(
           Date.now() + response.data.data.token.accessTokenExpireDate
         );
+        // 사원 id
+        const employeeId = response.data.data.id;
+
         // 쿠키 생성
-        document.cookie = `accessToken=${accessToken}; expires=${expireDate.toUTCString()}; path=/`;
+        document.cookie = `accessToken=${accessToken};`;
+        document.cookie = `expires=${expireDate.toUTCString()};`;
+        document.cookie = `employeeId=${employeeId};`;
+
         // main 페이지로 라우팅
         router.push('/main');
       }

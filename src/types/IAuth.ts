@@ -29,3 +29,7 @@ export interface IAuthCheckPw {
 export interface IAuthFindPw {
   email: string;
 }
+
+export interface IAuthValidPw {
+  password: string;
+}
