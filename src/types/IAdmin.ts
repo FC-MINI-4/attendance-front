@@ -132,7 +132,7 @@ export interface IModifyDetailProps {
     hireDate: string;
     email: string;
     phone: string;
-    profileImagePath?: File;
+    profilePath: string;
   };
 }
 
