@@ -36,7 +36,7 @@ export interface MypageLeaveResIProps {
 
   //api
 
-  // 개인정보조회
+  // 개인정보 조회
   export interface IMemberProps {
     success: boolean;
     code: string;
@@ -53,5 +53,10 @@ export interface MypageLeaveResIProps {
     };
   }
 
-  //
+  //개인정보 수정
+  //export interface 
+
+  //연차 리스트
+
+  //당직 리스트
 
