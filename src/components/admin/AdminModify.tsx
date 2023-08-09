@@ -12,6 +12,7 @@ import modifyDetail from '@/api/admin/modifyDetail';
 import Loading from '@/components/common/Loading';
 import modifyRes from '@/api/admin/modify';
 import Button from '@/components/common/Button';
+import { clientInstance } from '@/api/axios';
 
 export default function AdminModify() {
   const [isLoading, setIsLoading] = useState(true);
@@ -90,8 +91,16 @@ export default function AdminModify() {
     const response = await modifyDetail(employee.employeeId);
     setIsLoading(true);
     if (response.success && response.data) {
-      const { employeeId, department, name, position, email, phone, hireDate } =
-        response.data;
+      const {
+        employeeId,
+        department,
+        name,
+        position,
+        email,
+        phone,
+        hireDate,
+        profilePath
+      } = response.data;
 
       setSelectedEmployee({
         employeeId,
@@ -101,7 +110,9 @@ export default function AdminModify() {
         email,
         phone,
         hireDate,
-        profilePath: ''
+
+        profilePath
+
       });
       {
         setTimeout(() => setIsLoading(false), 500);
@@ -158,12 +169,6 @@ export default function AdminModify() {
     }));
   };
 
-  <input
-    value={selectedEmployee.hireDate}
-    onChange={e => handleHireDateChange(e.target.value)}
-    className="border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-  />;
-
   return (
     <div className="ml-[3rem] h-[37rem] w-[92rem] flex">
       <div className=" h-[37rem] w-[25rem] border-2  border-primaryHover overflow-auto border-soild rounded-xl">
@@ -199,15 +204,21 @@ export default function AdminModify() {
         <div className="h-[30rem] w-[20rem] ml-[3rem]">
           <div className=" h-[20rem] w-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
             {selectedEmployee.profilePath ? (
-              <div className="w-[20rem] h-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
+
+              <div className="">
                 <Image
-                  src={`http://3.35.187.196:8080${selectedEmployee.profilePath}`}
+                  src={`${clientInstance.defaults.baseURL}${selectedEmployee.profilePath}`}
+                  width={320}
+                  height={320}
                   alt="프로필 이미지"
-                  layout="fill"
-                  className="rounded-xl"
+                  className="rounded-xl "
                 />
               </div>
-            ) : null}
+            ) : (
+              <div className="flex items-center justify-center font-semibold">
+                이미지 없음
+              </div>
+            )}
 
             <div className="flex  items-center  justify-center  font-semibold"></div>
           </div>
