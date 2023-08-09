@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { signUpState } from '@/recoil/signUp';
 import Button from '@/components/common/Button';
 import { requestSignUp } from '@/api/auth/signUp';
-import { TEMP_DEPARTMENT } from '@/constants/option';
+import { TEMP_DEPARTMENT } from '@/constants/options';
 import { SIGNUP_INPUT_INFO } from '@/constants/constants';
 import AuthDropdown from '@/components/common/AuthDropdown';
 import SinglePicker from '@/components/common/SinglePicker';
