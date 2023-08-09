@@ -3,7 +3,6 @@ import Image from 'next/image';
 import DropdownFilter from '@/components/admin/AdminDropDownFilter';
 import { MODIFY_DEPARTMENT, MODIFY_POSITION } from '@/constants/option';
 import {
-  IAdminModifyProps,
   IManageResProps,
   IModifyDetailProps,
   IModifyReqProps
@@ -14,10 +13,7 @@ import Loading from '@/components/common/Loading';
 import modifyRes from '@/api/admin/modify';
 import Button from '@/components/common/Button';
 
-export default function AdminModify({
-  handleDepartmentChange,
-  handlePositionChange
-}: IAdminModifyProps) {
+export default function AdminModify() {
   const [isLoading, setIsLoading] = useState(true);
   const [modifyEmployees, setModifyEmployees] = useState<IManageResProps[]>([]);
   const [selectedEmployee, setSelectedEmployee] = useState({
@@ -37,6 +33,8 @@ export default function AdminModify({
   const [phone, setPhone] = useState<string>('010-1234-1234');
   const [hireDate, setHireDate] = useState<string>('2023-11-22');
   const [email, setEmail] = useState('jinyc@naver.com');
+
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -109,11 +107,18 @@ export default function AdminModify({
       }
     }
   };
-
+  //이미지
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const file = event.target.files[0];
-      setProfileImage(file);
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = e => {
+        setProfileImage(file);
+        setPreviewImage(e.target?.result as string);
+      };
+
+      reader.readAsDataURL(file);
     }
   };
 
@@ -142,6 +147,20 @@ export default function AdminModify({
     setSelectedEmployee(prevState => ({
       ...prevState,
       phone: value
+    }));
+  };
+
+  const handlePositionChange = (value: string) => {
+    setSelectedEmployee(prevState => ({
+      ...prevState,
+      position: value
+    }));
+  };
+
+  const handleDepartmentChange = (value: string) => {
+    setSelectedEmployee(prevState => ({
+      ...prevState,
+      department: value
     }));
   };
 
@@ -185,19 +204,15 @@ export default function AdminModify({
       <form onSubmit={handleSubmit} className="flex">
         <div className="h-[30rem] w-[20rem] ml-[3rem]">
           <div className=" h-[20rem] w-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
-            {/* {selectedEmployee.data.profileImagePath ? (
+            {previewImage ? (
               <Image
-                src="/default-profile-image.jpg"
-                className="h-[20rem] w-[20rem]  rounded-xl"
-                alt="프로필 이미지"
+                src={previewImage}
+                alt="프로필 이미지 미리보기"
+                width={600}
+                height={600}
+                className="rounded-xl"
               />
-            ) : (
-              <Image
-                className="h-[20rem] w-[20rem]  rounded-xl"
-                src="/default-profile-image.jpg" // 기본 이미지 경로
-                alt="프로필 이미지"
-              />
-            )} */}
+            ) : null}
 
             <div className="flex  items-center  justify-center  font-semibold"></div>
           </div>

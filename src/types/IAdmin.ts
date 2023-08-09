@@ -24,11 +24,6 @@ export interface IFilterProps {
   selectedStatus?: string;
 }
 
-export interface IAdminModifyProps {
-  handleDepartmentChange: (value: string) => void;
-  handlePositionChange: (value: string) => void;
-}
-
 //api
 
 //관리페이지리스트
