@@ -14,7 +14,7 @@ import {
   DEPARTMENT,
   STATUS,
   REST_REQUEST
-} from '@/constants/option';
+} from '@/constants/options';
 
 export default function Main({ page }: IMainProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);

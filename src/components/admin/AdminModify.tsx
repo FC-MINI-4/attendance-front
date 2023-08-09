@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import DropdownFilter from '@/components/admin/AdminDropDownFilter';
-import { MODIFY_DEPARTMENT, MODIFY_POSITION } from '@/constants/option';
+import { MODIFY_DEPARTMENT, MODIFY_POSITION } from '@/constants/options';
 import {
   IManageResProps,
   IModifyDetailProps,

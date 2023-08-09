@@ -70,20 +70,20 @@ const memberDetail = {
 export default function MemberDetail() {
   return (
     <div className="items-center justify-center">
-      <div className="w-full max-w-lg p-8 bg-white rounded shadow">
-        <div className="pb-6">
-        <div className="relative bg-gray-300 rounded-sm-lg font-bold sm:text-2xl sm:pb-8 h-7">
-        <span className="bg-primary absolute top-0 left-0 w-4 h-8 z-0"></span>
-        <span className="relative z-10 pl-4">사용자 정보</span>
+      <div className="w-full max-w-2xl p-16 bg-white shadow">
+      <div className="pb-20">
+          <div className="relative bg-gray-200 rounded-sm-lg font-bold sm:text-3xl sm:pb-8 h-10">
+            <span className="bg-primary absolute top-0 left-0 w-4 h-10"></span>
+            <span className="text-lg pl-6 pb-2">사용자 정보</span>
+          </div>
         </div>
-      </div>
-        <div className="grid grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-[32px]">
           {Object.entries(memberDetail).map(([key, value]) => (
             <div key={key}>
-              <div className="text-sm pb-2 font-semibold text-gray-500">
+              <div className="text-base pb-[8px] font-semibold text-gray-500">
                 {key}
               </div>
-              <div className="mb-6 pb-2 text-base border-b border-gray-300 max-w-full">
+              <div className="mb-[24px] pb-[8px] text-lg border-b border-gray[300] max-w-full">
                 {value}
               </div>
             </div>

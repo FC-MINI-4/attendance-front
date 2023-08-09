@@ -32,3 +32,26 @@ export interface MypageLeaveResIProps {
       duties: MyPageDutyResIProps[];
     };
   }
+
+
+  //api
+
+  // 개인정보조회
+  export interface IMemberProps {
+    success: boolean;
+    code: string;
+    message: string;
+    data: {
+      employeeId:number;
+      department: string;
+      position: string;
+      name: string;
+      email: string;
+      hireDate: string;
+      employmentPeriod: string;
+      profileImagePath?: File;
+    };
+  }
+
+  //
+
