@@ -3,13 +3,17 @@ import { useState, useEffect, useRef } from 'react'
 import { dutyState, modalState } from "@/recoil/common/modal"
 import { useRecoilState } from 'recoil'
 import DatePicker from "react-datepicker"
+import requestDayOff from "@/api/main/dayoff"
 import 'react-datepicker/dist/react-datepicker.css';
+
 
 export default function ApproveModal(modalProps : IModalProps){
   const [ isModalShow, setIsModalShow ] = useRecoilState(modalState)
   const [ isDutyShow, setIsDutyShow ] = useRecoilState(dutyState)
   const [ startDate, setStartDate ] = useState<Date>(new Date())
   const [ endDate, setEndDate ] = useState<Date>(new Date())
+  const [ onClickValue, setOnClickValue ] = useState<string>('')
+  const [ checkReason, setCheckReason ] = useState<string>('')
   
   const startDateMSec = startDate.getTime()
   const endDateMSec = endDate.getTime()
@@ -94,7 +98,9 @@ export default function ApproveModal(modalProps : IModalProps){
           className="px-3">
           <input
             type="checkbox"
-            onClick={(e)=>checkItem(e.target as HTMLInputElement)}
+            onClick={(e)=>{
+              checkItem(e.target as HTMLInputElement)
+              setOnClickValue((e.target as HTMLInputElement).value)}}
             value={checkBoxContents[i]}/>
             {checkBoxContents[i]}
         </div>
@@ -105,6 +111,20 @@ export default function ApproveModal(modalProps : IModalProps){
       <div className="flex">{box}</div>
     )
   }
+
+
+
+
+  useEffect(()=>{
+    const dayOffData = {
+      "employeeId": 1,
+      "startDate": `${startDate}`,
+      "endDate": `${endDate}`,
+      "type": `${onClickValue}`,
+      "reason": `${checkReason}`
+    }
+    requestDayOff(dayOffData)
+  },[startDate, endDate, onClickValue])
   
   return(
     <>
@@ -145,7 +165,9 @@ export default function ApproveModal(modalProps : IModalProps){
                 </div>
                 <div className="flex justify-center items-center py-3">
                   {modalProps.IsTextBoxShow
-                    ? <textarea placeholder="사유" cols={60} rows={3} className="w-[75%] border rounded-md border-modalBorder pt-2 pl-2 outline-none"></textarea>
+                    ? <textarea placeholder="사유" cols={60} rows={3}
+                        className="w-[75%] border rounded-md border-modalBorder pt-2 pl-2 outline-none"
+                        onChange={(e)=>setCheckReason(e.target.value)}></textarea>
                     : null
                   }
                 </div>
