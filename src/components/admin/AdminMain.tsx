@@ -180,14 +180,7 @@ export default function Main({ page }: IMainProps) {
                   </div>
                 )}
               </>
-              <>
-                {page === 'admin-modify' && (
-                  <AdminModify
-                    handleDepartmentChange={handleDepartmentChange}
-                    handlePositionChange={handlePositionChange}
-                  />
-                )}
-              </>
+              <>{page === 'admin-modify' && <AdminModify />}</>
 
               <div>
                 {page === 'admin-duty' && (
