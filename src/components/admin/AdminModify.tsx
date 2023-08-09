@@ -106,7 +106,9 @@ export default function AdminModify() {
         email,
         phone,
         hireDate,
+
         profilePath
+
       });
       {
         setTimeout(() => setIsLoading(false), 500);
@@ -198,6 +200,7 @@ export default function AdminModify() {
         <div className="h-[30rem] w-[20rem] ml-[3rem]">
           <div className=" h-[20rem] w-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
             {selectedEmployee.profilePath ? (
+
               <div className="">
                 <Image
                   src={`${clientInstance.defaults.baseURL}${selectedEmployee.profilePath}`}
