@@ -1,68 +1,68 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
-import { signInState } from '@/recoil/signIn';
-import PwBox from '@/components/common/PwBox';
+import { useRouter } from 'next/router';
+import { signUpState } from '@/recoil/signUp';
 import Button from '@/components/common/Button';
+import { requestSignUp } from '@/api/auth/signUp';
+import { TEMP_DEPARTMENT } from '@/constants/options';
+import { SIGNUP_INPUT_INFO } from '@/constants/constants';
+import AuthDropdown from '@/components/common/AuthDropdown';
+import SinglePicker from '@/components/common/SinglePicker';
+import AuthSignUpInput from '@/components/auth/sign-up/AuthSignUpInput';
 
-import { requestSignIn } from '@/api/auth/signIn';
-import AuthSignInInput from '@/components/auth/sign-in/AuthSignInInput';
-
-export default function AuthSignInBox() {
+export default function AuthSignUpBox() {
+  const signUpData = useRecoilValue(signUpState);
   const router = useRouter();
-  const signInInfo = useRecoilValue(signInState);
-
-  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      const response = await requestSignIn({
-        email: signInInfo.email,
-        password: signInInfo.password
+      const response = await requestSignUp({
+        confirmPassword: signUpData.confirmPassword,
+        name: signUpData.name,
+        email: signUpData.email,
+        password: signUpData.password,
+        phone: signUpData.phone,
+        hireDate: signUpData.hireDate,
+        department: signUpData.department
       });
 
-      // 로그인 성공 시
-      if (response.data.success) {
-        // 성공 메시지 alert
-        alert(response.data.message);
-        // 액세스 토큰
-        const accessToken = response.data.data.token.accessToken;
-        // 현재 시간 + 만료 시간 = 만료일
-        const expireDate = new Date(
-          Date.now() + response.data.data.token.accessTokenExpireDate
-        );
-        const employeeId = response.data.data.id;
-        // 쿠키 생성
-        document.cookie = `accessToken=${accessToken}`;
-        document.cookie = `expires=${expireDate.toUTCString()};`;
-        document.cookie = `employeeId=${employeeId};`;
-        // main 페이지로 라우팅
-        router.push('/main');
-      }
-      // 로그인 실패 시
-      else {
-        // 실패 메시지 alert
+      if (response.data.success === true) {
+        alert('회원가입이 완료되었습니다!');
+        // 페이지를 로그인 페이지로 이동시키기
+        router.push('/sign-in');
+      } else {
         alert(response.data.message);
       }
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      alert(error.response.data.message);
     }
   };
 
   return (
-    <PwBox>
-      <form onSubmit={handleLogin}>
-        <AuthSignInInput />
-        <Button contents={'로그인'} submit />
-        <div className="flex justify-between sm:mt-2 mb-12 sm:mb-0">
-          <Link href="/sign-up" className="cusor-pointer">
-            회원가입
-          </Link>
-          <Link href="/find-pw" className="cusor-pointer">
-            비밀번호 찾기
-          </Link>
-        </div>
+    <div>
+      <div className="text-xs sm:text-base font-semibold pl-1 text-mainBlack">
+        계열사*
+      </div>
+      <AuthDropdown options={TEMP_DEPARTMENT} label={'계열사'} admin={false} />
+      {SIGNUP_INPUT_INFO.map(value => (
+        <AuthSignUpInput
+          key={value.label}
+          label={value.label}
+          button={value.button}
+          placeholder={value.placeholder}
+          name={value.name}
+          type={value.type}
+        />
+      ))}
+      <div className="text-xs sm:text-base font-semibold pl-1 text-mainBlack">
+        입사일
+      </div>
+      <div className="border-b-2 border-gray-200 mb-4 sm:w-full sm:max-w-[calc(100%-6rem)] pl-1">
+        <SinglePicker name={'hireDate'} />
+      </div>
+      <form onSubmit={handleSignUp} encType="multipart/form-data">
+        <Button contents={'회원가입'} submit />
       </form>
-    </PwBox>
+    </div>
   );
 }
