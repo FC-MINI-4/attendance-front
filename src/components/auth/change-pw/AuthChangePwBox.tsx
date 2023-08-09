@@ -1,5 +1,5 @@
 import PwBox from '@/components/common/PwBox';
-import AuthChangePwInput from '@/components/auth/AuthChangePwInput';
+import AuthChangePwInput from '@/components/auth/change-pw/AuthChangePwInput';
 
 export default function AuthChangePwBox() {
   return (
