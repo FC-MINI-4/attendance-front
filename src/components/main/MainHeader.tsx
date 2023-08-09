@@ -1,7 +1,20 @@
 import Image from "next/image"
+import Link from "next/link"
+import { useCookies } from 'react-cookie'
+import { useState } from 'react'
 
 export default function MainHeader(){
-  //그냥 일단 데이터 없어서 하드코딩
+  const [isClicked, setIsClicked] = useState<boolean>(false)
+  const [cookies, , removeCookie] = useCookies();
+
+  const removeAllCookies = () => {
+    setIsClicked(true)
+    for (const cookieName in cookies) {
+      removeCookie(cookieName);
+    }
+    alert('로그아웃되었습니다.');
+  }
+
   return(
     <div className="h-24 flex justify-between px-16">
       <div className="top-0 bottom-0 my-auto pl-7 text-3xl font-bold">
@@ -23,7 +36,11 @@ export default function MainHeader(){
           </div>
         </div>
         <div className="ml-4 top-0 bottom-0 my-auto font-bold">
-          로그아웃
+          <Link
+            href="/sign-in"
+            onClick={removeAllCookies}>
+            로그아웃
+          </Link>
         </div>
       </div>
     </div>
