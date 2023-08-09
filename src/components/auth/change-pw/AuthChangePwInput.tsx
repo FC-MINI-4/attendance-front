@@ -59,19 +59,19 @@ export default function AuthChangePwInput() {
     }
   };
 
+  // form data 전송
   const handleChangePw = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
+      // 비밀번호 변경 (로그인 시)
       const response = await requestChangePw({
         password: password,
         confirmPassword: confirmPassword,
         authToken: '1234'
       });
-      if (response.status === 200) {
-        if (!response.data.success) {
-          alert(response.data.message);
-        }
+      if (!response.data.success) {
+        alert(response.data.message);
       }
     } catch (error) {}
   };
@@ -81,7 +81,7 @@ export default function AuthChangePwInput() {
       <form onSubmit={handleChangePw}>
         <div className="sm:mb-8 mb-8">
           <Input
-            label={'새로운 비밀번호'}
+            label={'현재 비밀번호'}
             name={'password'}
             onChange={handleCurrentPw}
             placeholder={'영문+숫자, 8자리 이상 16자리 이하'}
