@@ -1,10 +1,12 @@
 import { IModalProps } from "@/types/IModal"
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { dutyState, modalState } from "@/recoil/common/modal"
 import { useRecoilState } from 'recoil'
 import DatePicker from "react-datepicker"
 import requestDayOff from "@/api/main/dayoff"
 import 'react-datepicker/dist/react-datepicker.css';
+import dayOffList from "@/api/admin/dayOff"
+import moment from "moment"
 
 
 export default function ApproveModal(modalProps : IModalProps){
@@ -110,25 +112,25 @@ export default function ApproveModal(modalProps : IModalProps){
     )
   }
 
+  const dayOffData = {
+    "employeeId": 1,
+    "startDate": `${moment(startDate).format('YYYY-MM-DD')}`,
+    "endDate": `${moment(endDate).format('YYYY-MM-DD')}`,
+    "type": `${onClickValue}`,
+    "reason": `${checkReason}`
+  }
 
-
-
-  useEffect(()=>{
-    const dayOffData = {
-      "employeeId": 1,
-      "startDate": `${startDate}`,
-      "endDate": `${endDate}`,
-      "type": `${onClickValue}`,
-      "reason": `${checkReason}`
-    }
+  const submitForm = () => {
     requestDayOff(dayOffData)
-  },[startDate, endDate, onClickValue])
+  }
   
   return(
     <>
       <div className="w-screen h-screen bg-black/40 fixed top-0 left-0 z-10">
         <div ref={modalRef}>
-          <form className="w-1/3 h-80 bg-white absolute top-0 left-0 bottom-0 right-0 m-auto">
+          <form
+            className="w-1/3 h-80 bg-white absolute top-0 left-0 bottom-0 right-0 m-auto"
+            onSubmit={submitForm}>
             <div
               className="before:content-[''] before:block before:w-4 before:h-10 before:bg-primary before:absolute before:top-0 before:left-0
               relative py-2 pl-6 shadow-md">
