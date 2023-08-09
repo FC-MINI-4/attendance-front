@@ -7,7 +7,6 @@ import { requestFindPw } from '@/api/auth/findPw';
 
 
 export default function AuthFindPwInput() {
-  const accessToken = useAccessToken(); // 액세스 토큰 가져오기
   const [email, setEmail] = useState('');
 
 
@@ -25,8 +24,7 @@ export default function AuthFindPwInput() {
 
     try {
       await requestFindPw({
-        email: email,
-        accessToken: accessToken
+        email: email
       });
     } catch (error) {}
   };
@@ -39,6 +37,7 @@ export default function AuthFindPwInput() {
           name={'email'}
           onChange={handleEmailChange}
           placeholder={'예: jindojoon@soonyang.com'}
+          type="email"
           valid={emailCheck()}
         />
       </div>
