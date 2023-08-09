@@ -4,6 +4,7 @@ import { signUpState } from '@/recoil/signUp';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { IAuthSignUpInput } from '@/types/IAuth';
+import { requestEmailCheck } from '@/api/auth/signUp';
 import { rEmail, rPassword } from '@/constants/constants';
 import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 
@@ -24,29 +25,38 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
 
   // 휴대폰 번호 입력 핸들러
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
+    const { name, value } = event.target;
 
-    // 숫자 이외 문자 제거
-    const onlyNumber = value.replace(/\D/g, '');
+    const hyphenNumber = value
+      .replace(/[^0-9]/g, '')
+      .substring(0, 11)
+      .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 
-    // 숫자를 3-4-4 형식으로 변환
-    const match = onlyNumber.match(/^(\d{3})(\d{4})(\d{4})$/);
-    if (match) {
-      setPhoneNumber(`${match[1]}-${match[2]}-${match[3]}`);
-    } else {
-      setPhoneNumber(onlyNumber);
-    }
+    setPhoneNumber(hyphenNumber);
 
-    // 휴대폰 번호가 11자 초과하는 것을 막음
-
-    if (onlyNumber.length > 11) {
-      setPhoneNumber(onlyNumber.slice(0, 11));
-    }
+    setSignUpInfo(prevInformation => ({
+      ...prevInformation,
+      [name]: hyphenNumber
+    }));
   };
 
-  // 이메일 중복 체크 (업데이트 전)
-  const onDuplicateClick = () => {
-    alert('사용 가능한 이메일입니다.');
+  // 이메일 중복 체크
+  const handleEmailCheck = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const response = await requestEmailCheck({
+        email: signUpInfo.email
+      });
+      if (response.data.success) {
+        alert(response.data.message);
+      }
+      if (!response.data.success) {
+        alert(response.data.message);
+      }
+    } catch (error: any) {
+      alert(error.response.data.message);
+    }
   };
 
   // 버튼 & 비밀번호 확인 조건부 렌더링
@@ -56,23 +66,10 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
       // 중복확인 버튼일 경우
       if (props.button === '중복확인')
         return (
-          <Button
-            contents={props.button}
-            onClick={onDuplicateClick}
-            secondary
-          />
+          <form onSubmit={handleEmailCheck}>
+            <Button contents={props.button} secondary submit />
+          </form>
         );
-      // 업로드 버튼일 경우
-      else {
-        return (
-          <Button
-            contents={props.button}
-            onClick={onDuplicateClick}
-            secondary
-          />
-        );
-      }
-      // 비밀번호 확인일 경우
     } else return;
   };
 

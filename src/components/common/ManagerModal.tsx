@@ -50,7 +50,7 @@ export default function ManageModal(props: IModalProps) {
                 </div>
               </div>
 
-              <div className="flex  h-1/5 w-full bg-primaryHover  border-b-2 border-white  ">
+              <div className="flex  h-1/5 w-full bg-primaryHover  border-b-2 border-white overflow  ">
                 <div className="w-1/5 flex items-center justify-center border-white border-r-2">
                   {props.type}
                 </div>

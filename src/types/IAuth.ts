@@ -15,6 +15,7 @@ export interface ISignUpItem {
 }
 
 export interface IAuthCheckPw {
-  pwd: string;
-  checkedPwd: string;
+  password: string;
+  confirmPassword: string;
+  authToken?: string;
 }
