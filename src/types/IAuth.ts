@@ -7,11 +7,16 @@ export interface IAuthSignUpInput {
 }
 
 export interface IAuthSignUp {
+export interface IAuthSignUpItem {
   label: string;
   name: string;
   button?: string;
   placeholder?: string;
   type: string;
+}
+
+export interface IAuthValidPw {
+  password?: string;
 }
 
 export interface IAuthResetPw {
@@ -33,4 +38,8 @@ export interface IAuthChangePw {
   currentPassword: string;
   password: string;
   confirmPassword: string;
+}
+
+export interface IAuthChangePw extends IAuthCheckPw {
+  currentPassword: string;
 }
