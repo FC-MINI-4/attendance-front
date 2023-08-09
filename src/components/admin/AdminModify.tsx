@@ -64,6 +64,12 @@ export default function AdminModify() {
 
         formData.append('profileImagePath', profileImage as File);
 
+          'key',
+          new Blob([JSON.stringify(data)], { type: 'application/json' })
+        );
+
+        formData.append('file', JSON.stringify(profileImage));
+
         const response = await modifyRes(formData);
 
         alert(response.message);
