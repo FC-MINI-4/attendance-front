@@ -1,18 +1,37 @@
 import Image from "next/image"
-import Link from "next/link"
 import { useCookies } from 'react-cookie'
-import { useState } from 'react'
+import Router from "next/router"
+import Link from "next/link";
 
 export default function MainHeader(){
-  const [isClicked, setIsClicked] = useState<boolean>(false)
-  const [cookies, , removeCookie] = useCookies();
+  // const [cookies, , removeCookie] = useCookies();
 
-  const removeAllCookies = () => {
-    setIsClicked(true)
-    for (const cookieName in cookies) {
-      removeCookie(cookieName);
-    }
-    alert('로그아웃되었습니다.');
+  // const removeAllCookies = () => {
+  //   for (const cookieName in cookies) {
+  //     removeCookie(cookieName);
+  //   }
+  //   alert('로그아웃되었습니다.');
+  // }
+
+  // const [cookies, setCookie, removeCookie] = useCookies();
+
+  // const handleDeleteAllCookies = () => {
+  //   // 모든 쿠키 값을 삭제
+  //   Object.keys(cookies).forEach(cookieName => {
+  //     removeCookie(cookieName);
+  //   });
+
+  //   console.log('All cookies deleted!');
+  // };
+
+  const deleteCookie = (name: string) => {
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  }
+
+  const a = () => {
+    deleteCookie('accessToken')
+    // deleteCookie('expires')
+    // deleteCookie('employeeId')
   }
 
   return(
@@ -36,9 +55,9 @@ export default function MainHeader(){
           </div>
         </div>
         <div className="ml-4 top-0 bottom-0 my-auto font-bold">
-          <Link
-            href="/sign-in"
-            onClick={removeAllCookies}>
+          <Link href='/sign-in'
+            className="cursor-pointer"
+            onClick={a}>
             로그아웃
           </Link>
         </div>
