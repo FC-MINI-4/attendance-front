@@ -7,8 +7,8 @@ export default function MemberBoard() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await memberList();
+
       const dayOffRemainsValue = response.data?.dayOffRemains | 0;
-      setDayOffRemains(dayOffRemainsValue);
     };
 
     fetchData();
