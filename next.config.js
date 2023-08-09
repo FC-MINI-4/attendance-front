@@ -1,6 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-}
+  reactStrictMode: true
+};
 
-module.exports = nextConfig
+const apiIP = `${process.env.NEXT_PUBLIC_API_IP}`;
+
+module.exports = {
+  ...nextConfig,
+  images: {
+    domains: [`${apiIP}`]
+  }
+};

@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import DropdownFilter from '@/components/admin/AdminDropDownFilter';
-import { MODIFY_DEPARTMENT, MODIFY_POSITION } from '@/constants/option';
-import {
-  IManageResProps,
-  IModifyDetailProps,
-  IModifyReqProps
-} from '@/types/IAdmin';
+import { MODIFY_DEPARTMENT, MODIFY_POSITION } from '@/constants/options';
+import { IManageResProps } from '@/types/IAdmin';
 import reqManage from '@/api/admin/manage';
 import modifyDetail from '@/api/admin/modifyDetail';
 import Loading from '@/components/common/Loading';
 import modifyRes from '@/api/admin/modify';
 import Button from '@/components/common/Button';
+import { clientInstance } from '@/api/axios';
 
 export default function AdminModify() {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +20,8 @@ export default function AdminModify() {
     name: '진양철',
     phone: '010-1234-1234',
     hireDate: '1943-10-06',
-    email: 'jinyc@naver.com'
+    email: 'jinyc@naver.com',
+    profilePath: ''
   });
   const [employeeId, setEmployeeId] = useState<number>(1);
   const [department, setDepartment] = useState<string>('순양자동차');
@@ -89,8 +87,16 @@ export default function AdminModify() {
     const response = await modifyDetail(employee.employeeId);
     setIsLoading(true);
     if (response.success && response.data) {
-      const { employeeId, department, name, position, email, phone, hireDate } =
-        response.data;
+      const {
+        employeeId,
+        department,
+        name,
+        position,
+        email,
+        phone,
+        hireDate,
+        profilePath
+      } = response.data;
 
       setSelectedEmployee({
         employeeId,
@@ -99,7 +105,8 @@ export default function AdminModify() {
         name,
         email,
         phone,
-        hireDate
+        hireDate,
+        profilePath
       });
       {
         setTimeout(() => setIsLoading(false), 500);
@@ -135,13 +142,6 @@ export default function AdminModify() {
     }));
   };
 
-  const handleEmailChange = (value: string) => {
-    setSelectedEmployee(prevState => ({
-      ...prevState,
-      email: value
-    }));
-  };
-
   const handlePhoneChange = (value: string) => {
     setSelectedEmployee(prevState => ({
       ...prevState,
@@ -162,12 +162,6 @@ export default function AdminModify() {
       department: value
     }));
   };
-
-  <input
-    value={selectedEmployee.hireDate}
-    onChange={e => handleHireDateChange(e.target.value)}
-    className="border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-  />;
 
   return (
     <div className="ml-[3rem] h-[37rem] w-[92rem] flex">
@@ -203,15 +197,21 @@ export default function AdminModify() {
       <form onSubmit={handleSubmit} className="flex">
         <div className="h-[30rem] w-[20rem] ml-[3rem]">
           <div className=" h-[20rem] w-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
-            {previewImage ? (
-              <Image
-                src={previewImage}
-                alt="프로필 이미지 미리보기"
-                width={600}
-                height={600}
-                className="rounded-xl"
-              />
-            ) : null}
+            {selectedEmployee.profilePath ? (
+              <div className="">
+                <Image
+                  src={`${clientInstance.defaults.baseURL}${selectedEmployee.profilePath}`}
+                  width={320}
+                  height={320}
+                  alt="프로필 이미지"
+                  className="rounded-xl "
+                />
+              </div>
+            ) : (
+              <div className="flex items-center justify-center font-semibold">
+                이미지 없음
+              </div>
+            )}
 
             <div className="flex  items-center  justify-center  font-semibold"></div>
           </div>
@@ -281,9 +281,9 @@ export default function AdminModify() {
               <div className=" m-6 mt-4 ml-16 ">
                 <div className="text-md font-semibold ">이메일</div>
                 <input
-                  value={selectedEmployee.email}
+                  defaultValue={selectedEmployee.email}
                   className=" border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-                  onChange={e => handleEmailChange(e.target.value)}></input>
+                />
               </div>
               <div className=" m-6 ml-16 mt-4  ">
                 <div className="text-md font-semibold ">전화번호</div>

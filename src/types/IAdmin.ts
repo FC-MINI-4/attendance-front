@@ -54,8 +54,8 @@ export interface IDayOffDetailProps {
 export interface IDayOffDetailResProps {
   dayOffId: number;
   requestDate: string;
-  type: string;
-  status: string;
+  dayOff: string;
+  requestStatus: string;
   startDate: string;
   endDate: string;
   reason: string;
@@ -132,7 +132,7 @@ export interface IModifyDetailProps {
     hireDate: string;
     email: string;
     phone: string;
-    profileImagePath?: File;
+    profilePath: string;
   };
 }
 
