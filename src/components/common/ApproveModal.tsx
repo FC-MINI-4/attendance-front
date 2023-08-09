@@ -1,12 +1,11 @@
 import { IModalProps } from "@/types/IModal"
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { dutyState, modalState } from "@/recoil/common/modal"
 import { useRecoilState } from 'recoil'
 import DatePicker from "react-datepicker"
 import requestDayOff from "@/api/main/dayoff"
+import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css';
-import dayOffList from "@/api/admin/dayOff"
-import moment from "moment"
 
 
 export default function ApproveModal(modalProps : IModalProps){
@@ -111,16 +110,31 @@ export default function ApproveModal(modalProps : IModalProps){
       <div className="flex">{box}</div>
     )
   }
+  
+  // 쿠키값 가져오기
+  function getCookie(cookieName : string) {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+        const [name, value] = cookie.split("=");
+        if (name === cookieName) {
+            return decodeURIComponent(value);
+        }
+    }
+    return null;
+  }
+
+  const employeeId = Number(getCookie('employeeId'))
+
 
   const dayOffData = {
-    "employeeId": 1,
+    "employeeId": employeeId,
     "startDate": `${moment(startDate).format('YYYY-MM-DD')}`,
     "endDate": `${moment(endDate).format('YYYY-MM-DD')}`,
     "type": `${onClickValue}`,
     "reason": `${checkReason}`
   }
 
-  const submitForm = () => {
+  const submitDayOff = () => {
     requestDayOff(dayOffData)
   }
   
@@ -130,7 +144,7 @@ export default function ApproveModal(modalProps : IModalProps){
         <div ref={modalRef}>
           <form
             className="w-1/3 h-80 bg-white absolute top-0 left-0 bottom-0 right-0 m-auto"
-            onSubmit={submitForm}>
+            onSubmit={submitDayOff}>
             <div
               className="before:content-[''] before:block before:w-4 before:h-10 before:bg-primary before:absolute before:top-0 before:left-0
               relative py-2 pl-6 shadow-md">
