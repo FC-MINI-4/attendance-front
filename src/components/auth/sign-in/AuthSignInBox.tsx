@@ -28,15 +28,16 @@ export default function AuthSignInBox() {
         // 액세스 토큰
         const accessToken = response.data.data.token.accessToken;
         // 사원 아이디
-        const employeeId = response.data.employeeId;
+        const employeeId = response.data.data.id;
         // 현재 시간 + 만료 시간 = 만료일
         const expireDate = new Date(
           Date.now() + response.data.data.token.accessTokenExpireDate
         );
 
         // 쿠키 생성
-        document.cookie = `accessToken=${accessToken}; expires=${expireDate.toUTCString()}; employeeId=${employeeId} path=/;`;
-
+        document.cookie = `accessToken=${accessToken}`;
+        document.cookie = `expires=${expireDate.toUTCString()}`;
+        document.cookie = `employeeId=${employeeId}`;
         // main 페이지로 라우팅
         router.push('/main');
       }
