@@ -16,8 +16,10 @@ export default function memberList() {
           </div>
         </div>
         
-        <div className="w-[800px] h-[400px] mr-80 flex ">
+        <div className="w-[800px] h-[800px] mr-80 flex ml-40">
+          <div className=' bg-gray-100 p-24 rounded '>
           <MyPageList />
+          </div>
         </div>
         
       </div>
