@@ -70,11 +70,11 @@ const memberDetail = {
 export default function MemberDetail() {
   return (
     <div className="items-center justify-center">
-      <div className="w-full max-w-2xl p-16 bg-white rounded shadow">
+      <div className="w-full max-w-2xl p-16 bg-white shadow">
       <div className="pb-20">
           <div className="relative bg-gray-200 rounded-sm-lg font-bold sm:text-3xl sm:pb-8 h-10">
-            <span className="bg-primary absolute top-0 left-0 w-4 h-10 z-0"></span>
-            <span className="relative z-10 pl-4">사용자 정보</span>
+            <span className="bg-primary absolute top-0 left-0 w-4 h-10"></span>
+            <span className="text-lg pl-6 pb-2">사용자 정보</span>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-x-8 gap-y-[32px]">
