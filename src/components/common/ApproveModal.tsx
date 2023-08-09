@@ -135,9 +135,6 @@ export default function ApproveModal(modalProps : IModalProps){
               {modalProps.title}
             </div>
             <div>
-              <div className="flex justify-center items-center pt-4 pb-2">
-                {modalProps.IsCheckBoxShow ? <MakeCheckBox /> : null}
-              </div>
               <div>
                 <div className="flex justify-center items-center pt-4 pb-2"> 
                   {modalProps.IsCheckBoxShow
@@ -177,22 +174,6 @@ export default function ApproveModal(modalProps : IModalProps){
                     type="submit" value={modalProps.submit}
                     className="border cursor-pointer w-[75%] h-9 bg-primary text-white rounded-md"/>
                 </div>
-              </div>
-              <div className="flex justify-center items-center py-3">
-                {modalProps.IsTextBoxShow ? (
-                  <textarea
-                    placeholder="사유"
-                    cols={60}
-                    rows={3}
-                    className="w-[75%] border rounded-md border-modalBorder pt-2 pl-2 outline-none"></textarea>
-                ) : null}
-              </div>
-              <div className="flex justify-center items-center pt-2">
-                <input
-                  type="submit"
-                  value={modalProps.submit}
-                  className="border cursor-pointer w-[75%] h-9 bg-primary text-white rounded-md"
-                />
               </div>
             </div>
           </form>
