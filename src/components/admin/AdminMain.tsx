@@ -155,7 +155,7 @@ export default function Main({ page }: IMainProps) {
                             onChange={handleSearchChange}
                           />
                         </div>
-                        <div className="flex justify-center w-[8rem] pl-14">
+                        <div className="flex justify-center w-[8rem] pl-12 ">
                           <DropdownFilter
                             options={DEPARTMENT}
                             value={selectedDepartment}
