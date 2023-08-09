@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import moment from 'moment'
 import{
 addMonths,
@@ -11,11 +11,9 @@ endOfWeek,
 addDays
 } from 'date-fns'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+import { HOLIDAYS, VOTEDAY, THANKSGIVING, SUBTITLE, BUDDADAY, NEWYEAR  } from "@/constants/holidays";
 
 export default function Calendar(){
-  // new Date 한국시간으로 변경
-  // const offset = 1000 * 60 * 60 * 9
-  // const koreaNow = new Date((new Date()).getTime() + offset)
 
   //현재 달 state에 저장!
   const [currentDate, setCurrentDate] = useState(new Date())
@@ -65,27 +63,50 @@ export default function Calendar(){
         formattedDate = moment(day).format('D')
         let checkedMonth = moment(day).format('MM')
         let today = moment(day).format('YYYY.MM.DD') === currentDayForm
+        let holidayForm = moment(day).format('MMDD')
+        let lunaDayForm = moment(day).format('YYYYMMDD')
+        
+        let a = HOLIDAYS.filter(x=> x === holidayForm)
+        let b = THANKSGIVING.filter(x=> x === lunaDayForm)
+        let c = VOTEDAY.filter(x=> x === lunaDayForm)
+        let d = BUDDADAY.filter(x => x === lunaDayForm)
+        let e = NEWYEAR.filter(x => x === lunaDayForm)
+        let f = SUBTITLE.filter(x => x === lunaDayForm)
+
         days.push(
-          <div
-            className={`h-[7.5rem] grow border box-border last:border-r-0
-            ${today ? `bg-primary text-white` : null}
-            hover:bg-primaryHover hover:text-white`}
-            key={formattedDate}>
-            { checkedMonth === currentMonth ?
-              (
+          (i === 0 || a.length>0 || b.length>0 || c.length>0 || d.length>0 || e.length>0 || f.length>0 ? 
+            <div
+              className={`h-[7.5rem] grow border box-border last:border-r-0
+              ${today ? `bg-primary text-white` : null}
+              hover:bg-primaryHover hover:text-white`}
+              key={formattedDate}>
+              { checkedMonth === currentMonth ?
+                <div className="w-6 h-6 pt-1.5 pl-1.5 text-red-700">
+                  {formattedDate}
+                </div>
+              :
+                <div className="w-6 h-6 pt-1.5 pl-1.5 text-mainGray">
+                  {formattedDate}
+                </div>
+              }
+            </div>
+          :
+            <div
+              className={`h-[7.5rem] grow border box-border last:border-r-0
+              ${today ? `bg-primary text-white` : null}
+              hover:bg-primaryHover hover:text-white`}
+              key={formattedDate}>
+              { checkedMonth === currentMonth ?
                 <div className="w-6 h-6 pt-1.5 pl-1.5">
                   {formattedDate}
                 </div>
-              )
-            :
-              (
+              :
                 <div className="w-6 h-6 pt-1.5 pl-1.5 text-mainGray">
-                {formattedDate}
-              </div>
-              )
-            }
-
-          </div>
+                  {formattedDate}
+                </div>
+              }
+            </div>
+          )
         )
         day = addDays(day, 1)
       }
