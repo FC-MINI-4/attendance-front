@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Cookies } from 'react-cookie';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { rPassword } from '@/constants/constants';
@@ -6,6 +7,9 @@ import { requestChangePw } from '@/api/auth/changePw';
 import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 
 export default function AuthChangePwInput() {
+  const cookie = new Cookies();
+  const employeeId = cookie.get('employeeId');
+
   const [currentPassword, setcurrentPassword] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setComfirmPassword] = useState('');
@@ -66,11 +70,14 @@ export default function AuthChangePwInput() {
     try {
       // 비밀번호 변경 (로그인 시)
       const response = await requestChangePw({
+        id: employeeId,
+        currentPassword: currentPassword,
         password: password,
-        confirmPassword: confirmPassword,
-        authToken: '1234'
+        confirmPassword: confirmPassword
       });
-      if (!response.data.success) {
+      if (response.data.success) {
+        alert(response.data.message);
+      } else {
         alert(response.data.message);
       }
     } catch (error) {}
@@ -86,7 +93,6 @@ export default function AuthChangePwInput() {
             onChange={handleCurrentPw}
             placeholder={'영문+숫자, 8자리 이상 16자리 이하'}
             type="password"
-            valid={passwordCheck()}
           />
           {renderCheck(true)}
         </div>

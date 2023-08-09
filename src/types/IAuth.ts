@@ -20,16 +20,17 @@ export interface IAuthResetPw {
   confirmPassword: string;
 }
 
-export interface IAuthCheckPw {
-  password: string;
-  confirmPassword: string;
-  authToken?: string;
-}
-
 export interface IAuthFindPw {
   email: string;
 }
 
 export interface IAuthValidPw {
   password: string;
+}
+
+export interface IAuthChangePw {
+  id: number;
+  currentPassword: string;
+  password: string;
+  confirmPassword: string;
 }
