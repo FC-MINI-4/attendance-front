@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
-import { signInState } from '@/recoil/signIn';
+import { signInState } from '@/recoil/signin';
 import PwBox from '@/components/common/PwBox';
 import Button from '@/components/common/Button';
 
-import { requestSignIn } from '@/api/auth/signIn';
+import { requestSignIn } from '@/api/auth/signin';
 import AuthSignInInput from '@/components/auth/sign-in/AuthSignInInput';
 
 export default function AuthSignInBox() {
@@ -27,13 +27,16 @@ export default function AuthSignInBox() {
         alert(response.data.message);
         // 액세스 토큰
         const accessToken = response.data.data.token.accessToken;
+        // 사원 아이디
+        const employeeId = response.data.employeeId;
         // 현재 시간 + 만료 시간 = 만료일
         const expireDate = new Date(
           Date.now() + response.data.data.token.accessTokenExpireDate
         );
+
         // 쿠키 생성
-        document.cookie = `accessToken=${accessToken}; expires=${expireDate.toUTCString()}; path=/`;
-        console.log(`cookie: ${document.cookie}`);
+        document.cookie = `accessToken=${accessToken}; expires=${expireDate.toUTCString()}; employeeId=${employeeId} path=/;`;
+
         // main 페이지로 라우팅
         router.push('/main');
       }
@@ -49,18 +52,17 @@ export default function AuthSignInBox() {
 
   return (
     <PwBox>
-      <form onSubmit={handleLogin}>
-        <AuthSignInInput />
-        <Button contents={'로그인'} submit />
-        <div className="flex justify-between sm:mt-2 mb-12 sm:mb-0">
-          <Link href="/sign-up" className="cusor-pointer">
-            회원가입
-          </Link>
-          <Link href="/find-pw" className="cusor-pointer">
-            비밀번호 찾기
-          </Link>
-        </div>
-      </form>
+      <AuthSignInInput />
+      <Button contents={'로그인'} />
+      <div className="flex justify-between sm:mt-2 mb-12 sm:mb-0">
+        <Link href="/sign-up" className="cusor-pointer">
+          회원가입
+        </Link>
+        <Link href="/find-pw" className="cusor-pointer">
+          비밀번호 찾기
+        </Link>
+      </div>
     </PwBox>
   );
 }
+3;

@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import { Cookies } from 'react-cookie';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { rPassword } from '@/constants/constants';
+import { requestChangePw } from '@/api/auth/changePw';
 import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 
-export default function AuthChangePwInput() {
-  const [currentPassword, setCurrentPassword] = useState('');
+// 로그인 상태에서의 비밀번호 변경
+export default function AuthResetPwInput() {
   const [password, setPassword] = useState('');
-  const [confirmPw, setComfirmPw] = useState('');
+  const [confirmPassword, setComfirmPassword] = useState('');
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event?.target.value);
@@ -16,15 +18,7 @@ export default function AuthChangePwInput() {
   const handleConfirmPwChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setComfirmPw(event?.target.value);
-  };
-
-  // 현재 비밀번호 형식 유효성 체크
-  const currentPasswordCheck = () => {
-    if (currentPassword.trim() === '') {
-      return true;
-    }
-    return rPassword.test(password);
+    setComfirmPassword(event?.target.value);
   };
 
   // 비밀번호 형식 유효성 체크
@@ -37,10 +31,10 @@ export default function AuthChangePwInput() {
 
   // 비밀번호 확인 유효성 체크
   const confirmPasswordCheck = () => {
-    if (confirmPw.trim() === '' && confirmPw.length > 0) {
+    if (confirmPassword.trim() === '' && confirmPassword.length > 0) {
       return false;
     }
-    return password === confirmPw;
+    return password === confirmPassword;
   };
 
   // 비밀번호 변경 버튼 활성화 여부
@@ -63,38 +57,15 @@ export default function AuthChangePwInput() {
       );
     }
   };
-  return (
-    <>
-      <div className="sm:mb-8 mb-8">
-        <Input
-          label={'새로운 비밀번호'}
-          name={'email'}
-          onChange={handlePasswordChange}
-          placeholder={'영문+숫자, 8자리 이상 16자리 이하'}
-          type="password"
-          valid={passwordCheck()}
-        />
-        {renderCheck(true)}
-      </div>
-      <div className="sm:mb-8 mb-8">
-        <Input
-          label={'비밀번호 확인'}
-          name={'email'}
-          onChange={handleConfirmPwChange}
-          placeholder={'비밀번호를 한번 더 입력해주세요.'}
-          type="password"
-          valid={confirmPasswordCheck()}
-        />
-        {renderCheck(false)}
-      </div>
-      <Button contents={'변경하기'} disabled={!isDisabled} />
+
   const handleChangePw = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
       const response = await requestChangePw({
         password: password,
-        confirmPassword: confirmPassword
+        authToken: '',
+        confirmPassword: ''
       });
       if (response.status === 200) {
         if (!response.data.success) {
@@ -109,11 +80,12 @@ export default function AuthChangePwInput() {
       <form onSubmit={handleChangePw}>
         <div className="sm:mb-8 mb-8">
           <Input
-            label={'새로운 비밀번호'}
+            label={'현재 비밀번호'}
             name={'password'}
             onChange={handlePasswordChange}
             placeholder={'영문+숫자, 8자리 이상 16자리 이하'}
             type="password"
+            valid={passwordCheck()}
           />
           {renderCheck(true)}
         </div>

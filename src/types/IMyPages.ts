@@ -32,3 +32,31 @@ export interface MypageLeaveResIProps {
       duties: MyPageDutyResIProps[];
     };
   }
+
+
+  //api
+
+  // 개인정보 조회
+  export interface IMemberProps {
+    success: boolean;
+    code: string;
+    message: string;
+    data: {
+      employeeId:number;
+      department: string;
+      position: string;
+      name: string;
+      email: string;
+      hireDate: string;
+      employmentPeriod: string;
+      profileImagePath?: File;
+    };
+  }
+
+  //개인정보 수정
+  //export interface 
+
+  //연차 리스트
+
+  //당직 리스트
+

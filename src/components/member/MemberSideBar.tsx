@@ -15,7 +15,7 @@ export default function MemberSideBar() {
         <div
           key={key}
           className={`before:content-[''] before:block before:w-1.5 before:h-6 before:bg-mainBlack before:absolute before:top-3.5 before:left-[10px] before:hover:bg-primary
-        py-3.5 relative text-mainBlack pl-8 font-semibold cursor-pointer
+        py-3.5 relative text-mainBlack pl-8 font-semibold cursor-pointer ml-8
         hover:text-primary ${
           link === router.pathname
             ? 'text-primary before:bg-primary'

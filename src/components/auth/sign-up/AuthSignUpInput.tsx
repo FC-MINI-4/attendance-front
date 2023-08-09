@@ -4,7 +4,6 @@ import { signUpState } from '@/recoil/signUp';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { IAuthSignUpInput } from '@/types/IAuth';
-import { requestEmailCheck } from '@/api/auth/signUp';
 import { rEmail, rPassword } from '@/constants/constants';
 import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 
@@ -25,19 +24,21 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
 
   // 휴대폰 번호 입력 핸들러
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    const { value } = event.target;
+
+    // 숫자 이외 문자 제거
+    const onlyNumber = value.replace(/\D/g, '');
 
     const hyphenNumber = value
       .replace(/[^0-9]/g, '')
       .substring(0, 11)
       .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 
-    setPhoneNumber(hyphenNumber);
+    // 휴대폰 번호가 11자 초과하는 것을 막음
 
-    setSignUpInfo(prevInformation => ({
-      ...prevInformation,
-      [name]: hyphenNumber
-    }));
+    if (onlyNumber.length > 11) {
+      setPhoneNumber(onlyNumber.slice(0, 11));
+    }
   };
 
   // 이메일 중복 체크
@@ -66,10 +67,23 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
       // 중복확인 버튼일 경우
       if (props.button === '중복확인')
         return (
-          <form onSubmit={handleEmailCheck}>
-            <Button contents={props.button} secondary submit />
-          </form>
+          <Button
+            contents={props.button}
+            onClick={onDuplicateClick}
+            secondary
+          />
         );
+      // 업로드 버튼일 경우
+      else {
+        return (
+          <Button
+            contents={props.button}
+            onClick={onDuplicateClick}
+            secondary
+          />
+        );
+      }
+      // 비밀번호 확인일 경우
     } else return;
   };
 
