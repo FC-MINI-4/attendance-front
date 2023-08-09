@@ -45,24 +45,30 @@ export default function AdminModify() {
     ) {
       try {
         const data = {
-          employeeId: employeeId,
-          department: department,
-          hireDate: hireDate,
-          name: name,
-          phone: phone,
-          position: position
+
+          employeeId: selectedEmployee.employeeId,
+          department: selectedEmployee.department,
+          hireDate: selectedEmployee.hireDate,
+          name: selectedEmployee.name,
+          phone: selectedEmployee.phone,
+          position: selectedEmployee.position
         };
-        console.log(data);
 
         const formData = new FormData();
 
         formData.append(
+
+          'employeeInfoRequest',
+          new Blob([JSON.stringify(data)], { type: 'application/json' })
+        );
+
+        formData.append('profileImagePath', profileImage as File);
           'key',
           new Blob([JSON.stringify(data)], { type: 'application/json' })
         );
 
         formData.append('file', JSON.stringify(profileImage));
-
+        
         const response = await modifyRes(formData);
 
         alert(response.message);
