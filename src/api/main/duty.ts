@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { clientInstance } from '@/api/axios';
-import { ApplyIDuty } from '@/types/IDuty';
+import { IApplyDuty } from '@/types/IDuty';
 
-export default async function requestDayOff(requestData: ApplyIDuty) {
+export default async function requestDayOff(requestData: IApplyDuty) {
   try {
     const response = await axios.post(
       `${clientInstance.defaults.baseURL}/api/schedules/duty`,

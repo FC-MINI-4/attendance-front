@@ -1,4 +1,4 @@
-export interface ApplyIDuty{
-  date: string,
-  reason: string
+export interface IApplyDuty {
+  employeeId: number;
+  date: string;
 }
