@@ -23,7 +23,8 @@ export default function AdminModify() {
     name: '진양철',
     phone: '010-1234-1234',
     hireDate: '1943-10-06',
-    email: 'jinyc@naver.com'
+    email: 'jinyc@naver.com',
+    profilePath: ''
   });
   const [employeeId, setEmployeeId] = useState<number>(1);
   const [department, setDepartment] = useState<string>('순양자동차');
@@ -99,7 +100,8 @@ export default function AdminModify() {
         name,
         email,
         phone,
-        hireDate
+        hireDate,
+        profilePath: ''
       });
       {
         setTimeout(() => setIsLoading(false), 500);
@@ -132,13 +134,6 @@ export default function AdminModify() {
     setSelectedEmployee(prevState => ({
       ...prevState,
       hireDate: value
-    }));
-  };
-
-  const handleEmailChange = (value: string) => {
-    setSelectedEmployee(prevState => ({
-      ...prevState,
-      email: value
     }));
   };
 
@@ -203,14 +198,15 @@ export default function AdminModify() {
       <form onSubmit={handleSubmit} className="flex">
         <div className="h-[30rem] w-[20rem] ml-[3rem]">
           <div className=" h-[20rem] w-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
-            {previewImage ? (
-              <Image
-                src={previewImage}
-                alt="프로필 이미지 미리보기"
-                width={600}
-                height={600}
-                className="rounded-xl"
-              />
+            {selectedEmployee.profilePath ? (
+              <div className="w-[20rem] h-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
+                <Image
+                  src={`http://3.35.187.196:8080${selectedEmployee.profilePath}`}
+                  alt="프로필 이미지"
+                  layout="fill"
+                  className="rounded-xl"
+                />
+              </div>
             ) : null}
 
             <div className="flex  items-center  justify-center  font-semibold"></div>
@@ -281,9 +277,9 @@ export default function AdminModify() {
               <div className=" m-6 mt-4 ml-16 ">
                 <div className="text-md font-semibold ">이메일</div>
                 <input
-                  value={selectedEmployee.email}
+                  defaultValue={selectedEmployee.email}
                   className=" border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-                  onChange={e => handleEmailChange(e.target.value)}></input>
+                />
               </div>
               <div className=" m-6 ml-16 mt-4  ">
                 <div className="text-md font-semibold ">전화번호</div>

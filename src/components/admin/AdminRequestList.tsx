@@ -159,7 +159,6 @@ export default function RequestList({
     currentPage
   ]);
 
-  // 함수를 생성하고 직원 정보를 인자로 받는다.
   const handleApproval = async (employee: ILeaveResProps | IDutyResProps) => {
     try {
       if (window.confirm('승인 후 수정불가능합니다. 승인하시겠습니까?')) {
@@ -170,6 +169,15 @@ export default function RequestList({
           await dutyRes({ dutyId: employee.dutyId, status: '승인됨' });
           alert('승인되었습니다.');
         }
+
+        // 승인된 후 데이터를 업데이트
+        const updatedEmployees = employees.map(emp => {
+          if (emp === employee) {
+            return { ...emp, status: '승인됨' };
+          }
+          return emp;
+        });
+        setEmployees(updatedEmployees);
       } else {
         alert('취소되었습니다.');
       }
@@ -188,6 +196,15 @@ export default function RequestList({
           await dutyRes({ dutyId: employee.dutyId, status: '거절됨' });
           alert('거절되었습니다.');
         }
+
+        // 거절된 후 데이터를 업데이트
+        const updatedEmployees = employees.map(emp => {
+          if (emp === employee) {
+            return { ...emp, status: '거절됨' };
+          }
+          return emp;
+        });
+        setEmployees(updatedEmployees);
       } else {
         alert('취소되었습니다.');
       }
@@ -251,6 +268,12 @@ export default function RequestList({
                   } else if (employee.status === '거절됨') {
                     return (
                       <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-secondary">
+                        {employee.status}
+                      </div>
+                    );
+                  } else if (employee.status === '취소') {
+                    return (
+                      <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-primary">
                         {employee.status}
                       </div>
                     );

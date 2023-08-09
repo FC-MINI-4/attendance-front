@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   ISideBarProps,
   IFilterProps,
@@ -8,7 +8,6 @@ import {
 } from '@/types/IAdmin';
 import Pagination from '@/components/common/Pagination';
 import { IPaginationProps } from '@/types/ICommon';
-import ManageModal from '@/components/common/ManagerModal';
 import { useRecoilState } from 'recoil';
 import { manageState } from '@/recoil/common/modal';
 import reqManage from '@/api/admin/manage';
@@ -53,24 +52,22 @@ export default function EmployeeList({
   const handleDayOffDetails = async (employeeId: number) => {
     const res = await detailDayOff(employeeId);
     const dayOffDetail = res.data || [];
+    setIsManageShow(true);
 
     if (dayOffDetail.length > 0) {
+      setDutyDetails([]);
       setDayOffDetails(dayOffDetail);
-      setIsManageShow(true);
-    } else {
-      alert('해당 직원의 휴가 내역이 없습니다.');
     }
   };
 
   const handleDutyDetails = async (employeeId: number) => {
     const res = await detailDuty(employeeId);
     const dutyDetail = res.data || [];
+    setIsManageShow(true);
 
     if (dutyDetail.length > 0) {
+      setDayOffDetails([]);
       setDutyDetails(dutyDetail);
-      setIsManageShow(true);
-    } else {
-      alert('해당 직원의 당직 내역이 없습니다.');
     }
   };
 
@@ -105,28 +102,82 @@ export default function EmployeeList({
     onPageChange(newPage);
   };
 
+  const modalRef = useRef<HTMLInputElement | null>(null);
+  useEffect(() => {
+    const handleOutside = (e: Event) => {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        setIsManageShow(false);
+        setDayOffDetails([]);
+        setDutyDetails([]);
+      }
+    };
+    document.addEventListener('mousedown', handleOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleOutside);
+    };
+  }, [modalRef]);
+
   return (
     <>
       {isManageShow && (
-        <>
-          {dayOffDetails.map((detail, dayOffId) => (
-            <ManageModal
-              key={dayOffId}
-              type={detail.type}
-              date={`${detail.startDate} ~ ${detail.endDate}`}
-              value={detail.reason}
-            />
-          ))}
-          {dutyDetails.map(detail => (
-            <ManageModal
-              key={detail.dutyId}
-              type={detail.type}
-              date={detail.date}
-              value={detail.status}
-            />
-          ))}
-        </>
+        <div className="w-screen h-screen bg-black/40 fixed top-0 left-0 z-10 ">
+          <div
+            ref={modalRef}
+            className="w-1/3 h-80 bg-white absolute top-0 left-0 bottom-0 right-0 m-auto">
+            <div className="h-1/5 flex border-2 ">
+              <div className="w-[1.8rem] bg-primary"></div>
+              <div className="text-xl flex items-center ml-4">일정관리</div>
+            </div>
+            <div className="h-4/5 flex  ">
+              <div className="m-auto h-4/5 w-4/5 border-2 border-primary rounded-lg flex-wrap overflow-auto ">
+                <div className="flex h-1/5 bg-primary w-full border-b-2 border-white sticky top-0 z-10">
+                  <div className="w-1/5 flex items-center justify-center border-white border-r-2 text-white">
+                    내용
+                  </div>
+                  <div className="w-3/5 flex items-center justify-center text-white">
+                    기간
+                  </div>
+                  <div className="w-1/5 flex items-center justify-center text-white border-l-2">
+                    상태
+                  </div>
+                </div>
+
+                {dayOffDetails.map(dayOffData => (
+                  <div
+                    key={dayOffData.dayOffId}
+                    className="flex h-1/5 w-full bg-primaryHover border-b-2 border-white ">
+                    <div className="w-1/5 flex items-center justify-center border-white border-r-2">
+                      {dayOffData.dayOff}
+                    </div>
+                    <div className="w-3/5 flex items-center justify-center">
+                      {`${dayOffData.startDate} ~ ${dayOffData.endDate}`}
+                    </div>
+                    <div className="w-1/5 flex items-center justify-center border-white border-l-2">
+                      {dayOffData.requestStatus}
+                    </div>
+                  </div>
+                ))}
+                {dutyDetails.map(dutyData => (
+                  <div
+                    key={dutyData.dutyId}
+                    className="flex h-1/5 w-full bg-primaryHover border-b-2 border-white ">
+                    <div className="w-1/5 flex items-center justify-center border-white border-r-2">
+                      {dutyData.type}
+                    </div>
+                    <div className="w-3/5 flex items-center justify-center">
+                      {dutyData.date}
+                    </div>
+                    <div className="w-1/5 flex items-center justify-center border-white border-l-2">
+                      {dutyData.status}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       )}
+
       {isLoading ? (
         <Loading />
       ) : (
