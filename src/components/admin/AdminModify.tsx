@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import DropdownFilter from '@/components/admin/AdminDropDownFilter';
-import { MODIFY_DEPARTMENT, MODIFY_POSITION } from '@/constants/option';
-import {
-  IManageResProps,
-  IModifyDetailProps,
-  IModifyReqProps
-} from '@/types/IAdmin';
+import { MODIFY_DEPARTMENT, MODIFY_POSITION } from '@/constants/options';
+import { IManageResProps } from '@/types/IAdmin';
 import reqManage from '@/api/admin/manage';
 import modifyDetail from '@/api/admin/modifyDetail';
 import Loading from '@/components/common/Loading';
 import modifyRes from '@/api/admin/modify';
 import Button from '@/components/common/Button';
+import { clientInstance } from '@/api/axios';
 
 export default function AdminModify() {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,8 +31,6 @@ export default function AdminModify() {
   const [phone, setPhone] = useState<string>('010-1234-1234');
   const [hireDate, setHireDate] = useState<string>('2023-11-22');
   const [email, setEmail] = useState('jinyc@naver.com');
-
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -61,7 +56,7 @@ export default function AdminModify() {
           new Blob([JSON.stringify(data)], { type: 'application/json' })
         );
 
-        formData.append('profileImagePath', profileImage as File);
+        formData.append('profileImageFile', profileImage as File);
 
         const response = await modifyRes(formData);
 
@@ -90,8 +85,16 @@ export default function AdminModify() {
     const response = await modifyDetail(employee.employeeId);
     setIsLoading(true);
     if (response.success && response.data) {
-      const { employeeId, department, name, position, email, phone, hireDate } =
-        response.data;
+      const {
+        employeeId,
+        department,
+        name,
+        position,
+        email,
+        phone,
+        hireDate,
+        profilePath
+      } = response.data;
 
       setSelectedEmployee({
         employeeId,
@@ -101,7 +104,7 @@ export default function AdminModify() {
         email,
         phone,
         hireDate,
-        profilePath: ''
+        profilePath
       });
       {
         setTimeout(() => setIsLoading(false), 500);
@@ -112,14 +115,7 @@ export default function AdminModify() {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-
-      reader.onload = e => {
-        setProfileImage(file);
-        setPreviewImage(e.target?.result as string);
-      };
-
-      reader.readAsDataURL(file);
+      setProfileImage(file);
     }
   };
 
@@ -158,12 +154,6 @@ export default function AdminModify() {
     }));
   };
 
-  <input
-    value={selectedEmployee.hireDate}
-    onChange={e => handleHireDateChange(e.target.value)}
-    className="border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-  />;
-
   return (
     <div className="ml-[3rem] h-[37rem] w-[92rem] flex">
       <div className=" h-[37rem] w-[25rem] border-2  border-primaryHover overflow-auto border-soild rounded-xl">
@@ -199,15 +189,18 @@ export default function AdminModify() {
         <div className="h-[30rem] w-[20rem] ml-[3rem]">
           <div className=" h-[20rem] w-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
             {selectedEmployee.profilePath ? (
-              <div className="w-[20rem] h-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
-                <Image
-                  src={`http://3.35.187.196:8080${selectedEmployee.profilePath}`}
-                  alt="프로필 이미지"
-                  layout="fill"
-                  className="rounded-xl"
-                />
+              <Image
+                src={`${clientInstance.defaults.baseURL}${selectedEmployee.profilePath}`}
+                width={320}
+                height={320}
+                alt="프로필 이미지"
+                className="rounded-xl "
+              />
+            ) : (
+              <div className="flex items-center justify-center font-semibold">
+                이미지 없음
               </div>
-            ) : null}
+            )}
 
             <div className="flex  items-center  justify-center  font-semibold"></div>
           </div>
