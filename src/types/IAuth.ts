@@ -15,6 +15,7 @@ export interface IAuthSignUp {
 }
 
 export interface IAuthResetPw {
+  accessToken: string;
   password: string;
   confirmPassword: string;
 }

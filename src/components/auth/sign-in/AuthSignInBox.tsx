@@ -33,7 +33,6 @@ export default function AuthSignInBox() {
         );
         // 쿠키 생성
         document.cookie = `accessToken=${accessToken}; expires=${expireDate.toUTCString()}; path=/`;
-        console.log(`cookie: ${document.cookie}`);
         // main 페이지로 라우팅
         router.push('/main');
       }
