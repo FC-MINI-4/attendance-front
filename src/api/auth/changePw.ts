@@ -6,7 +6,7 @@ import { IAuthCheckPw } from '@/types/IAuth';
 export async function requestChangePw(changePwData: IAuthCheckPw) {
   try {
     const response = await axios.post(
-      `${clientInstance.defaults.baseURL}/api/auth/users/:${changePwData.authToken}/password/change`,
+      `${clientInstance.defaults.baseURL}/api/auth/users/password/change`,
       changePwData
     );
     return response;
