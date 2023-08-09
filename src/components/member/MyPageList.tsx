@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { IMemberDayOffProps, IMemberDutyProps } from '@/types/IMyPages';
-import Loading from '@/components/common/Loading';
 import memberList from '@/api/member/memberList';
 
 export default function MyPageList() {
@@ -83,3 +82,4 @@ export default function MyPageList() {
     </div>
   );
 }
+

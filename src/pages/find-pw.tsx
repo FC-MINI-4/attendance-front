@@ -1,7 +1,7 @@
 import AuthLayout from '@/components/auth/AuthLayout';
-import AuthFindPwBox from '@/components/auth/AuthFindPwBox';
+import AuthFindPwBox from '@/components/auth/find-pw/AuthFindPwBox';
 
-export default function changePw() {
+export default function findPw() {
   return (
     <AuthLayout>
       <AuthFindPwBox />
