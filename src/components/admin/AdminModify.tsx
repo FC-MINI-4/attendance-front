@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import DropdownFilter from '@/components/admin/AdminDropDownFilter';
 import { MODIFY_DEPARTMENT, MODIFY_POSITION } from '@/constants/options';
-import { IManageResProps } from '@/types/IAdmin';
+import {
+  IManageResProps,
+  IModifyDetailProps,
+  IModifyReqProps
+} from '@/types/IAdmin';
 import reqManage from '@/api/admin/manage';
 import modifyDetail from '@/api/admin/modifyDetail';
 import Loading from '@/components/common/Loading';
@@ -59,6 +63,12 @@ export default function AdminModify() {
         );
 
         formData.append('profileImagePath', profileImage as File);
+
+          'key',
+          new Blob([JSON.stringify(data)], { type: 'application/json' })
+        );
+
+        formData.append('file', JSON.stringify(profileImage));
 
         const response = await modifyRes(formData);
 

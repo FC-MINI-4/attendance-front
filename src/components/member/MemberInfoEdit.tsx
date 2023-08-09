@@ -62,24 +62,22 @@ export default function MemberInfoEdit() {
         />
         <label
           htmlFor="modify"
-          className="cursor-pointer inline-block text-base border absolute right-3 bottom-0 px-0 py-1 text-light-blue-500 border-light-blue-500 mt-6" 
+          className="cursor-pointer inline-block text-base absolute right-3 bottom-0 px-0 py-1 text-light-blue-500 border-transparent mt-6 font-semibold"
         >
           프로필 사진 업로드
         </label>
       </div>
-      
-      <div className="bg-gray-200 h-24 flex items-center justify-center rounded-md mt-6">
+  
+      <div className="bg-gray-200 h-24 flex items-center justify-center rounded-md mt-6 font-semibold">
         <div className="text-base">
           <div className="mb-2 text-center">
             새 이미지를 업로드 해주세요.
-             </div>
-             <div className="mt-2 text-center">
-              이미지 최대크기: 1MB
-              </div>
-              </div>
-            </div>
-
-      
+          </div>
+          <div className="mt-2 text-center">
+            이미지 최대크기: 1MB
+          </div>
+        </div>
+      </div>
     </div>
   );
- }
+}
