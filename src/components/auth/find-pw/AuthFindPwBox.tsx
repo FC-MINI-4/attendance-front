@@ -1,5 +1,5 @@
 import PwBox from '@/components/common/PwBox';
-import AuthFindPwInput from '@/components/auth/AuthFindPwInput';
+import AuthFindPwInput from '@/components/auth/find-pw/AuthFindPwInput';
 
 export default function AuthFindPwBox() {
   return (
