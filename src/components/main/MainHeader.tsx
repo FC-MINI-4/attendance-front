@@ -1,6 +1,15 @@
 import Image from "next/image"
+import { useCookies } from 'react-cookie'
+import Router from "next/router"
+import Link from "next/link";
 
 export default function MainHeader(){
+  const LogOut = () => {
+    document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    document.cookie = 'employeeId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    document.cookie = 'expires=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    location.replace('/sign-in')
+  }
   //그냥 일단 데이터 없어서 하드코딩
   return(
     <div className="h-24 flex justify-between px-16">
@@ -22,7 +31,9 @@ export default function MainHeader(){
             잔여연차:15
           </div>
         </div>
-        <div className="ml-4 top-0 bottom-0 my-auto font-bold">
+        <div
+          className="ml-4 top-0 bottom-0 my-auto font-bold cursor-pointer"
+          onClick={()=>LogOut()}>
           로그아웃
         </div>
       </div>
