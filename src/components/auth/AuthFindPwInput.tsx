@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import useAccessToken from '@/hooks/useToken';
 import Input from '@/components/common/Input';
 import { rEmail } from '@/constants/constants';
 import Button from '@/components/common/Button';
-
+import { requestFindPw } from '@/api/auth/findPw';
 
 export default function AuthFindPwInput() {
+  const accessToken = useAccessToken(); // 액세스 토큰 가져오기
   const [email, setEmail] = useState('');
-
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event?.target.value);
@@ -15,6 +16,16 @@ export default function AuthFindPwInput() {
   // 이메일 형식 유효성 체크
   const emailCheck = () => {
     return rEmail.test(email);
+  };
+
+  const handleFindPw = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      await requestFindPw({
+        email: email
+      });
+    } catch (error) {}
   };
 
   return (
@@ -28,7 +39,9 @@ export default function AuthFindPwInput() {
           valid={emailCheck()}
         />
       </div>
-      <Button contents={'이메일 전송'} disabled={!emailCheck()} />
+      <form onSubmit={handleFindPw}>
+        <Button contents={'이메일 전송'} disabled={!emailCheck()} submit />
+      </form>
     </>
   );
 }

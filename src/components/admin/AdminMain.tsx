@@ -6,27 +6,24 @@ import DropdownFilter from '@/components/admin/AdminDropDownFilter';
 import RequestList from '@/components/admin/AdminRequestList';
 import EmployeeList from '@/components/admin/AdminManageList';
 import CustomPicker from '@/components/common/CustomPicker';
-import Image from 'next/image';
+import AdminModify from '@/components/admin/AdminModify';
 import { RecoilRoot } from 'recoil';
 
 import {
-  MODIFY_POSITION,
-  MODIFY_DEPARTMENT,
   EMPLOYEE_POSITION,
-  DUTY_REQUEST,
   DEPARTMENT,
   STATUS,
   REST_REQUEST
-} from '@/constants/option';
+} from '@/constants/options';
 
 export default function Main({ page }: IMainProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
   const [selectedDepartment, setSelectedDepartment] =
     useState<string>('계열사');
-  const [selectedPosition, setSeletedPosition] = useState<string>('직급');
+  const [selectedPosition, setSelectedPosition] = useState<string>('직급');
   const [selectedStatus, setSelectedStatus] = useState<string>('상태');
   const [selectedRest, setSelectedRest] = useState<string>('요청');
-  const [selectedDuty, setSelectedDuty] = useState<string>('요청');
+
   const [searchValue, setSearchValue] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(0);
   const [filteredEmployees, setFilteredEmployees] = useState([]);
@@ -42,20 +39,16 @@ export default function Main({ page }: IMainProps) {
     setSelectedRest(value);
   };
 
-  const handleDutyChange = (value: string) => {
-    setSelectedDuty(value);
-  };
-
   const handleDepartmentChange = (value: string) => {
     setSelectedDepartment(value);
   };
 
-  const handlestatusChange = (value: string) => {
+  const handleStatusChange = (value: string) => {
     setSelectedStatus(value);
   };
 
   const handlePositionChange = (value: string) => {
-    setSeletedPosition(value);
+    setSelectedPosition(value);
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,26 +57,6 @@ export default function Main({ page }: IMainProps) {
 
   const handleToggleSidebar = () => {
     setIsSidebarOpen(prevIsSidebarOpen => !prevIsSidebarOpen);
-  };
-
-  const handleChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64 = reader.result;
-        if (base64) {
-          const str = base64?.toString();
-          if (str && str.length > 1048576) {
-            alert('이미지는 1MB이하여야합니다!');
-            return;
-          }
-          setProfileImage(base64.toString());
-        }
-      };
-      reader.readAsDataURL(file);
-    }
   };
 
   return (
@@ -114,17 +87,13 @@ export default function Main({ page }: IMainProps) {
                     {(page === 'admin-duty' || page === 'admin-leave') && (
                       <>
                         {page === 'admin-duty' && (
-                          <div className="flex justify-center ml-4 w-[7rem]">
-                            <DropdownFilter
-                              options={DUTY_REQUEST}
-                              value={selectedDuty}
-                              onChange={handleDutyChange}
-                            />
+                          <div className="flex justify-center ml-4 w-[7rem] pr-4">
+                            요청
                           </div>
                         )}
 
                         {page === 'admin-leave' && (
-                          <div className="flex justify-center ml-4 w-[7rem]">
+                          <div className="flex justify-center ml-6 w-[7rem]">
                             <DropdownFilter
                               options={REST_REQUEST}
                               value={selectedRest}
@@ -143,7 +112,7 @@ export default function Main({ page }: IMainProps) {
                             onChange={handleSearchChange}
                           />
                         </div>
-                        <div className="flex justify-center w-[7rem]">
+                        <div className="flex justify-center pl-6 w-[10rem]">
                           <DropdownFilter
                             options={DEPARTMENT}
                             value={selectedDepartment}
@@ -157,7 +126,9 @@ export default function Main({ page }: IMainProps) {
                             onChange={handlePositionChange}
                           />
                         </div>
-                        <div className="text-center pr-2 w-[13rem]">입사일</div>
+                        <div className="text-center pr-2 w-[13rem] pl-4">
+                          입사일
+                        </div>
                         <div className="w-[19rem] pr-14 text-center">
                           요청내역
                         </div>
@@ -165,7 +136,7 @@ export default function Main({ page }: IMainProps) {
                           <DropdownFilter
                             options={STATUS}
                             value={selectedStatus}
-                            onChange={handlestatusChange}
+                            onChange={handleStatusChange}
                           />
                         </div>
                         <div className="w-[13rem]  text-center ">관리</div>
@@ -184,7 +155,7 @@ export default function Main({ page }: IMainProps) {
                             onChange={handleSearchChange}
                           />
                         </div>
-                        <div className="flex justify-center w-[8rem]">
+                        <div className="flex justify-center w-[8rem] pl-14">
                           <DropdownFilter
                             options={DEPARTMENT}
                             value={selectedDepartment}
@@ -209,122 +180,7 @@ export default function Main({ page }: IMainProps) {
                   </div>
                 )}
               </>
-              <>
-                {page === 'admin-modify' && (
-                  <div className="ml-[3rem] h-[37rem] w-[92rem] flex">
-                    <div className=" h-[37rem] w-[25rem] border-2  border-primaryHover overflow-auto border-soild rounded-xl">
-                      <div className="w-[25rem] h-[2.5rem] flex bg-primary ">
-                        <div className="w-[5rem] border-r-2 border-white h-[2,5rem] "></div>
-                        <div className="w-[10rem] border-r-2 border-white h-[2.5rem] justify-center items-center flex text-white">
-                          사원번호
-                        </div>
-                        <div className="w-[10rem] h-[2.5rem] flex justify-center items-center text-white ">
-                          이름
-                        </div>
-                      </div>
-
-                      <button className="w-[25rem] h-[2.5rem] flex border-b-2 border-primaryHover mt-[0.2px]">
-                        <div className="w-[5rem] border-r-2 h-[2.5rem]  border-primaryHover justify-center items-center flex  ">
-                          1
-                        </div>
-                        <div className="w-[10rem] border-r-2 border-primaryHover h-[2.5rem] justify-center items-center flex ">
-                          사원번호
-                        </div>
-                        <div className="w-[10rem] h-[2.5rem] flex justify-center items-center ">
-                          이름
-                        </div>
-                      </button>
-                    </div>
-                    <div className="h-[30rem] w-[20rem] ml-[3rem]">
-                      <div className=" h-[20rem] w-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
-                        {profileImage ? (
-                          <Image
-                            className="h-[20rem] w-[20rem]  rounded-xl"
-                            src={profileImage}
-                            alt="이미지"
-                          />
-                        ) : (
-                          <Image src="" alt="이미지" />
-                        )}
-                        <div className="flex  items-center  justify-center  font-semibold"></div>
-                      </div>
-                      <div className="w-[20rem] h-[3rem] flex items-center justify-center">
-                        <label
-                          htmlFor="imageUpload"
-                          className=" text-lg font-semibold hover:cursor-pointer">
-                          이미지를 선택해주세요
-                        </label>
-                        <input
-                          id="imageUpload"
-                          className="hidden"
-                          type="file"
-                          onChange={handleChangeFile}
-                          accept="image/jpeg, image/png, image/gif, image/svg+xml"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="ml-[3rem] h-[37rem] w-[30rem] border-2 border-primaryHover border-soild rounded-xl  ">
-                      <div>
-                        <div className=" m-6 ml-16 mt-4 ">
-                          <div className="text-md font-semibold ">이름</div>
-                          <input
-                            defaultValue="이창휘"
-                            className="w-[20rem]  border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md"
-                          />
-                        </div>
-
-                        <div className=" m-6 mt-4 ml-16">
-                          <div className="text-md font-semibold ">계열사</div>
-                          <div className="font-small w-[21rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex ">
-                            <DropdownFilter
-                              options={MODIFY_DEPARTMENT}
-                              value={selectedDepartment}
-                              onChange={handleDepartmentChange}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="  ml-16 mt-4 ">
-                        <div className="text-md font-semibold ">직급</div>
-                        <div className="font-small w-[21rem]  border-b-2 pt-2   border-gray-200 text-md ">
-                          <DropdownFilter
-                            options={MODIFY_POSITION}
-                            value={selectedPosition}
-                            onChange={handlePositionChange}
-                          />
-                        </div>
-                      </div>
-                      <div className=" m-6 mt-4 ml-16 ">
-                        <div className="text-md font-semibold ">입사일</div>
-                        <input
-                          defaultValue="2023년 07월 30일"
-                          className="  border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-                        />
-                      </div>
-
-                      <div className=" m-6 mt-4 ml-16 ">
-                        <div className="text-md font-semibold ">이메일</div>
-                        <div className=" text-md  border-b-2 w-[20rem] pt-2 border-gray-200 font-small">
-                          dummy@naver.com
-                        </div>
-                      </div>
-                      <div className=" m-6 ml-16 mt-4  ">
-                        <div className="text-md font-semibold ">전화번호</div>
-                        <input
-                          defaultValue="010-1234-5678"
-                          className="  border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-                        />
-                      </div>
-                      <div className="w-[30rem]  justify-center flex">
-                        <button className=" h-[3rem] w-[10rem] text-white   bg-primary rounded-3xl">
-                          수정
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </>
+              <>{page === 'admin-modify' && <AdminModify />}</>
 
               <div>
                 {page === 'admin-duty' && (
@@ -333,7 +189,6 @@ export default function Main({ page }: IMainProps) {
                     isSidebarOpen={isSidebarOpen}
                     selectedDepartment={selectedDepartment}
                     selectedPosition={selectedPosition}
-                    selectedDuty={selectedDuty}
                     selectedStatus={selectedStatus}
                     searchValue={searchValue}
                     pageCount={Math.ceil(

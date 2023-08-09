@@ -14,8 +14,8 @@ export default function Input({ ...props }: IInputProps) {
     <div className="w-full">
       <label
         className={`${
-          props.valid ? 'text-primary' : 'text-secondary'
-        } text-xs sm:text-base min-w-[5rem] sm:min-w-[10rem] flex font-semibold`}
+          props.valid ? 'text-mainBlack' : 'text-secondary'
+        } pl-1 text-xs sm:text-base min-w-[5rem] sm:min-w-[10rem] flex font-semibold`}
         htmlFor={props.label}>
         {props.label}
       </label>
@@ -24,7 +24,7 @@ export default function Input({ ...props }: IInputProps) {
         id={props.label}
         className={`${
           props.valid ? 'focus:border-primary' : 'focus:border-secondary'
-        } h-10 pt-3 w-full border-b-2 border-gray-200 pr-3 text-xs outline-none transition sm:h-12 sm:text-base`}
+        } pl-1 h-10 pt-3 w-full border-b-2 border-gray-200 pr-3 text-xs outline-none transition sm:h-12 sm:text-base`}
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.onChange}
