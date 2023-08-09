@@ -24,7 +24,7 @@ export interface IMemberListProps {
     name: string;
     email: string;
     dayOffRemains: number;
-    dayOffs: IMemberDayOffProps[];
-    duties: IMemberDutyProps[];
+    dayOffs?: IMemberDayOffProps[];
+    duties?: IMemberDutyProps[];
   };
 }
