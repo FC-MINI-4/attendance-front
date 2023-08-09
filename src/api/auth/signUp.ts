@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { clientInstance } from '../axios';
-import { ISignInRequestBody } from '@/types/ISignin';
+import { ISignInRequestBody } from '@/types/ISignIn';
 import { ISignUpRequestBody } from '@/types/ISignUp';
 
 // * [POST] 이메일 중복체크
@@ -17,6 +17,7 @@ export async function requestEmailCheck(signUpData: ISignInRequestBody) {
   }
 }
 
+// * [POST] 회원가입 요청
 export async function requestSignUp(signUpData: ISignUpRequestBody) {
   try {
     const response = await axios.post(

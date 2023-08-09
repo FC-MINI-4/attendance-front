@@ -5,15 +5,22 @@ import { rPassword } from '@/constants/constants';
 import { requestChangePw } from '@/api/auth/changePw';
 import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 
-export default function AuthChangePwInput() {
+export default function AuthResetPwInput() {
+  const [currentPassword, setCurrentPassword] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setComfirmPassword] = useState('');
 
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCurrentPassword = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCurrentPassword(event?.target.value);
+  };
+
+  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event?.target.value);
   };
 
-  const handleConfirmPwChange = (
+  const handleConfirmPassword = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setComfirmPassword(event?.target.value);
@@ -61,9 +68,9 @@ export default function AuthChangePwInput() {
 
     try {
       const response = await requestChangePw({
+        currentPassword: currentPassword,
         password: password,
-        confirmPassword: confirmPassword,
-        authToken: '1234'
+        confirmPassword: confirmPassword
       });
       if (response.status === 200) {
         if (!response.data.success) {
@@ -79,8 +86,8 @@ export default function AuthChangePwInput() {
         <div className="sm:mb-8 mb-8">
           <Input
             label={'새로운 비밀번호'}
-            name={'email'}
-            onChange={handlePasswordChange}
+            name={'password'}
+            onChange={handlePassword}
             placeholder={'영문+숫자, 8자리 이상 16자리 이하'}
             type="password"
             valid={passwordCheck()}
@@ -90,8 +97,8 @@ export default function AuthChangePwInput() {
         <div className="sm:mb-8 mb-8">
           <Input
             label={'비밀번호 확인'}
-            name={'email'}
-            onChange={handleConfirmPwChange}
+            name={'password'}
+            onChange={handleConfirmPassword}
             placeholder={'비밀번호를 한번 더 입력해주세요.'}
             type="password"
             valid={confirmPasswordCheck()}

@@ -1,7 +1,7 @@
 import AuthLayout from '@/components/auth/AuthLayout';
-import AuthChangePwBox from '@/components/auth/AuthChangePwBox';
+import AuthChangePwBox from '@/components/auth/change-pw/AuthChangePwBox';
 
-export default function fintPw() {
+export default function changePw() {
   return (
     <>
       <AuthLayout>

@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import useAccessToken from '@/hooks/useToken';
 import Input from '@/components/common/Input';
 import { rEmail } from '@/constants/constants';
 import Button from '@/components/common/Button';
 import { requestFindPw } from '@/api/auth/findPw';
 
 export default function AuthFindPwInput() {
-  const accessToken = useAccessToken(); // 액세스 토큰 가져오기
   const [email, setEmail] = useState('');
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,14 +16,23 @@ export default function AuthFindPwInput() {
     return rEmail.test(email);
   };
 
+  // 비밀번호 찾기 API 호출 함수
   const handleFindPw = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      await requestFindPw({
+      const response = await requestFindPw({
         email: email
       });
-    } catch (error) {}
+
+      if (response.data.success) {
+        alert(response.data.message);
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (
