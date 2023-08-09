@@ -23,8 +23,7 @@ export default function AuthFindPwInput() {
 
     try {
       await requestFindPw({
-        email: email,
-        accessToken: accessToken
+        email: email
       });
     } catch (error) {}
   };

@@ -1,9 +1,9 @@
-import { useCookies } from 'react-cookie';
+import { Cookies } from 'react-cookie';
 
 export const useAccessToken = () => {
-  const [cookies] = useCookies(['accessToken']);
-  const accessToken = cookies.accessToken || null;
-  return accessToken;
+  const cookie = new Cookies();
+  const token = cookie.get('accessToken');
+  return token;
 };
 
 export default useAccessToken;

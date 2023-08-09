@@ -21,45 +21,45 @@ export default function ApproveModal(modalProps : IModalProps){
   const endDateMonth = endDate.getMonth()
 
   //잔여 연차보다 데이트피커로 선택한 날이 더 많을 경우
-  useEffect(()=>{
-    const elapsedMSec = endDateMSec - startDateMSec
-    const elapsedDays = Math.abs(elapsedMSec/(1000*60*60*24)) + 1
-    const sameMonth = startDateMonth - endDateMonth
+  useEffect(() => {
+    const elapsedMSec = endDateMSec - startDateMSec;
+    const elapsedDays = Math.abs(elapsedMSec / (1000 * 60 * 60 * 24)) + 1;
+    const sameMonth = startDateMonth - endDateMonth;
 
     // 시작월 = 마지막월, 연차 > 15
-    if(sameMonth === 0 && elapsedDays > 15){
-      alert('선택일이 잔여 연차를 초과했습니다.')
+    if (sameMonth === 0 && elapsedDays > 15) {
+      alert('선택일이 잔여 연차를 초과했습니다.');
       //시작일 기준 ~ +15일
-      const adjustDate = new Date(endDate.setDate(startDate.getDate() + 14))
-      setEndDate(adjustDate)
-    }else if(sameMonth < 0 && elapsedDays > 15){
-      alert('선택일이 잔여 연차를 초과했습니다.')
-      setEndDate(startDate)
-    }else if(sameMonth > 0 && elapsedDays > 15){
-      alert('선택일이 잔여 연차를 초과했습니다.')
-      setEndDate(startDate)
+      const adjustDate = new Date(endDate.setDate(startDate.getDate() + 14));
+      setEndDate(adjustDate);
+    } else if (sameMonth < 0 && elapsedDays > 15) {
+      alert('선택일이 잔여 연차를 초과했습니다.');
+      setEndDate(startDate);
+    } else if (sameMonth > 0 && elapsedDays > 15) {
+      alert('선택일이 잔여 연차를 초과했습니다.');
+      setEndDate(startDate);
     }
-  },[startDate])
+  }, [startDate]);
 
-  useEffect(()=>{
-    const elapsedMSec = endDateMSec - startDateMSec
-    const elapsedDays = Math.abs(elapsedMSec/(1000*60*60*24)) + 1
-    const sameMonth = startDateMonth - endDateMonth
+  useEffect(() => {
+    const elapsedMSec = endDateMSec - startDateMSec;
+    const elapsedDays = Math.abs(elapsedMSec / (1000 * 60 * 60 * 24)) + 1;
+    const sameMonth = startDateMonth - endDateMonth;
 
     // 시작월 = 마지막월, 연차 > 15
-    if(sameMonth === 0 && elapsedDays > 15){
-      alert('선택일이 잔여 연차를 초과했습니다.')
+    if (sameMonth === 0 && elapsedDays > 15) {
+      alert('선택일이 잔여 연차를 초과했습니다.');
       //시작일 기준 ~ +15일
-      const adjustDate = new Date(endDate.setDate(startDate.getDate() + 14))
-      setEndDate(adjustDate)
-    }else if(sameMonth < 0 && elapsedDays > 15){
-      alert('선택일이 잔여 연차를 초과했습니다.')
-      setStartDate(endDate)
+      const adjustDate = new Date(endDate.setDate(startDate.getDate() + 14));
+      setEndDate(adjustDate);
+    } else if (sameMonth < 0 && elapsedDays > 15) {
+      alert('선택일이 잔여 연차를 초과했습니다.');
+      setStartDate(endDate);
     }
-  },[endDate])
+  }, [endDate]);
 
   // 모달 외부 클릭시 모달창 닫히게 하는 로직
-  const modalRef = useRef<HTMLInputElement | null>(null)
+  const modalRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     function handleOutside(e: Event) {
@@ -69,7 +69,7 @@ export default function ApproveModal(modalProps : IModalProps){
         setIsDutyShow(false)
       }
     }
-    document.addEventListener('mousedown', handleOutside)
+    document.addEventListener('mousedown', handleOutside);
     return () => {
       document.removeEventListener('mousedown', handleOutside)
     }
@@ -77,25 +77,23 @@ export default function ApproveModal(modalProps : IModalProps){
   
 
   //체크박스
-  const MakeCheckBox = () =>{
-    const box = []
-    const checkBoxContents = ['반차(오전)', '반차(오후)' , '연차' , '경조휴가']
-    const checkboxes = document.getElementsByTagName('input')
-    
+  const MakeCheckBox = () => {
+    const box = [];
+    const checkBoxContents = ['반차(오전)', '반차(오후)', '연차', '경조휴가'];
+    const checkboxes = document.getElementsByTagName('input');
+
     //체크 박스 하나만 클릭 가능하게
-    const checkItem = (checkThis : HTMLInputElement) => {
-      for(let i=0; i<checkboxes.length; i++){
-        if(checkboxes[i] !== checkThis){
-          checkboxes[i].checked = false
+    const checkItem = (checkThis: HTMLInputElement) => {
+      for (let i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i] !== checkThis) {
+          checkboxes[i].checked = false;
         }
       }
-    }
+    };
 
-    for(let i=0; i<4; i++){
+    for (let i = 0; i < 4; i++) {
       box.push(
-        <div
-          key={i}
-          className="px-3">
+        <div key={i} className="px-3">
           <input
             type="checkbox"
             onClick={(e)=>{
@@ -104,7 +102,7 @@ export default function ApproveModal(modalProps : IModalProps){
             value={checkBoxContents[i]}/>
             {checkBoxContents[i]}
         </div>
-      )
+      );
     }
 
     return(
@@ -130,12 +128,15 @@ export default function ApproveModal(modalProps : IModalProps){
     <>
       <div className="w-screen h-screen bg-black/40 fixed top-0 left-0 z-10">
         <div ref={modalRef}>
-          <form
-            className="w-1/3 h-80 bg-white absolute top-0 left-0 bottom-0 right-0 m-auto">
-
-              <div className="before:content-[''] before:block before:w-4 before:h-10 before:bg-primary before:absolute before:top-0 before:left-0
+          <form className="w-1/3 h-80 bg-white absolute top-0 left-0 bottom-0 right-0 m-auto">
+            <div
+              className="before:content-[''] before:block before:w-4 before:h-10 before:bg-primary before:absolute before:top-0 before:left-0
               relative py-2 pl-6 shadow-md">
-                {modalProps.title}
+              {modalProps.title}
+            </div>
+            <div>
+              <div className="flex justify-center items-center pt-4 pb-2">
+                {modalProps.IsCheckBoxShow ? <MakeCheckBox /> : null}
               </div>
               <div>
                 <div className="flex justify-center items-center pt-4 pb-2"> 
@@ -177,9 +178,26 @@ export default function ApproveModal(modalProps : IModalProps){
                     className="border cursor-pointer w-[75%] h-9 bg-primary text-white rounded-md"/>
                 </div>
               </div>
+              <div className="flex justify-center items-center py-3">
+                {modalProps.IsTextBoxShow ? (
+                  <textarea
+                    placeholder="사유"
+                    cols={60}
+                    rows={3}
+                    className="w-[75%] border rounded-md border-modalBorder pt-2 pl-2 outline-none"></textarea>
+                ) : null}
+              </div>
+              <div className="flex justify-center items-center pt-2">
+                <input
+                  type="submit"
+                  value={modalProps.submit}
+                  className="border cursor-pointer w-[75%] h-9 bg-primary text-white rounded-md"
+                />
+              </div>
+            </div>
           </form>
         </div>
       </div>
     </>
-  )
+  );
 }
