@@ -104,7 +104,7 @@ export default function AdminModify() {
       }
     }
   };
-
+  //이미지
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
