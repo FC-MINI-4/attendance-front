@@ -29,8 +29,8 @@ export default function MyPageList() {
   return (
     <div className='w-[64rem] h-[36.67rem]'>
   
-      <div className='relative bg-white w-1/6 rounded-sm-lg font-bold sm:text-2xl sm:pb-8 h-10'>
-            <span className='bg-primary absolute top-0 left-0 w-4 h-10 z-0'></span>
+      <div className='relative bg-gray-200 w-1/6 rounded-sm-lg font-bold sm:text-2xl sm:pb-8 h-9'>
+            <span className='bg-primary absolute top-0 left-0 w-4 h-9 z-0'></span>
             <span className="relative z-10 pl-4">연차 리스트</span>
           </div>
 
@@ -53,8 +53,8 @@ export default function MyPageList() {
     </div>
   
 
-    <div className='relative bg-white w-1/6 rounded-sm font-bold sm:text-2xl sm:pb-8 h-10 mt-10'>
-  <span className='bg-primary absolute top-0 left-0 w-4 h-10 z-0'></span>
+    <div className='relative bg-gray-200 w-1/6 rounded-sm font-bold sm:text-2xl sm:pb-8 h-9 mt-10'>
+  <span className='bg-primary absolute top-0 left-0 w-4 h-9 z-0'></span>
   <span className="relative z-10 pl-4">당직 리스트</span>
 </div>
     <div>
