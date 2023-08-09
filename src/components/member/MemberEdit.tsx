@@ -23,12 +23,12 @@ export default function MemberEdit() {
   return (
     <div className="bg-white rounded shadow w-full max-w-2xl p-8">
       <div dir="ltr">
-      <div className="relative bg-gray-300 rounded-sm-lg font-bold sm:text-2xl sm:pb-8 h-7">
+      <div className="relative bg-gray-200 rounded-sm-lg font-bold sm:text-2xl sm:pb-8 h-7 ">
         <span className="bg-primary absolute top-0 left-0 w-4 h-8 z-0"></span>
         <span className="relative z-10 pl-4">사용자 정보</span>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4 sm:text-sm sm:pb-6 mt-8">
+      <div className="grid grid-cols-2 gap-4 sm:text-sm sm:pb-8 mt-8">
         <div className="mb-4 text-base flex items-center">
           <span className="whitespace-nowrap ">계열사 :</span>
           <select className="text-base w-full ml-2 border-b border-mainGray">

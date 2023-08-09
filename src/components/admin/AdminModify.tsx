@@ -25,13 +25,13 @@ export default function AdminModify() {
     hireDate: '1943-10-06',
     email: 'jinyc@naver.com'
   });
-  const [employeeId, setEmployeeId] = useState<string>('0');
-  const [department, setDepartment] = useState<string>('순양그룹');
-  const [position, setPosition] = useState<string>('회장');
+  const [employeeId, setEmployeeId] = useState<number>(1);
+  const [department, setDepartment] = useState<string>('순양자동차');
+  const [position, setPosition] = useState<string>('사원');
   const [profileImage, setProfileImage] = useState<File>();
-  const [name, setName] = useState<string>('진양철');
+  const [name, setName] = useState<string>('테스트유저1');
   const [phone, setPhone] = useState<string>('010-1234-1234');
-  const [hireDate, setHireDate] = useState<string>('1943-10-06');
+  const [hireDate, setHireDate] = useState<string>('2023-11-22');
   const [email, setEmail] = useState('jinyc@naver.com');
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -44,24 +44,27 @@ export default function AdminModify() {
       profileImage
     ) {
       try {
-        const formData = new FormData();
-        formData.append('employeeId', employeeId);
-        formData.append('department', department);
-        formData.append('hireDate', hireDate);
-        formData.append('name', name);
-        formData.append('phone', phone);
-        formData.append('position', position);
+        const data = {
+          employeeId: employeeId,
+          department: department,
+          hireDate: hireDate,
+          name: name,
+          phone: phone,
+          position: position
+        };
+        console.log(data);
 
-        if (profileImage) {
-          formData.append('key', profileImage);
-        }
-        const entries = formData.entries();
-        let entry = entries.next();
-        while (!entry.done) {
-          console.log(entry.value);
-          entry = entries.next();
-        }
+        const formData = new FormData();
+
+        formData.append(
+          'key',
+          new Blob([JSON.stringify(data)], { type: 'application/json' })
+        );
+
+        formData.append('file', JSON.stringify(profileImage));
+
         const response = await modifyRes(formData);
+
         alert(response.message);
       } catch (error) {
         alert('수정에 실패했습니다.');
@@ -224,6 +227,7 @@ export default function AdminModify() {
               className="hidden"
               type="file"
               accept="image/jpeg, image/png, image/gif, image/svg+xml"
+              name="file"
               onChange={handleImageChange}
             />
           </div>

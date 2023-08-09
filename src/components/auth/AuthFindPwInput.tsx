@@ -5,9 +5,11 @@ import { rEmail } from '@/constants/constants';
 import Button from '@/components/common/Button';
 import { requestFindPw } from '@/api/auth/findPw';
 
+
 export default function AuthFindPwInput() {
   const accessToken = useAccessToken(); // 액세스 토큰 가져오기
   const [email, setEmail] = useState('');
+
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event?.target.value);
@@ -40,9 +42,7 @@ export default function AuthFindPwInput() {
           valid={emailCheck()}
         />
       </div>
-      <form onSubmit={handleFindPw}>
-        <Button contents={'이메일 전송'} disabled={!emailCheck()} submit />
-      </form>
+      <Button contents={'이메일 전송'} disabled={!emailCheck()} />
     </>
   );
 }
