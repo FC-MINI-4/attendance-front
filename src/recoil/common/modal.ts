@@ -6,9 +6,9 @@ export const modalState = atom<boolean>({
 });
 
 export const dutyState = atom<boolean>({
-  key: 'isDutyShow',
+  key:'isDutyShow',
   default: false
-});
+})
 
 export const manageState = atom<boolean>({
   key: 'isManageShow',

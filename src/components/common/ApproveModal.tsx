@@ -1,20 +1,24 @@
-import { IModalProps } from '@/types/IModal';
-import { useState, useEffect, useRef } from 'react';
-import { dutyState, modalState } from '@/recoil/common/modal';
-import { useRecoilState } from 'recoil';
-import DatePicker from 'react-datepicker';
+import { IModalProps } from "@/types/IModal"
+import { useState, useEffect, useRef } from 'react'
+import { dutyState, modalState } from "@/recoil/common/modal"
+import { useRecoilState } from 'recoil'
+import DatePicker from "react-datepicker"
+import requestDayOff from "@/api/main/dayoff"
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function ApproveModal(modalProps: IModalProps) {
-  const [isModalShow, setIsModalShow] = useRecoilState(modalState);
-  const [isDutyShow, setIsDutyShow] = useRecoilState(dutyState);
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(new Date());
 
-  const startDateMSec = startDate.getTime();
-  const endDateMSec = endDate.getTime();
-  const startDateMonth = startDate.getMonth();
-  const endDateMonth = endDate.getMonth();
+export default function ApproveModal(modalProps : IModalProps){
+  const [ isModalShow, setIsModalShow ] = useRecoilState(modalState)
+  const [ isDutyShow, setIsDutyShow ] = useRecoilState(dutyState)
+  const [ startDate, setStartDate ] = useState<Date>(new Date())
+  const [ endDate, setEndDate ] = useState<Date>(new Date())
+  const [ onClickValue, setOnClickValue ] = useState<string>('')
+  const [ checkReason, setCheckReason ] = useState<string>('')
+  
+  const startDateMSec = startDate.getTime()
+  const endDateMSec = endDate.getTime()
+  const startDateMonth = startDate.getMonth()
+  const endDateMonth = endDate.getMonth()
 
   //잔여 연차보다 데이트피커로 선택한 날이 더 많을 경우
   useEffect(() => {
@@ -61,15 +65,16 @@ export default function ApproveModal(modalProps: IModalProps) {
     function handleOutside(e: Event) {
       // current.contains(e.target) : 컴포넌트 특정 영역 외 클릭 감지를 위해 사용
       if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-        setIsModalShow(false);
-        setIsDutyShow(false);
+        setIsModalShow(false)
+        setIsDutyShow(false)
       }
     }
     document.addEventListener('mousedown', handleOutside);
     return () => {
-      document.removeEventListener('mousedown', handleOutside);
-    };
-  }, [modalRef]);
+      document.removeEventListener('mousedown', handleOutside)
+    }
+  }, [modalRef])
+  
 
   //체크박스
   const MakeCheckBox = () => {
@@ -91,18 +96,35 @@ export default function ApproveModal(modalProps: IModalProps) {
         <div key={i} className="px-3">
           <input
             type="checkbox"
-            onClick={e => checkItem(e.target as HTMLInputElement)}
-            value={checkBoxContents[i]}
-          />
-          {checkBoxContents[i]}
+            onClick={(e)=>{
+              checkItem(e.target as HTMLInputElement)
+              setOnClickValue((e.target as HTMLInputElement).value)}}
+            value={checkBoxContents[i]}/>
+            {checkBoxContents[i]}
         </div>
       );
     }
 
-    return <div className="flex">{box}</div>;
-  };
+    return(
+      <div className="flex">{box}</div>
+    )
+  }
 
-  return (
+
+
+
+  useEffect(()=>{
+    const dayOffData = {
+      "employeeId": 1,
+      "startDate": `${startDate}`,
+      "endDate": `${endDate}`,
+      "type": `${onClickValue}`,
+      "reason": `${checkReason}`
+    }
+    requestDayOff(dayOffData)
+  },[startDate, endDate, onClickValue])
+  
+  return(
     <>
       <div className="w-screen h-screen bg-black/40 fixed top-0 left-0 z-10">
         <div ref={modalRef}>
@@ -116,25 +138,45 @@ export default function ApproveModal(modalProps: IModalProps) {
               <div className="flex justify-center items-center pt-4 pb-2">
                 {modalProps.IsCheckBoxShow ? <MakeCheckBox /> : null}
               </div>
-              <div className="flex justify-between items-center w-[75%] mx-auto py-3">
-                <DatePicker
-                  dateFormat={'yyyy/MM/dd'}
-                  selected={startDate}
-                  onChange={(date: Date) => setStartDate(date)}
-                  selectsStart
-                  startDate={startDate}
-                  endDate={endDate}
-                />
-                <span>-</span>
-                <DatePicker
-                  dateFormat={'yyyy/MM/dd'}
-                  selected={endDate}
-                  onChange={(date: Date) => setEndDate(date)}
-                  selectsStart
-                  startDate={startDate}
-                  endDate={endDate}
-                  minDate={startDate}
-                />
+              <div>
+                <div className="flex justify-center items-center pt-4 pb-2"> 
+                  {modalProps.IsCheckBoxShow
+                    ? <MakeCheckBox/>
+                    : null}
+                </div>
+                <div className="flex justify-between items-center w-[75%] mx-auto py-3">
+                  <DatePicker
+                    dateFormat={'yyyy/MM/dd'}
+                    selected={startDate}
+                    onChange={(date : Date)=>setStartDate(date)}
+                    selectsStart
+                    startDate={startDate}
+                    endDate={endDate}
+                    />
+                    <span>-</span>
+                  <DatePicker
+                    dateFormat={'yyyy/MM/dd'}
+                    selected={endDate}
+                    onChange={(date : Date)=>setEndDate(date)}
+                    selectsStart
+                    startDate={startDate}
+                    endDate={endDate}
+                    minDate={startDate}
+                    />
+                </div>
+                <div className="flex justify-center items-center py-3">
+                  {modalProps.IsTextBoxShow
+                    ? <textarea placeholder="사유" cols={60} rows={3}
+                        className="w-[75%] border rounded-md border-modalBorder pt-2 pl-2 outline-none"
+                        onChange={(e)=>setCheckReason(e.target.value)}></textarea>
+                    : null
+                  }
+                </div>
+                <div className="flex justify-center items-center pt-2">
+                  <input
+                    type="submit" value={modalProps.submit}
+                    className="border cursor-pointer w-[75%] h-9 bg-primary text-white rounded-md"/>
+                </div>
               </div>
               <div className="flex justify-center items-center py-3">
                 {modalProps.IsTextBoxShow ? (
