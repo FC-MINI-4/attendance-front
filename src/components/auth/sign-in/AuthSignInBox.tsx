@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
-import { signInState } from '@/recoil/signIn';
+import { signInState } from '@/recoil/signin';
 import PwBox from '@/components/common/PwBox';
 import Button from '@/components/common/Button';
 
-import { requestSignIn } from '@/api/auth/signIn';
+import { requestSignIn } from '@/api/auth/signin';
 import AuthSignInInput from '@/components/auth/sign-in/AuthSignInInput';
 
 export default function AuthSignInBox() {
@@ -49,18 +49,17 @@ export default function AuthSignInBox() {
 
   return (
     <PwBox>
-      <form onSubmit={handleLogin}>
-        <AuthSignInInput />
-        <Button contents={'로그인'} submit />
-        <div className="flex justify-between sm:mt-2 mb-12 sm:mb-0">
-          <Link href="/sign-up" className="cusor-pointer">
-            회원가입
-          </Link>
-          <Link href="/find-pw" className="cusor-pointer">
-            비밀번호 찾기
-          </Link>
-        </div>
-      </form>
+      <AuthSignInInput />
+      <Button contents={'로그인'} />
+      <div className="flex justify-between sm:mt-2 mb-12 sm:mb-0">
+        <Link href="/sign-up" className="cusor-pointer">
+          회원가입
+        </Link>
+        <Link href="/find-pw" className="cusor-pointer">
+          비밀번호 찾기
+        </Link>
+      </div>
     </PwBox>
   );
 }
+3;

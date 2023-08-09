@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import { IPaginationProps } from '@/types/ICommon';
+import { PaginationIProps } from '@/types/ICommon';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
 
 export default function Pagination({
   pageCount,
   currentPage,
   onPageChange
-}: IPaginationProps) {
+}: PaginationIProps) {
   return (
     <ReactPaginate
       previousLabel={<HiChevronLeft className="text-xl" />}
