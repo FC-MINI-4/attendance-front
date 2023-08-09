@@ -15,6 +15,15 @@ export interface ILayout {
   [key: string]: any;
 }
 
+// Dropdown Interface
+export interface IDropdown {
+  admin: boolean;
+  label?: string;
+  options: {
+    [key: string]: string;
+  };
+}
+
 export interface IPaginationProps {
   pageCount: number;
   currentPage: number;

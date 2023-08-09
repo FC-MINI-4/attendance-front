@@ -28,13 +28,11 @@ export default function AuthSignInBox() {
         // 액세스 토큰
         const accessToken = response.data.data.token.accessToken;
         // 사원 아이디
-        const employeeId = response.data.employeeId;
+        const employeeId = response.data.data.id;
         // 현재 시간 + 만료 시간 = 만료일
         const expireDate = new Date(
           Date.now() + response.data.data.token.accessTokenExpireDate
         );
-
-        const employeeId = response.data.data.id;
         // 쿠키 생성
         document.cookie = `accessToken=${accessToken}`;
         document.cookie = `expires=${expireDate.toUTCString()};`;
