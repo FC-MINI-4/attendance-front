@@ -1,13 +1,18 @@
 import axios from 'axios';
 import { clientInstance } from '@/api/axios';
-import { IModifyProps, IModifyReqProps } from '@/types/IAdmin';
 
 export default async function modifyRes(data: FormData) {
   try {
     const response = await axios.put(
       `${clientInstance.defaults.baseURL}/api/admin/employee`,
-      data
+      data,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
     );
+
     return response.data;
   } catch (error) {
     console.error('MODIFY_FAILURE', error);
