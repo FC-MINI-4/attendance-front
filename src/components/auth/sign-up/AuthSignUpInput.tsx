@@ -5,8 +5,8 @@ import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { IAuthSignUpInput } from '@/types/IAuth';
 import { requestEmailCheck } from '@/api/auth/signUp';
-import { rEmail, rPassword } from '@/constants/constants';
 import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
+import { rEmail, rNumber, rPassword, rPhone } from '@/constants/constants';
 
 export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
   // 회원가입 정보 atom state 구독
@@ -104,9 +104,9 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
     const { name, value } = event.target;
 
     const hyphenNumber = value
-      .replace(/[^0-9]/g, '')
+      .replace(rNumber, '')
       .substring(0, 11)
-      .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+      .replace(rPhone, `$1-$2-$3`);
 
     setPhoneNumber(hyphenNumber);
     setSignUpInfo(prevInformation => ({
