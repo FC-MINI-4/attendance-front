@@ -12,7 +12,8 @@ export default function Member() {
         <MemberHeader />
         <div className="flex h-fit">
           <div className="w-1/6 h-[858px] absolute left-0 top-24">
-            <div className="mt-40">
+            <div className="mt-20">
+
               <MemberBoard />
             </div>
             <div className="mt-16">
@@ -20,13 +21,12 @@ export default function Member() {
             </div>
           </div>
           <div className="w-5/6 h-[858px] absolute top-24 right-0 bg-gray-200 p-4">
-            <div className="w-7/12 left-0 right-0 top-0 bottom-0 m-auto flex justify-between mt-24">
-              <div className="pr-4 w-[600px]">
+            <div className="w-7/12 left-0 right-0 top-0 bottom-0 m-auto flex justify-between mt-20">
+              <div className="pr-4 w-[800px]">
                 <MemberDetail />
               </div>
-              <div>
-                <MemberInfo />
-              </div>
+              <div></div>
+              <MemberInfo />
             </div>
           </div>
         </div>
