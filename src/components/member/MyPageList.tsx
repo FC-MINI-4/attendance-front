@@ -7,12 +7,9 @@ export default function MyPageList() {
     []
   );
   const [dutyEmployees, setDutyEmployees] = useState<IMemberDutyProps[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
-
       const response = await memberList();
       const resList = response.data || {};
 
@@ -21,9 +18,6 @@ export default function MyPageList() {
       }
       if (resList.dayOffs) {
         setDayOffEmployees(resList.dayOffs);
-      }
-      {
-        setTimeout(() => setIsLoading(false), 500);
       }
     };
 

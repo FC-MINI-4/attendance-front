@@ -1,14 +1,13 @@
-import Link from 'next/link';
-import { HiOutlineUserCircle } from 'react-icons/hi';
 import react, { useState, useEffect } from 'react';
 import memberModify from '@/api/member/memberModify';
-import { IMemberModifyProps, IprivacyProps } from '@/types/IMyPages';
+import { IprivacyProps } from '@/types/IMyPages';
 import { clientInstance } from '@/api/axios';
 import Image from 'next/image';
 import DropdownFilter from '@/components/admin/AdminDropDownFilter';
 import { MODIFY_DEPARTMENT } from '@/constants/options';
 import Button from '@/components/common/Button';
 import memberInfo from '@/api/member/memberInfo';
+import Loading from '@/components/common/Loading';
 
 export default function MemberInfoEdit() {
   const [employeeId, setEmployeeId] = useState<number>();
@@ -16,6 +15,7 @@ export default function MemberInfoEdit() {
   const [profileImage, setProfileImage] = useState<File>();
   const [name, setName] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(true);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [privacyInfo, setPrivacyInfo] = useState<IprivacyProps>({
     success: false,
@@ -35,10 +35,14 @@ export default function MemberInfoEdit() {
 
   useEffect(() => {
     async function getInfo() {
+      setIsLoading(true);
       const response = await memberInfo();
       if (response.success && response.data) {
         const data = response;
         setPrivacyInfo(data);
+      }
+      {
+        setTimeout(() => setIsLoading(false), 500);
       }
     }
 
@@ -56,7 +60,7 @@ export default function MemberInfoEdit() {
           name: privacyInfo.data.name,
           phone: privacyInfo.data.phone
         };
-
+        setIsLoading(true);
         const formData = new FormData();
 
         formData.append(
@@ -67,6 +71,9 @@ export default function MemberInfoEdit() {
         formData.append('profileImageFile', profileImage as File);
 
         const response = await memberModify(formData);
+        {
+          setTimeout(() => setIsLoading(false), 500);
+        }
 
         alert(response.message);
       } catch (error) {
@@ -132,49 +139,55 @@ export default function MemberInfoEdit() {
           <div className="bg-primary absolute   top-0 left-0 w-4 h-12 z-0"></div>
           <div className="relative z-10 pl-4 ml-2 pt-2">정보 수정</div>
         </div>
-        <div className=" m-6 ml-16  ">
-          <div className="text-md font-semibold mt-16 ">이름</div>
-          <input
-            value={privacyInfo.data.name}
-            onChange={e => handleNameChange(e.target.value)}
-            className="w-[20rem]  border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md"
-          />
-        </div>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <div className=" m-6 ml-16  ">
+              <div className="text-md font-semibold mt-16 ">이름</div>
+              <input
+                value={privacyInfo.data.name}
+                onChange={e => handleNameChange(e.target.value)}
+                className="w-[20rem]  border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md"
+              />
+            </div>
 
-        <div className=" m-6 mt-8 ml-16">
-          <div className="text-md font-semibold ">계열사</div>
-          <div className="font-small w-[21rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex ">
-            <DropdownFilter
-              options={MODIFY_DEPARTMENT}
-              value={privacyInfo.data.department}
-              onChange={handleDepartmentChange}
-            />
-          </div>
-        </div>
+            <div className=" m-6 mt-8 ml-16">
+              <div className="text-md font-semibold ">계열사</div>
+              <div className="font-small w-[21rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex ">
+                <DropdownFilter
+                  options={MODIFY_DEPARTMENT}
+                  value={privacyInfo.data.department}
+                  onChange={handleDepartmentChange}
+                />
+              </div>
+            </div>
 
-        <div className=" m-6 mt-8 ml-16 ">
-          <div className="text-md font-semibold ">입사일</div>
-          <input
-            defaultValue={privacyInfo.data.hireDate}
-            className="  border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-          />
-        </div>
+            <div className=" m-6 mt-8 ml-16 ">
+              <div className="text-md font-semibold ">입사일</div>
+              <input
+                defaultValue={privacyInfo.data.hireDate}
+                className="  border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
+              />
+            </div>
 
-        <div className=" m-6 mt-8 ml-16 ">
-          <div className="text-md font-semibold ">이메일</div>
-          <input
-            defaultValue={privacyInfo.data.email}
-            className=" border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-          />
-        </div>
-        <div className=" m-6 ml-16 mt-8  ">
-          <div className="text-md font-semibold ">전화번호</div>
-          <input
-            value={privacyInfo.data.phone}
-            className="  border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-            onChange={e => handlePhoneChange(e.target.value)}
-          />
-        </div>
+            <div className=" m-6 mt-8 ml-16 ">
+              <div className="text-md font-semibold ">이메일</div>
+              <input
+                defaultValue={privacyInfo.data.email}
+                className=" border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
+              />
+            </div>
+            <div className=" m-6 ml-16 mt-8  ">
+              <div className="text-md font-semibold ">전화번호</div>
+              <input
+                value={privacyInfo.data.phone}
+                className="  border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
+                onChange={e => handlePhoneChange(e.target.value)}
+              />
+            </div>
+          </>
+        )}
       </div>
       <div className="flex w-[25rem] border-2 rounded border-primary shadow ml-2 ">
         <div className="w-full h-full">

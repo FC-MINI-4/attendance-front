@@ -1,16 +1,14 @@
 import Link from 'next/link';
-import { HiOutlineUserCircle } from 'react-icons/hi';
 import React, { useState, useEffect } from 'react';
-import memberModify from '@/api/member/memberModify';
-import { IMemberModifyProps, IprivacyProps } from '@/types/IMyPages';
+import { IprivacyProps } from '@/types/IMyPages';
 import { clientInstance } from '@/api/axios';
 import Image from 'next/image';
-import DropdownFilter from '@/components/admin/AdminDropDownFilter';
-import { MODIFY_DEPARTMENT } from '@/constants/options';
 import memberInfo from '@/api/member/memberInfo';
+import Loading from '@/components/common/Loading';
 
 export default function MemberInfoEdit() {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [privacyInfo, setPrivacyInfo] = useState<IprivacyProps>({
     success: false,
     code: '',
@@ -29,10 +27,14 @@ export default function MemberInfoEdit() {
 
   useEffect(() => {
     async function getInfo() {
+      setIsLoading(true);
       const response = await memberInfo();
       if (response.success && response.data) {
         const data = response;
         setPrivacyInfo(data);
+      }
+      {
+        setTimeout(() => setIsLoading(false), 500);
       }
     }
 
@@ -70,28 +72,32 @@ export default function MemberInfoEdit() {
           <div className="bg-primary absolute   top-0 left-0 w-4 h-12 z-0"></div>
           <div className="relative z-10 pl-4 ml-2 pt-2">사용자 정보</div>
         </div>
-        <div className="flex mt-8">
-          <div className="">
-            {Object.entries(List).map(([key, value]) => (
-              <div className="m-6 ml-12" key={key}>
-                <div className="text-md mt-14">{key}</div>
-                <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm focus:border-primary text-md">
-                  {value}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className="flex mt-8">
+            <div className="">
+              {Object.entries(List).map(([key, value]) => (
+                <div className="m-6 ml-12" key={key}>
+                  <div className="text-md mt-14">{key}</div>
+                  <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm focus:border-primary text-md">
+                    {value}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          <div className="">
-            {Object.entries(More).map(([key, value]) => (
-              <div className="m-6 ml-12" key={key}>
-                <div className="text-md mt-14">{key}</div>
-                <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm focus:border-primary text-md">
-                  {value}
+              ))}
+            </div>
+            <div className="">
+              {Object.entries(More).map(([key, value]) => (
+                <div className="m-6 ml-12" key={key}>
+                  <div className="text-md mt-14">{key}</div>
+                  <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm focus:border-primary text-md">
+                    {value}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div className="flex w-[25rem] border-2 rounded border-primary shadow ml-2 ">
         <div className="w-full h-full">
