@@ -4,7 +4,7 @@ import { Cookies } from 'react-cookie';
 
 const cookie = new Cookies();
 const accessToken = cookie.get('accessToken');
-const employeeId = cookie.get('employeeId')
+const employeeId = cookie.get('employeeId');
 
 export default async function requestSchedules() {
   try {
