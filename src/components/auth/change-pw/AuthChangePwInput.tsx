@@ -110,11 +110,14 @@ export default function AuthChangePwInput() {
         password: password,
         confirmPassword: confirmPassword
       });
-      if (response.data.success) {
-        alert(response.data.message);
-        router.push('/sign-in');
-      } else {
-        alert(response.data.message);
+
+      if (response) {
+        if (response.data.success) {
+          alert(response.data.message);
+          router.push('/sign-in');
+        } else {
+          alert(response.data.message);
+        }
       }
     } catch (error) {
       console.log(error);
