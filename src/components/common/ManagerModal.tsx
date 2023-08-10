@@ -24,7 +24,7 @@ export default function ManageModal(props: IModalProps) {
     return () => {
       document.removeEventListener('mousedown', handleOutside);
     };
-  }, [modalRef]);
+  }, [modalRef, setIsManageShow]);
 
   return (
     <>

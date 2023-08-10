@@ -1,14 +1,13 @@
-import Link from 'next/link';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { useRef, useState } from 'react';
+import Image from 'next/image';
 
 const dummyData = {
   name: '문현수',
   department: '개발',
   position: '팀장',
   employeeId: 'YSL-001',
-  hireDate: '2022-06-25',
-  profileUrl: 'https://i.ibb.co/R3SM6X1/image.jpg'
+  hireDate: '2022-06-25'
 };
 
 const handleClick = () => {
@@ -43,16 +42,8 @@ export default function MemberInfoEdit() {
   return (
     <div className="flex flex-col items-center text-lg bg-white rounded shadow p-6">
       <div className="flex justify-center items-center relative sm:pb-8">
-        {dummyData.profileUrl.length > 0 ? (
-          <img
-            className="w-40 h-40 rounded-full bg-contain"
-            src={dummyData.profileUrl}
-            alt="image"
-            ref={imgRef}
-          />
-        ) : (
-          <HiOutlineUserCircle className="w-40 h-40" />
-        )}
+        <HiOutlineUserCircle className="w-40 h-40" />
+
         <input
           type="file"
           id="modify"

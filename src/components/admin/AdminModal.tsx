@@ -21,7 +21,7 @@ export default function AdminModal({ reason }: IAdminModalProps) {
     return () => {
       document.removeEventListener('mousedown', handleOutside);
     };
-  }, [modalRef]);
+  }, [modalRef, setIsAdminShow]);
 
   return (
     <>
