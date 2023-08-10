@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+
 const dummyData = {
   name: '문현수',
   department: '개발',
@@ -60,6 +61,7 @@ export default function MemberInfoEdit() {
 
       <div className="bg-gray-200 h-24 flex items-center justify-center rounded-md mt-6 font-semibold"></div>
       <Link href={'/change-pw'}>비밀번호 수정하기</Link>
+
     </div>
   );
 }
