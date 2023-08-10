@@ -1,12 +1,11 @@
 import Image from 'next/image';
-import requestPersonal from '@/api/member/personalInfo';
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { remainDaysState } from '@/recoil/main';
+import { emailState, remainDaysState, nameState } from '@/recoil/main';
 
 export default function MainHeader() {
-  const [userName, setUserName] = useState('')
-  const [userEmail, setUserEmail] = useState('')
+  const [userName, setUserName] = useRecoilState(nameState)
+  const [userEmail, setUserEmail] = useRecoilState(emailState)
   const [userProfile, setUserProfile] = useState('')
   const [remainDays, setRemainDays] = useRecoilState(remainDaysState)
 
@@ -16,18 +15,6 @@ export default function MainHeader() {
     document.cookie = 'expires=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     location.replace('/sign-in');
   };
-
-  useEffect(()=>{
-    const userInfo = async () => {
-      const infoReq = await requestPersonal()
-      const personalInfo = infoReq.data
-      
-      setUserEmail(personalInfo.email)
-      setUserName(personalInfo.name)
-      setUserProfile(personalInfo.profileImagePath)
-    }
-    userInfo()
-  },[])
 
   return (
     <div className="h-24 flex justify-between px-16">
