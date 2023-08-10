@@ -27,7 +27,7 @@ export default function AuthSignInInput() {
           value={signInInfo.email}
         />
       </div>
-      <div className="sm:mb-16 mb-8">
+      <div className="sm:mb-8 mb-8">
         <Input
           label={'비밀번호'}
           name={'password'}
