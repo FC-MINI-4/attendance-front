@@ -17,13 +17,14 @@ export async function requestEmailCheck(signUpData: ISignInRequestBody) {
   }
 }
 
-// * [POST] 회원가입 요청
+// * [POST] 회원가입
 export async function requestSignUp(signUpData: ISignUpRequestBody) {
   try {
     const response = await axios.post(
       `${clientInstance.defaults.baseURL}/api/auth/signup`,
       signUpData
     );
+    alert(response.data.data.message);
     return response;
   } catch (error) {
     console.error('NOT_AVAILABLE_EMAIL', error);

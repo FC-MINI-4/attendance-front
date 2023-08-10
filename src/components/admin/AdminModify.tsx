@@ -32,8 +32,6 @@ export default function AdminModify() {
   const [hireDate, setHireDate] = useState<string>('2023-11-22');
   const [email, setEmail] = useState('jinyc@naver.com');
 
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -58,7 +56,7 @@ export default function AdminModify() {
           new Blob([JSON.stringify(data)], { type: 'application/json' })
         );
 
-        formData.append('profileImagePath', profileImage as File);
+        formData.append('profileImageFile', profileImage as File);
 
         const response = await modifyRes(formData);
 
@@ -106,9 +104,7 @@ export default function AdminModify() {
         email,
         phone,
         hireDate,
-
         profilePath
-
       });
       {
         setTimeout(() => setIsLoading(false), 500);
@@ -119,14 +115,7 @@ export default function AdminModify() {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-
-      reader.onload = e => {
-        setProfileImage(file);
-        setPreviewImage(e.target?.result as string);
-      };
-
-      reader.readAsDataURL(file);
+      setProfileImage(file);
     }
   };
 
@@ -200,16 +189,13 @@ export default function AdminModify() {
         <div className="h-[30rem] w-[20rem] ml-[3rem]">
           <div className=" h-[20rem] w-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
             {selectedEmployee.profilePath ? (
-
-              <div className="">
-                <Image
-                  src={`${clientInstance.defaults.baseURL}${selectedEmployee.profilePath}`}
-                  width={320}
-                  height={320}
-                  alt="프로필 이미지"
-                  className="rounded-xl "
-                />
-              </div>
+              <Image
+                src={`${clientInstance.defaults.baseURL}${selectedEmployee.profilePath}`}
+                width={320}
+                height={320}
+                alt="프로필 이미지"
+                className="rounded-xl "
+              />
             ) : (
               <div className="flex items-center justify-center font-semibold">
                 이미지 없음

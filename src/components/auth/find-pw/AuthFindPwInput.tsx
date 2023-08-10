@@ -16,7 +16,7 @@ export default function AuthFindPwInput() {
     return rEmail.test(email);
   };
 
-  // 비밀번호 찾기 API 호출 함수
+  // 비밀번호 변경을 위한 이메일 전송 API 호출 함수
   const handleFindPw = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -24,7 +24,6 @@ export default function AuthFindPwInput() {
       const response = await requestFindPw({
         email: email
       });
-
       if (response.data.success) {
         alert(response.data.message);
       } else {

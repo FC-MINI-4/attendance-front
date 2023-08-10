@@ -26,12 +26,10 @@ export default function AuthSignUpBox() {
         department: signUpData.department
       });
 
-      if (response.data.success === true) {
+      if (response.data.success) {
         alert('회원가입이 완료되었습니다!');
         // 페이지를 로그인 페이지로 이동시키기
         router.push('/sign-in');
-      } else {
-        alert(response.data.message);
       }
     } catch (error: any) {
       alert(error.response.data.message);

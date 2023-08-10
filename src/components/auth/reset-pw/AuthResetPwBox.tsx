@@ -9,7 +9,7 @@ export default function AuthResetPwBox() {
         <br /> 비밀번호를 재설정합니다.
       </div>
       <div className="text-subTextAndBorder text-lg mb-8">
-        새로운 비밀번호를 <br /> 입력해주세요.
+        재설정할 비밀번호를 <br /> 입력해주세요.
       </div>
       <AuthResetPwInput />
     </PwBox>

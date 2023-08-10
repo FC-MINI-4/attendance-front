@@ -2,7 +2,7 @@ import axios from 'axios';
 import { clientInstance } from '@/api/axios';
 import { ISignInRequestBody } from '@/types/ISignIn';
 
-// * [POST] 로그인 요청
+// * [POST] 로그인 요청 api
 export async function requestSignIn(signInData: ISignInRequestBody) {
   try {
     const response = await axios.post(

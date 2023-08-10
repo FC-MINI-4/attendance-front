@@ -1,26 +1,30 @@
 import { useState } from 'react';
+import { Cookies } from 'react-cookie';
+import { useRouter } from 'next/router';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { rPassword } from '@/constants/constants';
-import { requestChangePw } from '@/api/auth/changePw';
+import { requestResetPw } from '@/api/auth/resetPw';
 import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 
 export default function AuthResetPwInput() {
-  const [currentPassword, setCurrentPassword] = useState('');
+  const router = useRouter();
+  const { query } = router;
+
+  // 액세스 토큰을 request body?
+  const cookie = new Cookies();
+  const accessToken = cookie.get('accessToken');
+  // query에서 받아온 authToken
+  const authToken = query.authToken;
+
   const [password, setPassword] = useState('');
   const [confirmPassword, setComfirmPassword] = useState('');
 
-  const handleCurrentPassword = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setCurrentPassword(event?.target.value);
-  };
-
-  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event?.target.value);
   };
 
-  const handleConfirmPassword = (
+  const handleConfirmPwChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setComfirmPassword(event?.target.value);
@@ -63,31 +67,30 @@ export default function AuthResetPwInput() {
     }
   };
 
-  const handleChangePw = async (event: React.FormEvent<HTMLFormElement>) => {
+  //
+  const handleResetPw = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      const response = await requestChangePw({
-        currentPassword: currentPassword,
+      const response = await requestResetPw({
+        accessToken: accessToken,
         password: password,
         confirmPassword: confirmPassword
       });
-      if (response.status === 200) {
-        if (!response.data.success) {
-          alert(response.data.message);
-        }
+      if (response.data.success) {
+        alert(response.data.message);
       }
     } catch (error) {}
   };
 
   return (
     <>
-      <form onSubmit={handleChangePw}>
+      <form onSubmit={handleResetPw}>
         <div className="sm:mb-8 mb-8">
           <Input
             label={'새로운 비밀번호'}
             name={'password'}
-            onChange={handlePassword}
+            onChange={handlePasswordChange}
             placeholder={'영문+숫자, 8자리 이상 16자리 이하'}
             type="password"
             valid={passwordCheck()}
@@ -98,7 +101,7 @@ export default function AuthResetPwInput() {
           <Input
             label={'비밀번호 확인'}
             name={'password'}
-            onChange={handleConfirmPassword}
+            onChange={handleConfirmPwChange}
             placeholder={'비밀번호를 한번 더 입력해주세요.'}
             type="password"
             valid={confirmPasswordCheck()}

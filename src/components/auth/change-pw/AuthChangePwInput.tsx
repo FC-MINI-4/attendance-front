@@ -1,39 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { Cookies } from 'react-cookie';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { rPassword } from '@/constants/constants';
-import { requestChangePw, requestValidPw } from '@/api/auth/changePw';
+import { requestChangePw } from '@/api/auth/changePw';
 import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 
 export default function AuthChangePwInput() {
-  const [isValid, setIsValid] = useState(false);
-  const [currentPassword, setCurrentPassword] = useState('a');
+  const cookie = new Cookies();
+  const employeeId = cookie.get('employeeId');
+
+  const [currentPassword, setcurrentPassword] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setComfirmPassword] = useState('');
 
-  useEffect(() => {
-    requestValidPw().then(res => {
-      console.log(res);
-      try {
-      } catch (error) {
-        throw error;
-      }
-    });
-  }, []);
-
-  const handleCurrentPassword = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setCurrentPassword(event?.target.value);
+  const handleCurrentPw = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setcurrentPassword(event?.target.value);
   };
 
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event?.target.value);
   };
 
-  const handleConfirmPassword = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleConfirmPw = (event: React.ChangeEvent<HTMLInputElement>) => {
     setComfirmPassword(event?.target.value);
   };
 
@@ -74,19 +63,22 @@ export default function AuthChangePwInput() {
     }
   };
 
+  // form data 전송
   const handleChangePw = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
+      // 비밀번호 변경 (로그인 시)
       const response = await requestChangePw({
+        id: employeeId,
         currentPassword: currentPassword,
         password: password,
         confirmPassword: confirmPassword
       });
-      if (response.status === 200) {
-        if (!response.data.success) {
-          alert(response.data.message);
-        }
+      if (response.data.success) {
+        alert(response.data.message);
+      } else {
+        alert(response.data.message);
       }
     } catch (error) {}
   };
@@ -98,10 +90,9 @@ export default function AuthChangePwInput() {
           <Input
             label={'현재 비밀번호'}
             name={'password'}
-            onChange={handleCurrentPassword}
-            placeholder={'현재 비밀번호를 입력해주세요.'}
+            onChange={handleCurrentPw}
+            placeholder={'영문+숫자, 8자리 이상 16자리 이하'}
             type="password"
-            valid={passwordCheck()}
           />
           {renderCheck(true)}
         </div>
@@ -120,7 +111,7 @@ export default function AuthChangePwInput() {
           <Input
             label={'비밀번호 확인'}
             name={'password'}
-            onChange={handleConfirmPassword}
+            onChange={handleConfirmPw}
             placeholder={'비밀번호를 한번 더 입력해주세요.'}
             type="password"
             valid={confirmPasswordCheck()}
