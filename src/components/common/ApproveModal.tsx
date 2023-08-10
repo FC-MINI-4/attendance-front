@@ -96,7 +96,7 @@ export default function ApproveModal(modalProps: IModalProps) {
   //체크박스
   const MakeCheckBox = () => {
     const box = [];
-    const checkBoxContents = ['반차(오전)', '반차(오후)', '연차', '경조휴가'];
+    const checkBoxContents = ['오전 반차', '오후 반차', '연차', '특별 휴가'];
     const checkboxes = document.getElementsByTagName('input');
 
     //체크 박스 하나만 클릭 가능하게
@@ -140,6 +140,7 @@ export default function ApproveModal(modalProps: IModalProps) {
   };
 
   const submitDayOff = () => {
+    event?.preventDefault();
     requestDayOff(dayOffData);
   };
 
@@ -151,8 +152,7 @@ export default function ApproveModal(modalProps: IModalProps) {
 
   const dutyData = {
     employeeId: employeeId,
-    date: `${startDateForm}`,
-    reason: '프로젝트 진행'
+    date: `${startDateForm}`
   };
 
   const submitDuty = () => {
