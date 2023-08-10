@@ -115,7 +115,7 @@ export default function EmployeeList({
     return () => {
       document.removeEventListener('mousedown', handleOutside);
     };
-  }, [modalRef]);
+  }, [modalRef, setIsManageShow]);
 
   return (
     <>

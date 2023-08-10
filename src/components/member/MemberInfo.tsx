@@ -8,8 +8,7 @@ const dummyData = {
   department: '개발',
   position: '팀장',
   employeeId: 'YSL-001',
-  hireDate: '2022-06-25',
-  profileUrl: 'https://i.ibb.co/R3SM6X1/image.jpg'
+  hireDate: '2022-06-25'
 };
 
 const handleClick = () => {
@@ -44,16 +43,7 @@ export default function MemberInfo() {
   return (
     <div className="flex flex-col text-lg bg-white shadow">
       <div className="flex justfiy-center items-center relative pl-12 my-6 w-[250px]">
-        {dummyData.profileUrl.length > 0 ? (
-          <img
-            className="w-40 h-40 rounded-full bg-contain"
-            src={dummyData.profileUrl}
-            alt="image"
-            ref={imgRef}
-          />
-        ) : (
-          <HiOutlineUserCircle className="items-centerw-40 h-40" />
-        )}
+        <HiOutlineUserCircle className="items-centerw-40 h-40" />
       </div>
       <div className="text-lg my-6 text-center font-bold">
         {dummyData.name}님, 반갑습니다.
