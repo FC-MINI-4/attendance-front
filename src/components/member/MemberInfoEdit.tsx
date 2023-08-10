@@ -1,67 +1,238 @@
-import { HiOutlineUserCircle } from 'react-icons/hi';
-import { useRef, useState } from 'react';
+import react, { useState, useEffect } from 'react';
+import memberModify from '@/api/member/memberModify';
+import { IprivacyProps } from '@/types/IMyPages';
+import { clientInstance } from '@/api/axios';
 import Image from 'next/image';
-import Link from 'next/link';
-
-
-const dummyData = {
-  name: '문현수',
-  department: '개발',
-  position: '팀장',
-  employeeId: 'YSL-001',
-  hireDate: '2022-06-25'
-};
-
-const handleClick = () => {
-  // 1. 로그아웃 API를 요청합니다.
-  return;
-};
-
-// 받아온 프로필URL을 Photo로 변환합니다.
+import DropdownFilter from '@/components/admin/AdminDropDownFilter';
+import { MODIFY_DEPARTMENT } from '@/constants/options';
+import Button from '@/components/common/Button';
+import memberInfo from '@/api/member/memberInfo';
+import Loading from '@/components/common/Loading';
 
 export default function MemberInfoEdit() {
-  const [myUrl, setMyUrl] = useState('');
-  const imgRef = useRef<HTMLImageElement>(null);
+  const [employeeId, setEmployeeId] = useState<number>();
+  const [department, setDepartment] = useState<string>('');
+  const [profileImage, setProfileImage] = useState<File>();
+  const [name, setName] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [privacyInfo, setPrivacyInfo] = useState<IprivacyProps>({
+    success: false,
+    code: '',
+    message: '',
+    data: {
+      employeeId: 0,
+      department: '',
+      position: '',
+      name: '',
+      email: '',
+      phone: '',
+      hireDate: '',
+      profilePath: ''
+    }
+  });
 
-  const readImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files?.length) return;
+  useEffect(() => {
+    async function getInfo() {
+      setIsLoading(true);
+      const response = await memberInfo();
+      if (response.success && response.data) {
+        const data = response;
+        setPrivacyInfo(data);
+      }
+      {
+        setTimeout(() => setIsLoading(false), 500);
+      }
+    }
 
-    const imageFile = e.target.files[0];
+    getInfo();
+  }, []);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if ((employeeId && department && name && phone) || profileImage) {
+      try {
+        const data = {
+          employeeId: privacyInfo.data.employeeId,
+          department: privacyInfo.data.department,
+          name: privacyInfo.data.name,
+          phone: privacyInfo.data.phone
+        };
+        setIsLoading(true);
+        const formData = new FormData();
+
+        formData.append(
+          'personalInfoRequest',
+          new Blob([JSON.stringify(data)], { type: 'application/json' })
+        );
+
+        formData.append('profileImageFile', profileImage as File);
+
+        const response = await memberModify(formData);
+        {
+          setTimeout(() => setIsLoading(false), 500);
+        }
+
+        alert(response.message);
+      } catch (error) {
+        alert('수정에 실패했습니다.');
+      }
+    } else {
+      alert('수정에 실패했습니다.');
+    }
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    const fileSizeInMB = file.size / (1024 * 1024);
+    if (fileSizeInMB > 5) {
+      alert('파일 크기가 5MB를 초과합니다. 5MB 이하의 파일을 선택해주세요.');
+      return;
+    }
     const reader = new FileReader();
+    reader.onload = e => {
+      setProfileImage(file);
+      setPreviewImage(e.target?.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
 
-    reader.addEventListener('load', (e: ProgressEvent<FileReader>) => {
-      if (!e || !e.target) return;
-      if (typeof e.target.result !== 'string' || !imgRef.current) return;
+  const handleNameChange = (value: string) => {
+    setPrivacyInfo(prevState => ({
+      ...prevState,
+      data: {
+        ...prevState.data,
+        name: value
+      }
+    }));
+  };
 
-      imgRef.current.src = e.target.result;
-    });
+  const handlePhoneChange = (value: string) => {
+    setPrivacyInfo(prevState => ({
+      ...prevState,
+      data: {
+        ...prevState.data,
+        phone: value
+      }
+    }));
+  };
 
-    setMyUrl(URL.createObjectURL(imageFile));
-
-    return reader.readAsDataURL(imageFile);
+  const handleDepartmentChange = (value: string) => {
+    setPrivacyInfo(prevState => ({
+      ...prevState,
+      data: {
+        ...prevState.data,
+        department: value
+      }
+    }));
   };
 
   return (
-    <div className="flex flex-col items-center text-lg bg-white rounded shadow p-6">
-      <div className="flex justify-center items-center relative sm:pb-8">
-        <HiOutlineUserCircle className="w-40 h-40" />
+    <form onSubmit={handleSubmit} className="w-[70rem] flex h-[35rem]">
+      <div className="w-[40rem] border-primary   border-2 rounded shadow">
+        <div className="relative  w-[15rem]  rounded-sm font-bold sm:text-2xl sm:pb-8 h-9 ">
+          <div className="bg-primary absolute   top-0 left-0 w-4 h-12 z-0"></div>
+          <div className="relative z-10 pl-4 ml-2 pt-2">정보 수정</div>
+        </div>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <div className=" m-6 ml-16  ">
+              <div className="text-md font-semibold mt-16 ">이름</div>
+              <input
+                value={privacyInfo.data.name}
+                onChange={e => handleNameChange(e.target.value)}
+                className="w-[20rem]  border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md"
+              />
+            </div>
 
-        <input
-          type="file"
-          id="modify"
-          onChange={e => readImage(e)}
-          className="absolute w-0 h-0 p-0 overflow-hidden border-0"
-        />
-        <label
-          htmlFor="modify"
-          className="cursor-pointer inline-block text-base absolute right-3 bottom-0 px-0 py-1 text-light-blue-500 border-transparent mt-6 font-semibold">
-          프로필 사진 업로드
-        </label>
+            <div className=" m-6 mt-8 ml-16">
+              <div className="text-md font-semibold ">계열사</div>
+              <div className="font-small w-[21rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex ">
+                <DropdownFilter
+                  options={MODIFY_DEPARTMENT}
+                  value={privacyInfo.data.department}
+                  onChange={handleDepartmentChange}
+                />
+              </div>
+            </div>
+
+            <div className=" m-6 mt-8 ml-16 ">
+              <div className="text-md font-semibold ">입사일</div>
+              <input
+                defaultValue={privacyInfo.data.hireDate}
+                className="  border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
+              />
+            </div>
+
+            <div className=" m-6 mt-8 ml-16 ">
+              <div className="text-md font-semibold ">이메일</div>
+              <input
+                defaultValue={privacyInfo.data.email}
+                className=" border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
+              />
+            </div>
+            <div className=" m-6 ml-16 mt-8  ">
+              <div className="text-md font-semibold ">전화번호</div>
+              <input
+                value={privacyInfo.data.phone}
+                className="  border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
+                onChange={e => handlePhoneChange(e.target.value)}
+              />
+            </div>
+          </>
+        )}
       </div>
-
-      <div className="bg-gray-200 h-24 flex items-center justify-center rounded-md mt-6 font-semibold"></div>
-      <Link href={'/change-pw'}>비밀번호 수정하기</Link>
-
-    </div>
+      <div className="flex w-[25rem] border-2 rounded border-primary shadow ml-2 ">
+        <div className="w-full h-full">
+          <div className=" flex  justify-center h-[200px] rounded-full mt-20 ">
+            {previewImage ? (
+              <Image
+                src={previewImage}
+                alt="미리보기 이미지"
+                width={320}
+                height={320}
+                className="rounded-xl w-[240px] h-[240px] "
+              />
+            ) : privacyInfo.data.profilePath ? (
+              <Image
+                src={`${clientInstance.defaults.baseURL}${privacyInfo.data.profilePath}`}
+                width={320}
+                height={320}
+                alt="프로필 이미지"
+                className="rounded-xl w-[240px] h-[240px] "
+              />
+            ) : (
+              <div className="flex items-center justify-center font-semibold ">
+                이미지 없음
+              </div>
+            )}
+          </div>
+          <label
+            htmlFor="imageUpload"
+            className=" text-lg font-semibold hover:cursor-pointer justify-center flex  mt-16">
+            이미지를 선택해주세요.
+          </label>
+          <input
+            id="imageUpload"
+            className="hidden"
+            type="file"
+            accept="image/jpeg, image/png, image/gif, image/svg+xml"
+            name="file"
+            onChange={handleImageChange}></input>
+          <div className="w-[25rem] flex justify-center ">
+            <div className="w-[16rem] mt-20">
+              <Button contents="수정" submit />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   );
 }

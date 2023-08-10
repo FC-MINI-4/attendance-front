@@ -10,12 +10,12 @@ const employeeId = cookie.get('employeeId');
 export default async function memberInfo() {
   try {
     const response = await axios.get(
-      `${clientInstance.defaults.baseURL}/api/personal-info/${employeeId}`
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${accessToken}`
-      //   }
-      // }
+      `${clientInstance.defaults.baseURL}/api/personal-info/${employeeId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
     );
     return response.data;
   } catch (error) {
