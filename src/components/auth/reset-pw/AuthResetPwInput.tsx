@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Cookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
@@ -10,15 +9,9 @@ import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 export default function AuthResetPwInput() {
   const router = useRouter();
   const { query } = router;
-
-  // 액세스 토큰을 request body?
-  const cookie = new Cookies();
-  const accessToken = cookie.get('accessToken');
-  // query에서 받아온 authToken
-  const authToken = query.authToken;
-
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setComfirmPassword] = useState('');
+  const authToken = query.authToken; // query에서 AuthToken get
+  const [password, setPassword] = useState(''); // 새로운 비밀번호
+  const [confirmPassword, setComfirmPassword] = useState(''); // 새로운 비밀번호 확인
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event?.target.value);
@@ -47,11 +40,7 @@ export default function AuthResetPwInput() {
   };
 
   // 비밀번호 변경 버튼 활성화 여부
-  const isDisabled =
-    passwordCheck() &&
-    confirmPasswordCheck() &&
-    password.length > 7 &&
-    password.length < 17;
+  const isDisabled = passwordCheck() && confirmPasswordCheck();
 
   // 유효성 검사
   const renderCheck = (isPassword: boolean) => {
@@ -67,20 +56,25 @@ export default function AuthResetPwInput() {
     }
   };
 
-  //
+  // * 비밀번호 재설정 API 호출 함수
   const handleResetPw = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
       const response = await requestResetPw({
-        accessToken: accessToken,
+        authToken: authToken as string,
         password: password,
         confirmPassword: confirmPassword
       });
-      if (response.data.success) {
-        alert(response.data.message);
+
+      if (response) {
+        if (response.data.success) {
+          alert(response.data.message);
+        }
       }
-    } catch (error) {}
+    } catch (error: any) {
+      alert(error.response.data.message);
+    }
   };
 
   return (
