@@ -50,12 +50,11 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
       });
       if (response.data.success) {
         alert(response.data.message);
-      }
-      if (!response.data.success) {
+      } else {
         alert(response.data.message);
       }
-    } catch (error: any) {
-      alert(error.response.data.message);
+    } catch (error) {
+      throw error;
     }
   };
 
