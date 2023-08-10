@@ -8,7 +8,7 @@ export async function requestSignIn(signInData: ISignInRequestBody) {
   try {
     const response = await axios.post(
       `${clientInstance.defaults.baseURL}/api/auth/login`,
-      signInData,
+      signInData
     );
     return response;
   } catch (error) {
