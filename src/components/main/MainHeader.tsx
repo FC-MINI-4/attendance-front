@@ -1,11 +1,14 @@
 import Image from 'next/image';
 import requestPersonal from '@/api/member/personalInfo';
 import { useState, useEffect } from 'react'
+import { useRecoilState } from 'recoil'
+import { remainDaysState } from '@/recoil/main';
 
 export default function MainHeader() {
   const [userName, setUserName] = useState('')
   const [userEmail, setUserEmail] = useState('')
   const [userProfile, setUserProfile] = useState('')
+  const [remainDays, setRemainDays] = useRecoilState(remainDaysState)
 
   const LogOut = () => {
     document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
@@ -36,11 +39,13 @@ export default function MainHeader() {
           <Image src={userProfile ? userProfile : '/logo.png'} alt='profileImg' width={48} height={48}/>
         </div>
         <div className="relative">
-          <div className="absolute top-0 left-0 font-bold">{userName}</div>
-          <div className="pt-6">{userEmail}</div>
-          <div className="absolute top-0 right-0 text-primary font-bold">
-            잔여연차:{}
+          <div className='flex justify-between absolute top-0 left-0'>
+            <div className="font-bold mr-6">{userName}</div>
+            <div className="text-primary font-bold">
+              잔여연차:{remainDays}
+            </div>
           </div>
+          <div className="w-48 pt-6">{userEmail}</div>
         </div>
         <div
           className="ml-4 top-0 bottom-0 my-auto font-bold cursor-pointer"
