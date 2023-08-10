@@ -28,3 +28,26 @@ export interface IMemberListProps {
     duties?: IMemberDutyProps[];
   };
 }
+export interface IMemberModifyProps {
+  employeeId: number;
+  department: string;
+  name: string;
+  phone: string;
+  password: string;
+}
+
+export interface IprivacyProps {
+  success: boolean;
+  code: string;
+  message: string;
+  data: {
+    employeeId: number;
+    department: string;
+    name: string;
+    email: string;
+    phone: string;
+    hireDate: string;
+    position: string;
+    profilePath: string;
+  };
+}

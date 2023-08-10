@@ -1,93 +1,126 @@
-// new Date()로 받아오는 현재 날짜 데이터를
-// toLocaleString() // 한국 시각데이터로 바꿉니다.
-// 2023.8.1 오후 2:17:38
+import Link from 'next/link';
+import { HiOutlineUserCircle } from 'react-icons/hi';
+import react, { useState, useEffect } from 'react';
+import memberModify from '@/api/member/memberModify';
+import { IMemberModifyProps, IprivacyProps } from '@/types/IMyPages';
+import { clientInstance } from '@/api/axios';
+import Image from 'next/image';
+import DropdownFilter from '@/components/admin/AdminDropDownFilter';
+import { MODIFY_DEPARTMENT } from '@/constants/options';
+import memberInfo from '@/api/member/memberInfo';
 
-// 2023 8 1 - 2022 06 15 = 1년 1개월
+export default function MemberInfoEdit() {
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [privacyInfo, setPrivacyInfo] = useState<IprivacyProps>({
+    success: false,
+    code: '',
+    message: '',
+    data: {
+      employeeId: 0,
+      department: '',
+      name: '',
+      email: '',
+      phone: '',
+      hireDate: '',
+      profilePath: '',
+      position: ''
+    }
+  });
 
-// 현재 날짜와 시간 생성
-const currentDate = new Date();
+  useEffect(() => {
+    async function getInfo() {
+      const response = await memberInfo();
+      if (response.success && response.data) {
+        const data = response;
+        setPrivacyInfo(data);
+      }
+    }
 
-const dummyData = {
-  name: '문현수',
-  department: '개발',
-  position: '팀장',
-  employeeId: 'YSL-001',
-  hireDate: '2022-06-25'
-};
-
-/////////////////////////
-
-// 근속 기간을 계산합니다.
-function calculateDuration(startDate: Date, endDate: Date) {
-  let yearsDiff = endDate.getFullYear() - startDate.getFullYear();
-  let monthsDiff = endDate.getMonth() - startDate.getMonth();
-
-  // 만약 현재 월이 시작 월보다 작다면, 년도를 하나 줄여야 합니다.
-  if (endDate.getMonth() < startDate.getMonth()) {
-    yearsDiff--;
-    monthsDiff = 12 - startDate.getMonth() + endDate.getMonth();
-  }
-
-  return yearsDiff + '년 ' + monthsDiff + '개월';
-}
-
-const duration = calculateDuration(new Date(dummyData.hireDate), currentDate);
-
-/////////////////////////
-
-/////////////////////////
-
-// 검색 기준일 (2023.8.1 (화)) 형식 반환 함수
-const formatSearchDate = (date: Date) => {
-  const days = ['일', '월', '화', '수', '목', '금', '토'];
-  const daysText = days[date.getDay()]; // 현재 요일 인덱스를 반환합니다.
+    getInfo();
+  }, []);
 
   return (
-    date.toLocaleString('ko-KR', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric'
-    }) +
-    ' (' +
-    daysText +
-    ')'
-  );
-};
+    <div className="w-[70rem] flex h-[35rem]">
+      <div className="w-[40rem] border-primary   border-2 rounded shadow">
+        <div className="relative  w-[15rem]  rounded-sm font-bold sm:text-2xl sm:pb-8 h-9 ">
+          <div className="bg-primary absolute   top-0 left-0 w-4 h-12 z-0"></div>
+          <div className="relative z-10 pl-4 ml-2 pt-2">사용자 정보</div>
+        </div>
+        <div className="flex">
+          <div className=" m-6 ml-12  ">
+            <div className="text-md mt-12 ">이름</div>
+            <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md">
+              {privacyInfo.data.name}
+            </div>
+          </div>
 
-const searchDate = formatSearchDate(currentDate);
+          <div className=" m-6 ml-16  ">
+            <div className="text-md mt-12 ">직급</div>
+            <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md">
+              {privacyInfo.data.position}
+            </div>
+          </div>
+        </div>
+        <div className="flex">
+          <div className=" m-6 ml-12  ">
+            <div className="text-md mt-12 ">계열사</div>
+            <div className="w-[14rem] text-lg  font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md">
+              {privacyInfo.data.department}
+            </div>
+          </div>
 
-/////////////////////////
+          <div className=" m-6 ml-16  ">
+            <div className="text-md  mt-12 ">사원번호</div>
+            <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md">
+              {privacyInfo.data.employeeId}
+            </div>
+          </div>
+        </div>
 
-const memberDetail = {
-  부서명: dummyData.department,
-  직위: dummyData.position,
-  사원번호: dummyData.employeeId,
-  입사일: dummyData.hireDate,
-  '근무 기간': duration,
-  '검색 기준일': searchDate
-};
+        <div className="flex">
+          <div className=" m-6 ml-12  ">
+            <div className="text-md  mt-12 ">입사일</div>
+            <div className="w-[14rem] text-lg  font-semibold  border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md">
+              {privacyInfo.data.hireDate}
+            </div>
+          </div>
 
-export default function MemberDetail() {
-  return (
-    <div className="items-center justify-center">
-      <div className="w-full max-w-lg p-8 bg-white rounded shadow">
-        <div className="pb-6">
-        <div className="relative bg-gray-300 rounded-sm-lg font-bold sm:text-2xl sm:pb-8 h-7">
-        <span className="bg-primary absolute top-0 left-0 w-4 h-8 z-0"></span>
-        <span className="relative z-10 pl-4">사용자 정보</span>
+          <div className=" m-6 ml-16  ">
+            <div className="text-md   mt-12 ">근무기간</div>
+            <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md">
+              {privacyInfo.data.hireDate}
+            </div>
+          </div>
         </div>
       </div>
-        <div className="grid grid-cols-2 gap-8">
-          {Object.entries(memberDetail).map(([key, value]) => (
-            <div key={key}>
-              <div className="text-sm pb-2 font-semibold text-gray-500">
-                {key}
+      <div className="flex w-[25rem] border-2 rounded border-primary shadow ml-2 ">
+        <div className="w-full h-full">
+          <div className=" flex  justify-center h-[200px] rounded-full mt-20 ">
+            {previewImage ? (
+              <Image
+                src={previewImage}
+                alt="미리보기 이미지"
+                width={320}
+                height={320}
+                className="rounded-xl w-[240px] h-[240px] "
+              />
+            ) : privacyInfo.data.profilePath ? (
+              <Image
+                src={`${clientInstance.defaults.baseURL}${privacyInfo.data.profilePath}`}
+                width={320}
+                height={320}
+                alt="프로필 이미지"
+                className="rounded-xl w-[240px] h-[240px] "
+              />
+            ) : (
+              <div className="flex items-center justify-center font-semibold ">
+                이미지 없음
               </div>
-              <div className="mb-6 pb-2 text-base border-b border-gray-300 max-w-full">
-                {value}
-              </div>
-            </div>
-          ))}
+            )}
+          </div>
+          <div className="flex justify-center items-center mt-32 font-bold text-2xl">
+            {privacyInfo.data.name}님, 반갑습니다.
+          </div>
         </div>
       </div>
     </div>
