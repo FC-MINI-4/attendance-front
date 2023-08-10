@@ -11,12 +11,12 @@ export async function requestResetPw(resetPwData: IAuthResetPw) {
   try {
     const response = await axios.post(
       `${clientInstance.defaults.baseURL}/api/auth/users/password/reset`,
-      resetPwData
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${accessToken}`
-      //   }
-      // }
+      resetPwData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
     );
     return response;
   } catch (error) {

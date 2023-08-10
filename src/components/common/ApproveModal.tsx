@@ -3,11 +3,13 @@ import { useState, useEffect, useRef } from 'react';
 import { dutyState, modalState } from '@/recoil/common/modal';
 import { useRecoilState } from 'recoil';
 import DatePicker from 'react-datepicker';
-import requestDayOff from '@/api/main/dayoff';
+import {requestDayOff} from '@/api/main/dayoff';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
-import requestDuty from '@/api/main/duty';
-import getCookie from '@/components/common/GetCookie';
+import {requestDuty} from '@/api/main/duty';
+import { Cookies } from 'react-cookie';
+
+const cookie = new Cookies();
 
 export default function ApproveModal(modalProps: IModalProps) {
   const [isModalShow, setIsModalShow] = useRecoilState(modalState);
@@ -124,8 +126,8 @@ export default function ApproveModal(modalProps: IModalProps) {
 
     return <div className="flex">{box}</div>;
   };
-
-  const employeeId = Number(getCookie('employeeId'));
+ 
+  const employeeId = Number(cookie.get('employeeId'));
   const startDateForm = moment(startDate).format('YYYY-MM-DD');
   const endDateForm = moment(endDate).format('YYYY-MM-DD');
 
