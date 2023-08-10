@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "https://soonyang.vercel.app/$1",
+      "permanent": true
+    }
+  ]
+}
