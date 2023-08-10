@@ -8,7 +8,7 @@ export default function AuthSignInInput() {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setSignInInfo(prevInformation => ({
+    setSignInInfo((prevInformation: any) => ({
       ...prevInformation,
       [name]: value
     }));
