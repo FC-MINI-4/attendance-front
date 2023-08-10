@@ -1,19 +1,14 @@
 import axios from 'axios';
 import { clientInstance } from '@/api/axios';
-import { ApplyIDayOff } from '@/types/IDayOff';
+import { IApplyDayOff } from '@/types/IDayOff';
 
-export default async function requestDayOff(requestData: ApplyIDayOff) {
+export default async function requestDayOff(requestData: IApplyDayOff) {
   try {
     const response = await axios.post(
       `${clientInstance.defaults.baseURL}/api/schedules/day-off`,
-      requestData,
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${requestData.accessToken}`
-      //   }
-      // }
-    )
-    ;
+      requestData
+    );
+    alert('신청이 완료되었습니다.');
     return response;
   } catch (error) {
     console.error('Request_Fail', error);
