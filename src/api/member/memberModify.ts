@@ -5,10 +5,10 @@ import { Cookies } from 'react-cookie';
 const cookie = new Cookies();
 const accessToken = cookie.get('accessToken');
 
-export default async function modifyRes(data: FormData) {
+export default async function memberModify(data: FormData) {
   try {
     const response = await axios.put(
-      `${clientInstance.defaults.baseURL}/api/admin/employee`,
+      `${clientInstance.defaults.baseURL}/api/personal-info`,
       data,
       {
         headers: {
@@ -17,11 +17,9 @@ export default async function modifyRes(data: FormData) {
         }
       }
     );
-
     return response.data;
   } catch (error) {
-    console.error('MODIFY_FAILURE', error);
+    console.error('MEMBERMODIFY_FAILURE', error);
     throw error;
   }
 }
-//직원상세정보 수정페이지 수정요청

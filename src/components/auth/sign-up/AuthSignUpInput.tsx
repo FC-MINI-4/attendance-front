@@ -23,24 +23,7 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
     }));
   };
 
-  // 휴대폰 번호 입력 핸들러
-  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-
-    const hyphenNumber = value
-      .replace(/[^0-9]/g, '')
-      .substring(0, 11)
-      .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
-
-    setPhoneNumber(hyphenNumber);
-
-    setSignUpInfo(prevInformation => ({
-      ...prevInformation,
-      [name]: hyphenNumber
-    }));
-  };
-
-  // 이메일 중복 체크
+  // ** 이메일 중복 체크 API 호출 함수
   const handleEmailCheck = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -50,11 +33,9 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
       });
       if (response.data.success) {
         alert(response.data.message);
-      } else {
-        alert(response.data.message);
       }
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      alert(error.response.data.message);
     }
   };
 
@@ -77,7 +58,6 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
     if (signUpInfo.email.trim() === '') {
       return true;
     }
-
     return rEmail.test(signUpInfo.email);
   };
 
@@ -102,20 +82,37 @@ export default function AuthSignUpInput({ ...props }: IAuthSignUpInput) {
   const renderValid = () => {
     if (props.name === 'email') return emailCheck();
     else if (props.name === 'password') return passwordCheck();
+    else if (props.name === 'confirmPassword') return confirmPasswordCheck();
     else return true;
   };
 
-  // 유효성에 따른 조건부 렌더링
+  // 유형에 따른 조건부 렌더링
   const renderRegex = () => {
     if (props.name === 'email') {
       return <AuthValidCheck valid={emailCheck()} name={props.name} />;
     } else if (props.name === 'password') {
       return <AuthValidCheck valid={passwordCheck()} name={props.name} />;
-    } else if (props.name === 'confirmPassword') {
+    } else {
       return (
         <AuthValidCheck valid={confirmPasswordCheck()} name={props.name} />
       );
     }
+  };
+
+  // 휴대폰 번호 입력 핸들러
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    const hyphenNumber = value
+      .replace(/[^0-9]/g, '')
+      .substring(0, 11)
+      .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+
+    setPhoneNumber(hyphenNumber);
+    setSignUpInfo(prevInformation => ({
+      ...prevInformation,
+      [name]: hyphenNumber
+    }));
   };
 
   return (

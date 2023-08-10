@@ -1,38 +1,132 @@
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import React, { useState, useEffect } from 'react';
+import { IprivacyProps } from '@/types/IMyPages';
+import { clientInstance } from '@/api/axios';
+import Image from 'next/image';
 import memberInfo from '@/api/member/memberInfo';
-import { MEMBER_USER_INFO } from '@/constants/constants';
+import Loading from '@/components/common/Loading';
 
-export default function MemberDetail() {
-  const [userInfo, setUserInfo] = useState(MEMBER_USER_INFO);
+export default function MemberInfoEdit() {
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [privacyInfo, setPrivacyInfo] = useState<IprivacyProps>({
+    success: false,
+    code: '',
+    message: '',
+    data: {
+      employeeId: 0,
+      department: '',
+      name: '',
+      email: '',
+      phone: '',
+      hireDate: '',
+      profilePath: '',
+      position: ''
+    }
+  });
 
   useEffect(() => {
-    memberInfo().then(res => {
-      try {
-        setUserInfo(res.data);
-      } catch (error) {}
-    });
+    async function getInfo() {
+      setIsLoading(true);
+      const response = await memberInfo();
+      if (response.success && response.data) {
+        const data = response;
+        setPrivacyInfo(data);
+      }
+      {
+        setTimeout(() => setIsLoading(false), 500);
+      }
+    }
+
+    getInfo();
   }, []);
 
+  const hireDate = new Date(privacyInfo.data.hireDate);
+  const currentDate = new Date();
+
+  const dateDifference = currentDate.getTime() - hireDate.getTime();
+
+  const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
+  const years = Math.floor(dateDifference / millisecondsPerYear);
+  const remainingMilliseconds = dateDifference - years * millisecondsPerYear;
+
+  const millisecondsPerMonth = 1000 * 60 * 60 * 24 * 30.44;
+  const months = Math.floor(remainingMilliseconds / millisecondsPerMonth);
+
+  const List = {
+    이름: privacyInfo.data.name,
+    계열사: privacyInfo.data.department,
+    고용일: privacyInfo.data.hireDate
+  };
+
+  const More = {
+    직급: privacyInfo.data.position,
+    사원번호: privacyInfo.data.employeeId,
+    근무기간: `${years}년 ${months}개월`
+  };
+
   return (
-    <div className="items-center justify-center">
-      <div className="w-full p-16 bg-white shadow">
-        <div className="pb-20">
-          <div className="relative bg-gray-200 rounded-sm-lg font-bold sm:text-3xl sm:pb-8 h-10">
-            <span className="bg-primary absolute top-0 left-0 w-4 h-10"></span>
-            <span className="text-lg pl-6 pb-2">사용자 정보</span>
-          </div>
+    <div className="w-[70rem] flex h-[35rem]">
+      <div className="w-[40rem] border-primary   border-2 rounded shadow">
+        <div className="relative  w-[15rem]  rounded-sm font-bold sm:text-2xl sm:pb-8 h-9 ">
+          <div className="bg-primary absolute   top-0 left-0 w-4 h-12 z-0"></div>
+          <div className="relative z-10 pl-4 ml-2 pt-2">사용자 정보</div>
         </div>
-        <div className="grid grid-cols-2 gap-x-8 gap-y-[32px]">
-          {Object.entries(userInfo).map(([key, value]) => (
-            <div key={key}>
-              <div className="text-base pb-[8px] font-semibold text-gray-500">
-                {key}
-              </div>
-              <div className="mb-[24px] pb-[8px] text-lg border-b border-gray[300] max-w-full">
-                {value}
-              </div>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className="flex mt-8">
+            <div className="">
+              {Object.entries(List).map(([key, value]) => (
+                <div className="m-6 ml-12" key={key}>
+                  <div className="text-md mt-14">{key}</div>
+                  <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm focus:border-primary text-md">
+                    {value}
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+            <div className="">
+              {Object.entries(More).map(([key, value]) => (
+                <div className="m-6 ml-12" key={key}>
+                  <div className="text-md mt-14">{key}</div>
+                  <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm focus:border-primary text-md">
+                    {value}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="flex w-[25rem] border-2 rounded border-primary shadow ml-2 ">
+        <div className="w-full h-full">
+          <div className=" flex  justify-center h-[200px] rounded-full mt-20 ">
+            {previewImage ? (
+              <Image
+                src={previewImage}
+                alt="미리보기 이미지"
+                width={320}
+                height={320}
+                className="rounded-xl w-[240px] h-[240px] "
+              />
+            ) : privacyInfo.data.profilePath ? (
+              <Image
+                src={`${clientInstance.defaults.baseURL}${privacyInfo.data.profilePath}`}
+                width={320}
+                height={320}
+                alt="프로필 이미지"
+                className="rounded-xl w-[240px] h-[240px] "
+              />
+            ) : (
+              <div className="flex items-center justify-center font-semibold ">
+                이미지 없음
+              </div>
+            )}
+          </div>
+          <div className="flex justify-center items-center mt-32 font-bold text-2xl">
+            {privacyInfo.data.name}님, 반갑습니다.
+          </div>
         </div>
       </div>
     </div>

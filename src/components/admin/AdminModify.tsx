@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import Image from 'next/image';
 import DropdownFilter from '@/components/admin/AdminDropDownFilter';
 import { MODIFY_DEPARTMENT, MODIFY_POSITION } from '@/constants/options';
@@ -24,13 +24,14 @@ export default function AdminModify() {
     profilePath: ''
   });
   const [employeeId, setEmployeeId] = useState<number>(1);
-  const [department, setDepartment] = useState<string>('순양자동차');
-  const [position, setPosition] = useState<string>('사원');
+  const [department, setDepartment] = useState<string>('');
+  const [position, setPosition] = useState<string>('');
   const [profileImage, setProfileImage] = useState<File>();
-  const [name, setName] = useState<string>('테스트유저1');
-  const [phone, setPhone] = useState<string>('010-1234-1234');
-  const [hireDate, setHireDate] = useState<string>('2023-11-22');
-  const [email, setEmail] = useState('jinyc@naver.com');
+  const [name, setName] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [hireDate, setHireDate] = useState<string>('');
+  const [email, setEmail] = useState('');
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -107,6 +108,7 @@ export default function AdminModify() {
         profilePath
       });
       {
+        setPreviewImage(null);
         setTimeout(() => setIsLoading(false), 500);
       }
     }
@@ -114,9 +116,21 @@ export default function AdminModify() {
   //이미지
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      setProfileImage(file);
+
+    if (!file) return;
+
+    const fileSizeInMB = file.size / (1024 * 1024);
+    if (fileSizeInMB > 5) {
+      alert('파일 크기가 5MB를 초과합니다. 5MB 이하의 파일을 선택해주세요.');
+      return;
     }
+
+    const reader = new FileReader();
+    reader.onload = e => {
+      setProfileImage(file);
+      setPreviewImage(e.target?.result as string);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleNameChange = (value: string) => {
@@ -188,13 +202,21 @@ export default function AdminModify() {
       <form onSubmit={handleSubmit} className="flex">
         <div className="h-[30rem] w-[20rem] ml-[3rem]">
           <div className=" h-[20rem] w-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
-            {selectedEmployee.profilePath ? (
+            {previewImage ? (
+              <Image
+                src={previewImage}
+                alt="미리보기 이미지"
+                width={320}
+                height={320}
+                className="rounded-xl w-[320px] h-[320px]"
+              />
+            ) : selectedEmployee.profilePath ? (
               <Image
                 src={`${clientInstance.defaults.baseURL}${selectedEmployee.profilePath}`}
                 width={320}
                 height={320}
                 alt="프로필 이미지"
-                className="rounded-xl "
+                className="rounded-xl w-[320px] h-[320px] "
               />
             ) : (
               <div className="flex items-center justify-center font-semibold">

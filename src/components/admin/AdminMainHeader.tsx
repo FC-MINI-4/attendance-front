@@ -2,6 +2,7 @@ import React from 'react';
 import { IMainHeaderProps } from '@/types/IAdmin';
 import { HiOutlineBars4 } from 'react-icons/hi2';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function MainHeader({ onToggleSidebar }: IMainHeaderProps) {
   const handleToggle = () => {
@@ -15,7 +16,9 @@ export default function MainHeader({ onToggleSidebar }: IMainHeaderProps) {
           <HiOutlineBars4 className="w-[36px] h-[36px] " />
         </button>
         <div className="flex items-center ml-4">
-          <Image src={'/logo.png'} width={150} height={150} alt="logo" />
+          <Link href="admin-manage">
+            <Image src={'/logo.png'} width={150} height={150} alt="logo" />
+          </Link>
         </div>
       </div>
       <div className="flex">

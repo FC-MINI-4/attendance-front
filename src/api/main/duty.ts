@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { clientInstance } from '@/api/axios';
-import { IApplyDuty, IChangeDuty , ICancelDuty} from '@/types/IDuty';
+import { IApplyDuty, IChangeDuty, ICancelDuty } from '@/types/IDuty';
 import { Cookies } from 'react-cookie';
 
 const cookie = new Cookies();
@@ -10,17 +10,17 @@ export async function requestDuty(requestData: IApplyDuty) {
   try {
     const response = await axios.post(
       `${clientInstance.defaults.baseURL}/api/schedules/duty`,
-      requestData,
+      requestData
       // {
       //   headers: {
       //     Authorization: `Bearer ${accessToken}`
       //   }
       // }
     );
-    if(response.data.code === 'OVERLAPPED_DUTY_DATE'){
-      alert('이미 신청한 날짜입니다.')
-    }else if(response.data.code === 'PAST_DATE'){
-      alert(`${response.data.message}`)
+    if (response.data.code === 'OVERLAPPED_DUTY_DATE') {
+      alert('이미 신청한 날짜입니다.');
+    } else if (response.data.code === 'PAST_DATE') {
+      alert(`${response.data.message}`);
     }
     return console.log(response.data);
   } catch (error) {
@@ -29,35 +29,35 @@ export async function requestDuty(requestData: IApplyDuty) {
   }
 }
 
-export async function changeDuty(requestChange : IChangeDuty){
-  try{
+export async function changeDuty(requestChange: IChangeDuty) {
+  try {
     const response = await axios.post(
       `${clientInstance.defaults.baseURL}/api/schedules/duty/`,
-      requestChange,
+      requestChange
       // {
       //   headers: {
       //     Authorization: `Bearer ${accessToken}`
       //   }
       // }
     );
-  }catch(error){
+  } catch (error) {
     console.error('Request_Fail', error);
     throw error;
   }
 }
 
-export async function cancelDuty(requestChange : ICancelDuty){
-  try{
+export async function cancelDuty(requestChange: ICancelDuty) {
+  try {
     const response = await axios.put(
       `${clientInstance.defaults.baseURL}/api/schedules/day-off/status`,
-      requestChange,
+      requestChange
       // {
       //   headers: {
       //     Authorization: `Bearer ${accessToken}`
       //   }
       // }
     );
-  }catch(error){
+  } catch (error) {
     console.error('Request_Fail', error);
     throw error;
   }
