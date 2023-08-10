@@ -1,5 +1,9 @@
 import axios from 'axios';
 import { clientInstance } from '@/api/axios';
+import { Cookies } from 'react-cookie';
+
+const cookie = new Cookies();
+const accessToken = cookie.get('accessToken');
 
 export default async function modifyRes(data: FormData) {
   try {
@@ -8,7 +12,8 @@ export default async function modifyRes(data: FormData) {
       data,
       {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${accessToken}`
         }
       }
     );
