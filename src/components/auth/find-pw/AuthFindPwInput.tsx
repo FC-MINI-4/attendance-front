@@ -13,6 +13,9 @@ export default function AuthFindPwInput() {
 
   // 이메일 형식 유효성 체크
   const emailCheck = () => {
+    if (email.trim() === '') {
+      return false;
+    }
     return rEmail.test(email);
   };
 
@@ -24,13 +27,16 @@ export default function AuthFindPwInput() {
       const response = await requestFindPw({
         email: email
       });
-      if (response.data.success) {
-        alert(response.data.message);
-      } else {
-        alert(response.data.message);
+
+      if (response) {
+        if (response.data.success) {
+          alert(response.data.message);
+        } else {
+          alert(response.data.message);
+        }
       }
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      alert(error.response.data.message);
     }
   };
 

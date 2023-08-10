@@ -8,8 +8,10 @@ import { requestChangePw } from '@/api/auth/changePw';
 import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 
 export default function AuthChangePwInput() {
+  // next router 선언
   const router = useRouter();
 
+  // input state
   const [currentPassword, setcurrentPassword] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setComfirmPassword] = useState('');
@@ -19,14 +21,19 @@ export default function AuthChangePwInput() {
   const handlePasswordBlur = async (
     event: React.FocusEvent<HTMLInputElement>
   ) => {
-    const newPassword = event.target.value;
-    await fetchPassword(newPassword);
+    const password = event.target.value;
+
+    // 입력 비밀번호와 DB간 일치 검사
+    if (password.length > 7) await fetchPassword(password);
   };
 
   const handleNewPwBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const newPassword = event.target.value;
-    if (currentPassword === newPassword) {
-      alert('현재 비밀번호와 다른 새로운 비밀번호를 입력해주세요!');
+
+    // 현재 비밀번호와 새로운 비밀번호가 같을 때
+    if (currentPassword === newPassword && newPassword.length > 7) {
+      alert('현재 비밀번호와 다른 새 비밀번호를 입력해주세요!');
+      // 입력 창 초기화
       event.target.value = '';
     }
   };
@@ -44,6 +51,14 @@ export default function AuthChangePwInput() {
   // 새로운 비밀번호 확인
   const handleConfirmPw = (event: React.ChangeEvent<HTMLInputElement>) => {
     setComfirmPassword(event?.target.value);
+  };
+
+  // 현재 비밀번호 유효성 체크
+  const currentPasswordCheck = () => {
+    if (currentPassword.trim() === '') {
+      return true;
+    }
+    return rPassword.test(currentPassword);
   };
 
   // 비밀번호 형식 유효성 체크
@@ -71,8 +86,15 @@ export default function AuthChangePwInput() {
     password.length < 17;
 
   // 유효성 검사
-  const renderCheck = (isPassword: boolean) => {
-    if (isPassword) {
+  const renderCheck = (inputType: string) => {
+    if (inputType === 'currentPassword') {
+      return (
+        <AuthValidCheck
+          valid={currentPasswordCheck()}
+          name={'currentPassword'}
+        />
+      );
+    } else if (inputType === 'password') {
       return <AuthValidCheck valid={passwordCheck()} name={'password'} />;
     } else {
       return (
@@ -94,8 +116,8 @@ export default function AuthChangePwInput() {
       if (response.data.success) {
         setIsValid(prev => !prev);
       }
-    } catch (error) {
-      alert(error);
+    } catch (error: any) {
+      alert(error.response.data.message);
     }
   };
 
@@ -104,7 +126,7 @@ export default function AuthChangePwInput() {
     event.preventDefault();
 
     try {
-      // 비밀번호 변경 (로그인 시)
+      // * 로그인 상태에서 비밀번호 변경 API 호출
       const response = await requestChangePw({
         currentPassword: currentPassword,
         password: password,
@@ -113,14 +135,15 @@ export default function AuthChangePwInput() {
 
       if (response) {
         if (response.data.success) {
+          // 비밀번호 변경 성공
           alert(response.data.message);
           router.push('/sign-in');
         } else {
           alert(response.data.message);
         }
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      alert(error.response.data.message);
     }
   };
 
@@ -135,8 +158,9 @@ export default function AuthChangePwInput() {
             onBlur={handlePasswordBlur}
             placeholder={'영문+숫자, 8자리 이상 16자리 이하'}
             type="password"
-            valid={true}
+            valid={currentPasswordCheck()}
           />
+          {renderCheck('currentPassword')}
         </div>
         <div className="sm:mb-8 mb-8">
           <Input
@@ -148,7 +172,7 @@ export default function AuthChangePwInput() {
             valid={passwordCheck()}
             onBlur={handleNewPwBlur}
           />
-          {renderCheck(true)}
+          {renderCheck('password')}
         </div>
         <div className="sm:mb-8 mb-8">
           <Input
@@ -159,7 +183,7 @@ export default function AuthChangePwInput() {
             type="password"
             valid={confirmPasswordCheck()}
           />
-          {renderCheck(false)}
+          {renderCheck('confirmPasswordCheck')}
         </div>
         <Button contents={'변경하기'} disabled={!isDisabled} submit />
       </form>
