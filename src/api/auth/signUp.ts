@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { clientInstance } from '../axios';
-import { ISignInRequestBody } from '@/types/ISignIn';
+import { clientInstance } from '@/api/axios';
+import { ISignInRequestBody } from '@/types/ILogIn';
 import { ISignUpRequestBody } from '@/types/ISignUp';
 
 // * [POST] 이메일 중복체크
 export async function requestEmailCheck(signUpData: ISignInRequestBody) {
   try {
     const response = await axios.post(
-      `${clientInstance.defaults.baseURL}/api/auth/validateEmail`,
+      `${clientInstance.defaults.baseURL}/api/auth/check-email`,
       signUpData
     );
     return response;
@@ -24,7 +24,6 @@ export async function requestSignUp(signUpData: ISignUpRequestBody) {
       `${clientInstance.defaults.baseURL}/api/auth/signup`,
       signUpData
     );
-    alert(response.data.data.message);
     return response;
   } catch (error) {
     console.error('NOT_AVAILABLE_EMAIL', error);

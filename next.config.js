@@ -8,6 +8,14 @@ const apiIP = `${process.env.NEXT_PUBLIC_API_IP}`;
 module.exports = {
   ...nextConfig,
   images: {
-    domains: [`${apiIP}`]
+    domains: [`${apiIP}`],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'assets.example.com',
+        port: '',
+        pathname: '/account123/**'
+      }
+    ]
   }
 };

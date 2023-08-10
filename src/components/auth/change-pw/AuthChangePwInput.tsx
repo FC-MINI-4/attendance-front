@@ -1,23 +1,47 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { rPassword } from '@/constants/constants';
+import { requestValidPw } from '@/api/auth/validPw';
 import { requestChangePw } from '@/api/auth/changePw';
 import AuthValidCheck from '@/components/auth/sign-up/AuthValidCheck';
 
 export default function AuthChangePwInput() {
+  const router = useRouter();
+
   const [currentPassword, setcurrentPassword] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setComfirmPassword] = useState('');
+  const [isValid, setIsValid] = useState(false);
 
+  // 현재 비밀번호 유효성 검증
+  const handlePasswordBlur = async (
+    event: React.FocusEvent<HTMLInputElement>
+  ) => {
+    const newPassword = event.target.value;
+    await fetchPassword(newPassword);
+  };
+
+  const handleNewPwBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const newPassword = event.target.value;
+    if (currentPassword === newPassword) {
+      alert('현재 비밀번호와 다른 새로운 비밀번호를 입력해주세요!');
+      event.target.value = '';
+    }
+  };
+
+  // 현재 비밀번호
   const handleCurrentPw = (event: React.ChangeEvent<HTMLInputElement>) => {
     setcurrentPassword(event?.target.value);
   };
 
+  // 새로운 비밀번호
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event?.target.value);
   };
 
+  // 새로운 비밀번호 확인
   const handleConfirmPw = (event: React.ChangeEvent<HTMLInputElement>) => {
     setComfirmPassword(event?.target.value);
   };
@@ -40,6 +64,7 @@ export default function AuthChangePwInput() {
 
   // 비밀번호 변경 버튼 활성화 여부
   const isDisabled =
+    isValid &&
     passwordCheck() &&
     confirmPasswordCheck() &&
     password.length > 7 &&
@@ -59,6 +84,21 @@ export default function AuthChangePwInput() {
     }
   };
 
+  // 입력한 비밀번호와 DB간 일치 검사
+  const fetchPassword = async (validPassword: string) => {
+    try {
+      const response = await requestValidPw({
+        password: validPassword
+      });
+
+      if (response.data.success) {
+        setIsValid(prev => !prev);
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   // form data 전송
   const handleChangePw = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -66,14 +106,19 @@ export default function AuthChangePwInput() {
     try {
       // 비밀번호 변경 (로그인 시)
       const response = await requestChangePw({
+        currentPassword: currentPassword,
         password: password,
-        confirmPassword: confirmPassword,
-        authToken: '1234'
+        confirmPassword: confirmPassword
       });
-      if (!response.data.success) {
+      if (response.data.success) {
+        alert(response.data.message);
+        router.push('/sign-in');
+      } else {
         alert(response.data.message);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -84,11 +129,11 @@ export default function AuthChangePwInput() {
             label={'현재 비밀번호'}
             name={'password'}
             onChange={handleCurrentPw}
+            onBlur={handlePasswordBlur}
             placeholder={'영문+숫자, 8자리 이상 16자리 이하'}
             type="password"
-            valid={passwordCheck()}
+            valid={true}
           />
-          {renderCheck(true)}
         </div>
         <div className="sm:mb-8 mb-8">
           <Input
@@ -98,6 +143,7 @@ export default function AuthChangePwInput() {
             placeholder={'영문+숫자, 8자리 이상 16자리 이하'}
             type="password"
             valid={passwordCheck()}
+            onBlur={handleNewPwBlur}
           />
           {renderCheck(true)}
         </div>

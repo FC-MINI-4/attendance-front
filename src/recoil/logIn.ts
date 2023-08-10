@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { ISignInRequestBody } from '@/types/ISignIn';
+import { ISignInRequestBody } from '@/types/ILogIn';
 
 export const signInState = atom<ISignInRequestBody>({
   key: 'signInState',

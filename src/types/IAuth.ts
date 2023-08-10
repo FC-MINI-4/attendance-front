@@ -6,12 +6,16 @@ export interface IAuthSignUpInput {
   type: string;
 }
 
-export interface IAuthSignUp {
+export interface IAuthSignUpItem {
   label: string;
   name: string;
   button?: string;
   placeholder?: string;
   type: string;
+}
+
+export interface IAuthValidPw {
+  password: string;
 }
 
 export interface IAuthResetPw {
@@ -20,12 +24,16 @@ export interface IAuthResetPw {
   confirmPassword: string;
 }
 
-export interface IAuthCheckPw {
-  password: string;
-  confirmPassword: string;
-  authToken?: string;
-}
-
 export interface IAuthFindPw {
   email: string;
+}
+
+export interface IAuthValidPw {
+  password: string;
+}
+
+export interface IAuthChangePw {
+  currentPassword: string;
+  password: string;
+  confirmPassword: string;
 }

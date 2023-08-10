@@ -1,5 +1,4 @@
 import React from 'react';
-import MemberInfo from '@/components/member/MemberInfo';
 import MemberBoard from '@/components/member/MemberBoard';
 import MainHeader from '@/components/main/MainHeader';
 import MemberDetail from '@/components/member/MemberDetail';
