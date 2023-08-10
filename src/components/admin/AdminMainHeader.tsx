@@ -9,6 +9,13 @@ export default function MainHeader({ onToggleSidebar }: IMainHeaderProps) {
     onToggleSidebar();
   };
 
+  const LogOut = () => {
+    document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    document.cookie = 'employeeId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    document.cookie = 'expires=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    location.replace('/sign-in');
+  };
+
   return (
     <div className=" h-[4rem] border-solid border-b-2 border-mainGray  flex items-center justify-between">
       <div className="flex">
@@ -25,7 +32,9 @@ export default function MainHeader({ onToggleSidebar }: IMainHeaderProps) {
         <div className="mr-[2.5rem] font-semibold">
           진양철 회장님 환영합니다!
         </div>
-        <button className="mr-[2.5rem] font-medium">로그아웃</button>
+        <button onClick={() => LogOut()} className="mr-[2.5rem] font-medium">
+          로그아웃
+        </button>
       </div>
     </div>
   );

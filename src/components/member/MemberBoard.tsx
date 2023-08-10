@@ -15,7 +15,7 @@ export default function MemberBoard() {
   }, []);
 
   return (
-    <div className="w-[12rem] h-[14rem] flex justify-center items-center rounded-sm border-primary border-2 ">
+    <div className="w-[12rem] h-[14rem] flex justify-center items-center rounded-sm  ">
       <div>
         <div className="flex mt-4">
           <div className="font-bold mb-8">총 연차:</div>
