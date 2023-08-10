@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 const apiIP = process.env.NEXT_PUBLIC_API_IP;
 const clientPort = process.env.NEXT_PUBLIC_API_CLIENT_PORT;
 
-const clientUrl = `http://${apiIP}:${clientPort}`;
+const clientUrl = `https://${apiIP}:${clientPort}`;
 
 export const clientInstance = axios.create({
   baseURL: `${clientUrl}`
