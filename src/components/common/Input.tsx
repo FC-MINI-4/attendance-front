@@ -21,11 +21,11 @@ export default function Input({ ...props }: IInputProps) {
         {props.label}
       </label>
       <input
-        name={props.name}
-        id={props.label}
         className={`${
           props.valid ? 'focus:border-primary' : 'focus:border-secondary'
         } pl-1 h-10 pt-3 w-full border-b-2 border-gray-200 pr-3 text-xs outline-none transition sm:h-12 sm:text-base`}
+        name={props.name}
+        id={props.label}
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.onChange}
