@@ -15,7 +15,7 @@ export default function MemberBoard() {
   }, []);
 
   return (
-    <div className="sm:w-60 sm:mb-4 flex justify-between">
+    <div className="sm:w-60 sm:mb-4 flex justify-between mx-auto">
       <div>
         <div className="font-bold mb-2">총 연차</div>
         <div className="text-center">15일</div>
