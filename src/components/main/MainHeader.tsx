@@ -1,14 +1,23 @@
 import Image from 'next/image';
 import requestPersonal from '@/api/member/personalInfo';
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function MainHeader() {
+  const [] = useState()
+
   const LogOut = () => {
     document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     document.cookie = 'employeeId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     document.cookie = 'expires=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     location.replace('/sign-in');
   };
+
+  const PersonalInfo = async () => {
+    const a = await requestPersonal()
+    const b = a.data
+    b.email
+  }
+  PersonalInfo()
 
   return (
     <div className="h-24 flex justify-between px-16">
