@@ -12,8 +12,8 @@ export default async function memberModify(data: FormData) {
       data,
       {
         headers: {
-          'Content-Type': 'multipart/form-data'
-          // Authorization: `Bearer ${requestData.accessToken}`
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${accessToken}`
         }
       }
     );
