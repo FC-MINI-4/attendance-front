@@ -9,3 +9,8 @@ export const dayOffState = atom({
   key:'dayOffs',
   default:[]
 });
+
+export const dutiesState = atom({
+  key:'duties',
+  default:[]
+});

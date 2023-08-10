@@ -3,10 +3,12 @@ import MemberBoard from '@/components/member/MemberBoard';
 import MainHeader from '@/components/main/MainHeader';
 import MemberDetail from '@/components/member/MemberDetail';
 import MemberSideBar from '@/components/member/MemberSideBar';
+import { RecoilRoot } from 'recoil'
 
 export default function Member() {
   return (
     <>
+      <RecoilRoot>
       <div className=" w-full shadow-md">
         <MainHeader />
       </div>
@@ -21,6 +23,7 @@ export default function Member() {
           <MemberDetail />
         </div>
       </div>
+      </RecoilRoot>
     </>
   );
 }
