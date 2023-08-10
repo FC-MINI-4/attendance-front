@@ -1,11 +1,10 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
-import { signInState } from '@/recoil/signIn';
+import { signInState } from '@/recoil/logIn';
 import PwBox from '@/components/common/PwBox';
 import Button from '@/components/common/Button';
-
-import { requestSignIn } from '@/api/auth/signIn';
+import { requestSignIn } from '@/api/auth/logIn';
 import AuthSignInInput from '@/components/auth/sign-in/AuthSignInInput';
 
 export default function AuthSignInBox() {

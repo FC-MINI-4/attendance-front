@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { clientInstance } from '../axios';
-import { ISignInRequestBody } from '@/types/ISignIn';
+import { clientInstance } from '@/api/axios';
+import { ISignInRequestBody } from '@/types/ILogIn';
 import { ISignUpRequestBody } from '@/types/ISignUp';
 
 // * [POST] 이메일 중복체크

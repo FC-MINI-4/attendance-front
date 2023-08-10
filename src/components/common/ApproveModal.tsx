@@ -41,7 +41,14 @@ export default function ApproveModal(modalProps: IModalProps) {
       alert('선택일이 잔여 연차를 초과했습니다.');
       setEndDate(startDate);
     }
-  }, [startDate]);
+  }, [
+    endDate,
+    endDateMSec,
+    endDateMonth,
+    startDate,
+    startDateMSec,
+    startDateMonth
+  ]);
 
   useEffect(() => {
     const elapsedMSec = endDateMSec - startDateMSec;
@@ -58,7 +65,14 @@ export default function ApproveModal(modalProps: IModalProps) {
       alert('선택일이 잔여 연차를 초과했습니다.');
       setStartDate(endDate);
     }
-  }, [endDate]);
+  }, [
+    endDate,
+    endDateMSec,
+    endDateMonth,
+    startDate,
+    startDateMSec,
+    startDateMonth
+  ]);
 
   // 모달 외부 클릭시 모달창 닫히게 하는 로직
   const modalRef = useRef<HTMLInputElement | null>(null);
@@ -75,7 +89,7 @@ export default function ApproveModal(modalProps: IModalProps) {
     return () => {
       document.removeEventListener('mousedown', handleOutside);
     };
-  }, [modalRef]);
+  }, [modalRef, setIsDutyShow, setIsModalShow]);
 
   //체크박스
   const MakeCheckBox = () => {
@@ -111,7 +125,6 @@ export default function ApproveModal(modalProps: IModalProps) {
     return <div className="flex">{box}</div>;
   };
 
-  
   const employeeId = Number(getCookie('employeeId'));
   const startDateForm = moment(startDate).format('YYYY-MM-DD');
   const endDateForm = moment(endDate).format('YYYY-MM-DD');
@@ -134,15 +147,14 @@ export default function ApproveModal(modalProps: IModalProps) {
   //     : null;
   // }
 
-
   const dutyData = {
     employeeId: employeeId,
     date: `${startDateForm}`,
-    reason:'프로젝트 진행'
+    reason: '프로젝트 진행'
   };
 
   const submitDuty = () => {
-    event?.preventDefault()
+    event?.preventDefault();
     requestDuty(dutyData);
   };
 
@@ -163,12 +175,12 @@ export default function ApproveModal(modalProps: IModalProps) {
                 <div className="flex justify-center items-center pt-4 pb-2">
                   {modalProps.IsCheckBoxShow ? <MakeCheckBox /> : null}
                 </div>
-                {!modalProps.IsDutyModal ?
+                {!modalProps.IsDutyModal ? (
                   <div className="flex justify-between items-center w-[75%] mx-auto py-3">
                     <DatePicker
                       dateFormat={'yyyy/MM/dd'}
                       selected={startDate}
-                      onChange={(date: Date)=> setStartDate(date)}
+                      onChange={(date: Date) => setStartDate(date)}
                       selectsStart
                       startDate={startDate}
                       endDate={endDate}
@@ -177,25 +189,26 @@ export default function ApproveModal(modalProps: IModalProps) {
                     <DatePicker
                       dateFormat={'yyyy/MM/dd'}
                       selected={endDate}
-                      onChange={(date: Date)=> setEndDate(date)}
+                      onChange={(date: Date) => setEndDate(date)}
                       selectsStart
                       startDate={startDate}
                       endDate={endDate}
                       minDate={startDate}
                     />
-                  </div> :
-                  <div className="flex justify-center items-center w-[75%] mx-auto py-3">
-                  <DatePicker
-                    dateFormat={'yyyy/MM/dd'}
-                    selected={startDate}
-                    onChange={(date:Date)=>setStartDate(date)}
-                    selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
-                    className='text-center'
-                  />
                   </div>
-                  }
+                ) : (
+                  <div className="flex justify-center items-center w-[75%] mx-auto py-3">
+                    <DatePicker
+                      dateFormat={'yyyy/MM/dd'}
+                      selected={startDate}
+                      onChange={(date: Date) => setStartDate(date)}
+                      selectsStart
+                      startDate={startDate}
+                      endDate={endDate}
+                      className="text-center"
+                    />
+                  </div>
+                )}
                 <div className="flex justify-center items-center py-3">
                   {modalProps.IsTextBoxShow ? (
                     <textarea

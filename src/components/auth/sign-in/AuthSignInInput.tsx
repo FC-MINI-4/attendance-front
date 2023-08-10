@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 import Input from '@/components/common/Input';
-import { signInState } from '@/recoil/signIn';
+import { signInState } from '@/recoil/logIn';
 
 export default function AuthSignInInput() {
   // 회원가입 정보 atom state 구독
@@ -8,7 +8,7 @@ export default function AuthSignInInput() {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setSignInInfo(prevInformation => ({
+    setSignInInfo((prevInformation: any) => ({
       ...prevInformation,
       [name]: value
     }));

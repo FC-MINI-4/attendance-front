@@ -1,13 +1,20 @@
 import axios from 'axios';
-import { IAuthValidPw } from '@/types/IAuth';
+import { Cookies } from 'react-cookie';
 import { clientInstance } from '@/api/axios';
 
-// * [POST] 비밀번호 변경을 위한 이메일 전송
-export async function requestValidPw(vaildPwData: IAuthValidPw) {
+const cookie = new Cookies();
+const accessToken = cookie.get('accessToken');
+
+// * [GET] 입력한 비밀번호가 DB와 일치하는지 검사를 위한 작업
+export async function requestValidPw() {
   try {
-    const response = await axios.post(
-      `${clientInstance.defaults.baseURL}/api/auth/users/password/find`,
-      vaildPwData
+    const response = await axios.get(
+      `${clientInstance.defaults.baseURL}/api/auth/valid/password`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
     );
     return response;
   } catch (error) {
