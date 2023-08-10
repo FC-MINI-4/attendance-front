@@ -9,7 +9,7 @@ const employeeId = cookie.get('employeeId');
 export default async function memberList(): Promise<IMemberListProps> {
   try {
     const response = await axios.get<IMemberListProps>(
-      `${clientInstance.defaults.baseURL}/api/personal-info/schedules/${1}`
+      `${clientInstance.defaults.baseURL}/api/personal-info/schedules/${employeeId}`
     );
     return response.data;
   } catch (error) {
