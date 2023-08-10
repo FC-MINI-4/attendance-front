@@ -4,10 +4,12 @@ import MemberBoard from '@/components/member/MemberBoard';
 import MemberSideBar from '@/components/member/MemberSideBar';
 
 import MemberInfoEdit from '@/components/member/MemberInfoEdit';
+import { RecoilRoot } from 'recoil';
 
 export default function memberEdit() {
   return (
     <>
+    <RecoilRoot>
       <div className=" w-full shadow-md">
         <MainHeader />
       </div>
@@ -22,6 +24,7 @@ export default function memberEdit() {
           <MemberInfoEdit />
         </div>
       </div>
+    </RecoilRoot>
     </>
   );
 }
