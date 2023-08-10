@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { HiOutlineUserCircle } from 'react-icons/hi';
-import react, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import memberModify from '@/api/member/memberModify';
 import { IMemberModifyProps, IprivacyProps } from '@/types/IMyPages';
 import { clientInstance } from '@/api/axios';
@@ -39,6 +39,30 @@ export default function MemberInfoEdit() {
     getInfo();
   }, []);
 
+  const hireDate = new Date(privacyInfo.data.hireDate);
+  const currentDate = new Date();
+
+  const dateDifference = currentDate.getTime() - hireDate.getTime();
+
+  const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
+  const years = Math.floor(dateDifference / millisecondsPerYear);
+  const remainingMilliseconds = dateDifference - years * millisecondsPerYear;
+
+  const millisecondsPerMonth = 1000 * 60 * 60 * 24 * 30.44;
+  const months = Math.floor(remainingMilliseconds / millisecondsPerMonth);
+
+  const List = {
+    이름: privacyInfo.data.name,
+    계열사: privacyInfo.data.department,
+    고용일: privacyInfo.data.hireDate
+  };
+
+  const More = {
+    직급: privacyInfo.data.position,
+    사원번호: privacyInfo.data.employeeId,
+    근무기간: `${years}년 ${months}개월`
+  };
+
   return (
     <div className="w-[70rem] flex h-[35rem]">
       <div className="w-[40rem] border-primary   border-2 rounded shadow">
@@ -46,50 +70,26 @@ export default function MemberInfoEdit() {
           <div className="bg-primary absolute   top-0 left-0 w-4 h-12 z-0"></div>
           <div className="relative z-10 pl-4 ml-2 pt-2">사용자 정보</div>
         </div>
-        <div className="flex">
-          <div className=" m-6 ml-12  ">
-            <div className="text-md mt-12 ">이름</div>
-            <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md">
-              {privacyInfo.data.name}
-            </div>
+        <div className="flex mt-8">
+          <div className="">
+            {Object.entries(List).map(([key, value]) => (
+              <div className="m-6 ml-12" key={key}>
+                <div className="text-md mt-14">{key}</div>
+                <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm focus:border-primary text-md">
+                  {value}
+                </div>
+              </div>
+            ))}
           </div>
-
-          <div className=" m-6 ml-16  ">
-            <div className="text-md mt-12 ">직급</div>
-            <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md">
-              {privacyInfo.data.position}
-            </div>
-          </div>
-        </div>
-        <div className="flex">
-          <div className=" m-6 ml-12  ">
-            <div className="text-md mt-12 ">계열사</div>
-            <div className="w-[14rem] text-lg  font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md">
-              {privacyInfo.data.department}
-            </div>
-          </div>
-
-          <div className=" m-6 ml-16  ">
-            <div className="text-md  mt-12 ">사원번호</div>
-            <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md">
-              {privacyInfo.data.employeeId}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex">
-          <div className=" m-6 ml-12  ">
-            <div className="text-md  mt-12 ">입사일</div>
-            <div className="w-[14rem] text-lg  font-semibold  border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md">
-              {privacyInfo.data.hireDate}
-            </div>
-          </div>
-
-          <div className=" m-6 ml-16  ">
-            <div className="text-md   mt-12 ">근무기간</div>
-            <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md">
-              {privacyInfo.data.hireDate}
-            </div>
+          <div className="">
+            {Object.entries(More).map(([key, value]) => (
+              <div className="m-6 ml-12" key={key}>
+                <div className="text-md mt-14">{key}</div>
+                <div className="w-[14rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm focus:border-primary text-md">
+                  {value}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
