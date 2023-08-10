@@ -5,6 +5,7 @@ import { modalState } from '@/recoil/common/modal';
 import { useRecoilState } from 'recoil'
 import { useState, useEffect } from 'react'
 import requestSchedules from '@/api/main/schedules';
+import { IDayOffSchedules } from '@/types/IMain';
 
 export default function Main(){
   const [isModalShow] = useRecoilState(modalState)
@@ -20,11 +21,13 @@ export default function Main(){
       setRemainDays(scheduleInfo.daysOffRemains)
       setDayOffs(scheduleInfo.dayOffs)
       setDuties(scheduleInfo.duites)
+      
     }
     schedules()
   },[])
+  console.log(dayOffs)
 
-    console.log(dayOffs)
+  dayOffs
 
   return(
   <>

@@ -11,11 +11,11 @@ export default async function requestPersonal(){
   try {
     const response = await axios.get(
       `${clientInstance.defaults.baseURL}/api/personal-info/${employeeId}`,
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${accessToken}`
-      //   }
-      // }
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
     );
     return response.data;
   } catch (error) {
