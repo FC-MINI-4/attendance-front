@@ -11,11 +11,11 @@ export async function requestDayOff(requestData: IApplyDayOff) {
     const response = await axios.post(
       `${clientInstance.defaults.baseURL}/api/schedules/day-off`,
       requestData,
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${accessToken}`
-      //   }
-      // }
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
     );
     alert('신청이 완료되었습니다.');
     return response;
