@@ -8,8 +8,8 @@ export default async function requestDayOff(requestData: IApplyDayOff) {
       `${clientInstance.defaults.baseURL}/api/schedules/day-off`,
       requestData
     );
-    return response;
     alert('신청이 완료되었습니다.');
+    return response;
   } catch (error) {
     console.error('Request_Fail', error);
     throw error;
