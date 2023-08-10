@@ -3,9 +3,28 @@ import MainHeader from '@/components/main/MainHeader';
 import SideMenu from '@/components/main/MainSideMenu';
 import { modalState } from '@/recoil/common/modal';
 import { useRecoilState } from 'recoil'
+import { useState, useEffect } from 'react'
+import requestSchedules from '@/api/main/schedules';
 
 export default function Main(){
   const [isModalShow] = useRecoilState(modalState)
+  const [remainDays, setRemainDays] = useState<number>()
+  const [dayOffs, setDayOffs] = useState([])
+  const [duites, setDuties] = useState([])
+
+  useEffect(()=>{
+    const schedules = async () => {
+      const request = await requestSchedules()
+      const scheduleInfo = request.data
+      
+      setRemainDays(scheduleInfo.daysOffRemains)
+      setDayOffs(scheduleInfo.dayOffs)
+      setDuties(scheduleInfo.duites)
+    }
+    schedules()
+  },[])
+
+    console.log(dayOffs)
 
   return(
   <>
