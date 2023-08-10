@@ -67,8 +67,8 @@ export default function MemberInfoEdit() {
 
   return (
     <div className="w-[70rem] flex h-[35rem]">
-      <div className="w-[40rem] border-primary   border-2 rounded shadow">
-        <div className="relative  w-[15rem]  rounded-sm font-bold sm:text-2xl sm:pb-8 h-9 ">
+      <div className="w-[40rem]  mr-8  border-[1px] rounded shadow">
+        <div className="relative  w-[15rem]  rounded-md font-bold sm:text-2xl sm:pb-8 h-9 ">
           <div className="bg-primary absolute   top-0 left-0 w-4 h-12 z-0"></div>
           <div className="relative z-10 pl-4 ml-2 pt-2">사용자 정보</div>
         </div>
@@ -99,9 +99,9 @@ export default function MemberInfoEdit() {
           </div>
         )}
       </div>
-      <div className="flex w-[25rem] border-2 rounded border-primary shadow ml-2 ">
+      <div className="flex w-[25rem] border-[1px] rounded-md shadow ml-2 ">
         <div className="w-full h-full">
-          <div className=" flex  justify-center h-[200px] rounded-full mt-20 ">
+          <div className=" flex  justify-center h-[200px] rounded-full  ">
             {previewImage ? (
               <Image
                 src={previewImage}
@@ -116,7 +116,7 @@ export default function MemberInfoEdit() {
                 width={320}
                 height={320}
                 alt="프로필 이미지"
-                className="rounded-xl w-[240px] h-[240px] "
+                className="rounded-xl w-[320px] h-[320px]  mt-8 "
               />
             ) : (
               <div className="flex items-center justify-center font-semibold ">
@@ -124,7 +124,7 @@ export default function MemberInfoEdit() {
               </div>
             )}
           </div>
-          <div className="flex justify-center items-center mt-32 font-bold text-2xl">
+          <div className="flex justify-center mt-[15rem] font-bold text-xl ">
             {privacyInfo.data.name}님, 반갑습니다.
           </div>
         </div>
