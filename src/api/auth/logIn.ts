@@ -1,13 +1,14 @@
 import axios from 'axios';
 import { clientInstance } from '@/api/axios';
 import { ISignInRequestBody } from '@/types/ILogIn';
+import { Cookies } from 'react-cookie';
 
 // * [POST] 로그인 요청 api
 export async function requestSignIn(signInData: ISignInRequestBody) {
   try {
     const response = await axios.post(
       `${clientInstance.defaults.baseURL}/api/auth/login`,
-      signInData
+      signInData,
     );
     return response;
   } catch (error) {

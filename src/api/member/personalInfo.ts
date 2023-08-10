@@ -1,15 +1,15 @@
 import { clientInstance } from '@/api/axios';
 import axios from 'axios'
-import getCookie from '@/components/common/GetCookie';
-import { IPrivacyRes } from '@/types/IMain';
+import { Cookies } from 'react-cookie';
 
-export default async function requestPersonal(): Promise<IPrivacyRes>  {
+const cookie = new Cookies();
+const accessToken = cookie.get('accessToken');
+const employeeId = cookie.get('employeeId')
 
-  const employeeId = Number(getCookie('employeeId'));
-  const accessToken = getCookie('accessToken')
+export default async function requestPersonal(){
 
   try {
-    const response = await axios.get<IPrivacyRes>(
+    const response = await axios.get(
       `${clientInstance.defaults.baseURL}/api/personal-info/${employeeId}`,
       // {
       //   headers: {

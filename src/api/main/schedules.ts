@@ -1,24 +1,24 @@
 import axios from 'axios';
-import { Cookies } from 'react-cookie';
 import { clientInstance } from '@/api/axios';
+import { Cookies } from 'react-cookie';
 
 const cookie = new Cookies();
 const accessToken = cookie.get('accessToken');
+const employeeId = cookie.get('employeeId')
 
-// * [GET] 입력한 비밀번호가 DB와 일치하는지 검사를 위한 작업
-export async function requestValidPw() {
+export default async function requestSchedules() {
   try {
     const response = await axios.get(
-      `${clientInstance.defaults.baseURL}/api/auth/valid/password`,
+      `${clientInstance.defaults.baseURL}/api/schedules/${employeeId}`
       // {
       //   headers: {
       //     Authorization: `Bearer ${accessToken}`
       //   }
       // }
     );
-    return response;
+    return response.data;
   } catch (error) {
-    console.error('INVALID_PASSWORD', error);
+    console.error('Request_Fail', error);
     throw error;
   }
 }

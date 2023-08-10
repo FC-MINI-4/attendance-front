@@ -31,7 +31,7 @@ export default function AuthSignInBox() {
           Date.now() + response.data.data.token.accessTokenExpireDate
         );
         // 사원 id
-        const employeeId = response.data.data.id;
+        const employeeId = response.data.data.employee.id;
 
         // 쿠키 생성
         document.cookie = `accessToken=${accessToken};`;

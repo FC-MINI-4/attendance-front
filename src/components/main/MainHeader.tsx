@@ -3,7 +3,9 @@ import requestPersonal from '@/api/member/personalInfo';
 import { useState, useEffect } from 'react'
 
 export default function MainHeader() {
-  const [] = useState()
+  const [userName, setUserName] = useState('')
+  const [userEmail, setUserEmail] = useState('')
+  const [userProfile, setUserProfile] = useState('')
 
   const LogOut = () => {
     document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
@@ -12,12 +14,17 @@ export default function MainHeader() {
     location.replace('/sign-in');
   };
 
-  const PersonalInfo = async () => {
-    const a = await requestPersonal()
-    const b = a.data
-    b.email
-  }
-  PersonalInfo()
+  useEffect(()=>{
+    const userInfo = async () => {
+      const infoReq = await requestPersonal()
+      const personalInfo = infoReq.data
+      
+      setUserEmail(personalInfo.email)
+      setUserName(personalInfo.name)
+      setUserProfile(personalInfo.profileImagePath)
+    }
+    userInfo()
+  },[])
 
   return (
     <div className="h-24 flex justify-between px-16">
@@ -25,12 +32,14 @@ export default function MainHeader() {
         <Image src="/logo.png" alt="logo" width={200} height={20} />
       </div>
       <div className="flex top-0 bottom-0 my-auto pr-7">
-        <div className="w-12 h-12 rounded-full bg-mainGray mr-6"></div>
+        <div className="w-12 h-12 rounded-full border-2 mr-6 overflow-hidden flex justify-center items-center">
+          <Image src={userProfile ? userProfile : '/logo.png'} alt='profileImg' width={48} height={48}/>
+        </div>
         <div className="relative">
-          <div className="absolute top-0 left-0 font-bold">문현수님</div>
-          <div className="pt-6">mhs0704123@naver.com</div>
+          <div className="absolute top-0 left-0 font-bold">{userName}</div>
+          <div className="pt-6">{userEmail}</div>
           <div className="absolute top-0 right-0 text-primary font-bold">
-            잔여연차:15
+            잔여연차:{}
           </div>
         </div>
         <div
