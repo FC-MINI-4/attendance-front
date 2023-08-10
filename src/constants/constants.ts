@@ -1,4 +1,4 @@
-import { IAuthSignUp } from '@/types/IAuth';
+import { IAuthSignUpInput } from '@/types/IAuth';
 
 // 이메일 유효성 정규식
 export const rEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -16,7 +16,7 @@ export const MEMBER_USER_INFO = {
   profileImagePath: ''
 };
 
-export const SIGNUP_INPUT_INFO: IAuthSignUp[] = [
+export const SIGNUP_INPUT_INFO: IAuthSignUpInput[] = [
   {
     label: '이름*',
     name: 'name',
