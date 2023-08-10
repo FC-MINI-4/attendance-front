@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import requestPersonal from '@/api/member/personalInfo';
+import { useEffect } from 'react'
 
 export default function MainHeader() {
   const LogOut = () => {
@@ -7,7 +9,7 @@ export default function MainHeader() {
     document.cookie = 'expires=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     location.replace('/sign-in');
   };
-  //그냥 일단 데이터 없어서 하드코딩
+
   return (
     <div className="h-24 flex justify-between px-16">
       <div className="top-0 bottom-0 my-auto pl-7 text-3xl font-bold">

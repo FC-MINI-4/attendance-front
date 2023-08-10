@@ -7,6 +7,7 @@ import requestDayOff from '@/api/main/dayoff';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import requestDuty from '@/api/main/duty';
+import getCookie from '@/components/common/GetCookie';
 
 export default function ApproveModal(modalProps: IModalProps) {
   const [isModalShow, setIsModalShow] = useRecoilState(modalState);
@@ -110,18 +111,7 @@ export default function ApproveModal(modalProps: IModalProps) {
     return <div className="flex">{box}</div>;
   };
 
-  // 쿠키값 가져오기
-  function getCookie(cookieName: string) {
-    const cookies = document.cookie.split('; ');
-    for (const cookie of cookies) {
-      const [name, value] = cookie.split('=');
-      if (name === cookieName) {
-        return decodeURIComponent(value);
-      }
-    }
-    return null;
-  }
-
+  
   const employeeId = Number(getCookie('employeeId'));
   const startDateForm = moment(startDate).format('YYYY-MM-DD');
   const endDateForm = moment(endDate).format('YYYY-MM-DD');
@@ -138,18 +128,21 @@ export default function ApproveModal(modalProps: IModalProps) {
     requestDayOff(dayOffData);
   };
 
-  if (modalProps.IsDutyModal) {
-    startDateForm !== endDateForm
-      ? alert('반차의 경우 시작일과 마감일이 같아야 합니다.')
-      : null;
-  }
+  // if (modalProps.IsDutyModal) {
+  //   startDateForm !== endDateForm
+  //     ? alert('반차의 경우 시작일과 마감일이 같아야 합니다.')
+  //     : null;
+  // }
+
 
   const dutyData = {
     employeeId: employeeId,
-    date: `${startDateForm}`
+    date: `${startDateForm}`,
+    reason:'프로젝트 진행'
   };
 
   const submitDuty = () => {
+    event?.preventDefault()
     requestDuty(dutyData);
   };
 
@@ -170,26 +163,39 @@ export default function ApproveModal(modalProps: IModalProps) {
                 <div className="flex justify-center items-center pt-4 pb-2">
                   {modalProps.IsCheckBoxShow ? <MakeCheckBox /> : null}
                 </div>
-                <div className="flex justify-between items-center w-[75%] mx-auto py-3">
+                {!modalProps.IsDutyModal ?
+                  <div className="flex justify-between items-center w-[75%] mx-auto py-3">
+                    <DatePicker
+                      dateFormat={'yyyy/MM/dd'}
+                      selected={startDate}
+                      onChange={(date: Date)=> setStartDate(date)}
+                      selectsStart
+                      startDate={startDate}
+                      endDate={endDate}
+                    />
+                    <span>-</span>
+                    <DatePicker
+                      dateFormat={'yyyy/MM/dd'}
+                      selected={endDate}
+                      onChange={(date: Date)=> setEndDate(date)}
+                      selectsStart
+                      startDate={startDate}
+                      endDate={endDate}
+                      minDate={startDate}
+                    />
+                  </div> :
+                  <div className="flex justify-center items-center w-[75%] mx-auto py-3">
                   <DatePicker
                     dateFormat={'yyyy/MM/dd'}
                     selected={startDate}
-                    onChange={(date: Date) => setStartDate(date)}
+                    onChange={(date:Date)=>setStartDate(date)}
                     selectsStart
                     startDate={startDate}
                     endDate={endDate}
+                    className='text-center'
                   />
-                  <span>-</span>
-                  <DatePicker
-                    dateFormat={'yyyy/MM/dd'}
-                    selected={endDate}
-                    onChange={(date: Date) => setEndDate(date)}
-                    selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={startDate}
-                  />
-                </div>
+                  </div>
+                  }
                 <div className="flex justify-center items-center py-3">
                   {modalProps.IsTextBoxShow ? (
                     <textarea
