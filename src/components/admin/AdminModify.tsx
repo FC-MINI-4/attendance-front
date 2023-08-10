@@ -23,49 +23,36 @@ export default function AdminModify() {
     email: 'jinyc@naver.com',
     profilePath: ''
   });
-  const [employeeId, setEmployeeId] = useState<number>(1);
-  const [department, setDepartment] = useState<string>('');
-  const [position, setPosition] = useState<string>('');
   const [profileImage, setProfileImage] = useState<File>();
-  const [name, setName] = useState<string>('');
-  const [phone, setPhone] = useState<string>('');
-  const [hireDate, setHireDate] = useState<string>('');
-  const [email, setEmail] = useState('');
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (
-      (employeeId && department && hireDate && name && phone && position) ||
-      profileImage
-    ) {
-      try {
-        const data = {
-          employeeId: selectedEmployee.employeeId,
-          department: selectedEmployee.department,
-          hireDate: selectedEmployee.hireDate,
-          name: selectedEmployee.name,
-          phone: selectedEmployee.phone,
-          position: selectedEmployee.position
-        };
+    try {
+      const data = {
+        employeeId: selectedEmployee.employeeId,
+        department: selectedEmployee.department,
+        hireDate: selectedEmployee.hireDate,
+        name: selectedEmployee.name,
+        phone: selectedEmployee.phone,
+        position: selectedEmployee.position
+      };
 
-        const formData = new FormData();
+      const formData = new FormData();
 
-        formData.append(
-          'employeeInfoRequest',
-          new Blob([JSON.stringify(data)], { type: 'application/json' })
-        );
+      formData.append(
+        'employeeInfoRequest',
+        new Blob([JSON.stringify(data)], { type: 'application/json' })
+      );
 
+      if (profileImage) {
         formData.append('profileImageFile', profileImage as File);
-
-        const response = await modifyRes(formData);
-
-        alert(response.message);
-      } catch (error) {
-        alert('수정에 실패했습니다.');
       }
-    } else {
+
+      const response = await modifyRes(formData);
+
+      alert(response.message);
+    } catch (error) {
       alert('수정에 실패했습니다.');
     }
   };

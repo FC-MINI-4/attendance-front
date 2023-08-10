@@ -10,11 +10,7 @@ import memberInfo from '@/api/member/memberInfo';
 import Loading from '@/components/common/Loading';
 
 export default function MemberInfoEdit() {
-  const [employeeId, setEmployeeId] = useState<number>();
-  const [department, setDepartment] = useState<string>('');
   const [profileImage, setProfileImage] = useState<File>();
-  const [name, setName] = useState<string>('');
-  const [phone, setPhone] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [privacyInfo, setPrivacyInfo] = useState<IprivacyProps>({
@@ -52,34 +48,32 @@ export default function MemberInfoEdit() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if ((employeeId && department && name && phone) || profileImage) {
-      try {
-        const data = {
-          employeeId: privacyInfo.data.employeeId,
-          department: privacyInfo.data.department,
-          name: privacyInfo.data.name,
-          phone: privacyInfo.data.phone
-        };
-        setIsLoading(true);
-        const formData = new FormData();
+    try {
+      const data = {
+        employeeId: privacyInfo.data.employeeId,
+        department: privacyInfo.data.department,
+        name: privacyInfo.data.name,
+        phone: privacyInfo.data.phone
+      };
+      setIsLoading(true);
+      const formData = new FormData();
 
-        formData.append(
-          'personalInfoRequest',
-          new Blob([JSON.stringify(data)], { type: 'application/json' })
-        );
+      formData.append(
+        'personalInfoRequest',
+        new Blob([JSON.stringify(data)], { type: 'application/json' })
+      );
 
+      if (profileImage) {
         formData.append('profileImageFile', profileImage as File);
-
-        const response = await memberModify(formData);
-        {
-          setTimeout(() => setIsLoading(false), 500);
-        }
-
-        alert(response.message);
-      } catch (error) {
-        alert('수정에 실패했습니다.');
       }
-    } else {
+
+      const response = await memberModify(formData);
+      {
+        setTimeout(() => setIsLoading(false), 500);
+      }
+
+      alert(response.message);
+    } catch (error) {
       alert('수정에 실패했습니다.');
     }
   };
