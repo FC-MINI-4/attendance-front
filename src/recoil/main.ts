@@ -14,3 +14,13 @@ export const dutiesState = atom({
   key:'duties',
   default:[]
 });
+
+export const nameState = atom({
+  key:'userName',
+  default:''
+})
+
+export const emailState = atom({
+  key:'userEmail',
+  default:''
+})

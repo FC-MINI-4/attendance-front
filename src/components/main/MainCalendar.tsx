@@ -11,6 +11,8 @@ addDays
 } from 'date-fns'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 import { HOLIDAYS, VOTEDAY, THANKSGIVING, SUBTITLE, BUDDADAY, NEWYEAR  } from "@/constants/holidays";
+import { useRecoilState } from 'recoil';
+import { dayOffState } from '@/recoil/main'
 
 export default function Calendar(){
 
@@ -19,6 +21,7 @@ export default function Calendar(){
   const currentYear = moment(currentDate).format ('YYYY')
   const currentMonth = moment(currentDate).format('MM')
   const currentDayForm = moment(new Date()).format('YYYY.MM.DD')
+  const [dayOffs, setDayOffs] = useRecoilState(dayOffState)
 
   //버튼 클릭시 월 바뀌는 로직
   const prevMonth = () => {
@@ -27,6 +30,10 @@ export default function Calendar(){
   const nextMonth = () => {
     setCurrentDate(addMonths(currentDate, 1))
   }
+
+  const a = dayOffs.map(x => x['startDate'] === x['endDate'])
+
+  console.log(a)
 
   //일주일 표시
   const Weeks = () => {

@@ -4,12 +4,20 @@ import SideMenu from '@/components/main/MainSideMenu';
 import { useRecoilState } from 'recoil'
 import { useEffect } from 'react'
 import requestSchedules from '@/api/main/schedules';
-import { dayOffState, dutiesState, remainDaysState } from '@/recoil/main';
+import {
+dayOffState,
+dutiesState,
+emailState,
+nameState,
+remainDaysState
+} from '@/recoil/main';
 
 export default function Main(){
   const [remainDays, setRemainDays] = useRecoilState(remainDaysState)
   const [dayOffs, setDayOffs] = useRecoilState(dayOffState)
   const [duties, setDuties] = useRecoilState(dutiesState)
+  const [userName, setUserName] = useRecoilState(nameState)
+  const [userEmail, setUserEmail] = useRecoilState(emailState)
 
   useEffect(()=>{
     const schedules = async () => {
@@ -19,9 +27,12 @@ export default function Main(){
       setRemainDays(scheduleInfo.dayOffRemains)
       setDayOffs(scheduleInfo.dayOffs)
       setDuties(scheduleInfo.duites)
+      setUserName(scheduleInfo.name)
+      setUserEmail(scheduleInfo.email)
     }
     schedules()
-  },[setDayOffs, setRemainDays, setDuties])
+  },[setDayOffs, setRemainDays, setDuties, setUserEmail, setUserName])
+
 
   return(
   <>
