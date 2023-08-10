@@ -6,7 +6,7 @@ import { clientInstance } from '@/api/axios';
 export async function requestFindPw(findPwData: IAuthFindPw) {
   try {
     const response = await axios.post(
-      `${clientInstance.defaults.baseURL}/api/auth/users/password/find`,
+      `${clientInstance.defaults.baseURL}/api/auth/users/send-password-reset-email`,
       findPwData
     );
     return response;
