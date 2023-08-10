@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { clientInstance } from '../axios';
+import { clientInstance } from '@/api/axios';
 import { ISignInRequestBody } from '@/types/ISignIn';
 import { ISignUpRequestBody } from '@/types/ISignUp';
 
