@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { signUpState } from '@/recoil/signUp';
 import Button from '@/components/common/Button';
 import { requestSignUp } from '@/api/auth/signUp';
-import { TEMP_DEPARTMENT } from '@/constants/option';
+import { TEMP_DEPARTMENT } from '@/constants/options';
 import { SIGNUP_INPUT_INFO } from '@/constants/constants';
 import AuthDropdown from '@/components/common/AuthDropdown';
 import SinglePicker from '@/components/common/SinglePicker';
@@ -26,12 +26,10 @@ export default function AuthSignUpBox() {
         department: signUpData.department
       });
 
-      if (response.data.success === true) {
+      if (response.data.success) {
         alert('회원가입이 완료되었습니다!');
         // 페이지를 로그인 페이지로 이동시키기
         router.push('/sign-in');
-      } else {
-        alert(response.data.message);
       }
     } catch (error: any) {
       alert(error.response.data.message);

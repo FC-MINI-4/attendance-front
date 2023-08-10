@@ -12,6 +12,7 @@ export default function MenuBar() {
     <>
       {isModalShow ? (
         <ApproveModal
+          IsDutyModal={false}
           title={'연차/반차 등록'}
           IsCheckBoxShow={true}
           IsTextBoxShow={true}
@@ -20,6 +21,7 @@ export default function MenuBar() {
       ) : null}
       {isDutyShow ? (
         <ApproveModal
+          IsDutyModal={true}
           title={'당직 등록'}
           IsCheckBoxShow={false}
           IsTextBoxShow={false}

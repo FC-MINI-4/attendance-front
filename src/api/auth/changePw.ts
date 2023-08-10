@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { clientInstance } from '@/api/axios';
-import { IAuthCheckPw } from '@/types/IAuth';
+import { IAuthChangePw } from '@/types/IAuth';
 
 // * [POST] 비밀번호 변경
-export async function requestChangePw(changePwData: IAuthCheckPw) {
+export async function requestChangePw(changePwData: IAuthChangePw) {
   try {
     const response = await axios.post(
-      `${clientInstance.defaults.baseURL}/api/auth/users/:${changePwData.authToken}/password/change`,
+      `${clientInstance.defaults.baseURL}/api/auth/users/password/change`,
       changePwData
     );
     return response;

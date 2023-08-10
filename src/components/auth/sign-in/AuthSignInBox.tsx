@@ -4,7 +4,6 @@ import { useRecoilValue } from 'recoil';
 import { signInState } from '@/recoil/signIn';
 import PwBox from '@/components/common/PwBox';
 import Button from '@/components/common/Button';
-
 import { requestSignIn } from '@/api/auth/signIn';
 import AuthSignInInput from '@/components/auth/sign-in/AuthSignInInput';
 
@@ -31,9 +30,14 @@ export default function AuthSignInBox() {
         const expireDate = new Date(
           Date.now() + response.data.data.token.accessTokenExpireDate
         );
+        // 사원 id
+        const employeeId = response.data.data.id;
+
         // 쿠키 생성
-        document.cookie = `accessToken=${accessToken}; expires=${expireDate.toUTCString()}; path=/`;
-        console.log(`cookie: ${document.cookie}`);
+        document.cookie = `accessToken=${accessToken};`;
+        document.cookie = `expires=${expireDate.toUTCString()};`;
+        document.cookie = `employeeId=${employeeId};`;
+
         // main 페이지로 라우팅
         router.push('/main');
       }

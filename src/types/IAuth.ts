@@ -6,7 +6,7 @@ export interface IAuthSignUpInput {
   type: string;
 }
 
-export interface ISignUpItem {
+export interface IAuthSignUp {
   label: string;
   name: string;
   button?: string;
@@ -14,8 +14,23 @@ export interface ISignUpItem {
   type: string;
 }
 
-export interface IAuthCheckPw {
+export interface IAuthResetPw {
+  accessToken: string;
   password: string;
   confirmPassword: string;
-  authToken?: string;
+}
+
+export interface IAuthFindPw {
+  email: string;
+}
+
+export interface IAuthValidPw {
+  password: string;
+}
+
+export interface IAuthChangePw {
+  id: number;
+  currentPassword: string;
+  password: string;
+  confirmPassword: string;
 }
