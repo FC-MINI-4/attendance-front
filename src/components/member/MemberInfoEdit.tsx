@@ -1,6 +1,8 @@
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+
 
 const dummyData = {
   name: '문현수',
@@ -57,12 +59,9 @@ export default function MemberInfoEdit() {
         </label>
       </div>
 
-      <div className="bg-gray-200 h-24 flex items-center justify-center rounded-md mt-6 font-semibold">
-        <div className="text-base">
-          <div className="mb-2 text-center">새 이미지를 업로드 해주세요.</div>
-          <div className="mt-2 text-center">이미지 최대크기: 1MB</div>
-        </div>
-      </div>
+      <div className="bg-gray-200 h-24 flex items-center justify-center rounded-md mt-6 font-semibold"></div>
+      <Link href={'/change-pw'}>비밀번호 수정하기</Link>
+
     </div>
   );
 }
