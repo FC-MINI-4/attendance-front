@@ -22,6 +22,5 @@ export async function requestChangePw(changePwData: IAuthChangePw) {
     return response;
   } catch (error) {
     console.error('INVALID_PASSWORD', error);
-    throw error;
   }
 }
