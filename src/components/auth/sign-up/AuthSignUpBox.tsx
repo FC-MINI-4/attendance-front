@@ -12,6 +12,7 @@ import AuthSignUpInput from '@/components/auth/sign-up/AuthSignUpInput';
 export default function AuthSignUpBox() {
   const signUpData = useRecoilValue(signUpState);
   const router = useRouter();
+
   const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -25,14 +26,15 @@ export default function AuthSignUpBox() {
         hireDate: signUpData.hireDate,
         department: signUpData.department
       });
-
       if (response.data.success) {
-        alert('회원가입이 완료되었습니다!');
+        alert(response.data.message);
         // 페이지를 로그인 페이지로 이동시키기
         router.push('/sign-in');
+      } else {
+        alert(response.data.message);
       }
-    } catch (error: any) {
-      alert(error.response.data.message);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -58,7 +60,7 @@ export default function AuthSignUpBox() {
       <div className="border-b-2 border-gray-200 mb-4 sm:w-full sm:max-w-[calc(100%-6rem)] pl-1">
         <SinglePicker name={'hireDate'} />
       </div>
-      <form onSubmit={handleSignUp} encType="multipart/form-data">
+      <form onSubmit={handleSignUp}>
         <Button contents={'회원가입'} submit />
       </form>
     </div>

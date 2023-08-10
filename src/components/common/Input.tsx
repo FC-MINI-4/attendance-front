@@ -1,8 +1,9 @@
 interface IInputProps {
   placeholder?: string;
   value?: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   type?: string;
   label?: string;
   name: string;
@@ -30,6 +31,7 @@ export default function Input({ ...props }: IInputProps) {
         onChange={props.onChange}
         onKeyUp={props.onKeyUp}
         type={props.type}
+        onBlur={props.onBlur}
       />
     </div>
   );

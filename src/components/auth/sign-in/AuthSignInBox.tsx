@@ -22,8 +22,6 @@ export default function AuthSignInBox() {
 
       // 로그인 성공 시
       if (response.data.success) {
-        // 성공 메시지 alert
-        alert(response.data.message);
         // 액세스 토큰
         const accessToken = response.data.data.token.accessToken;
         // 현재 시간 + 만료 시간 = 만료일
@@ -37,6 +35,9 @@ export default function AuthSignInBox() {
         document.cookie = `accessToken=${accessToken};`;
         document.cookie = `expires=${expireDate.toUTCString()};`;
         document.cookie = `employeeId=${employeeId};`;
+
+        // 성공 메시지 alert
+        alert(response.data.message);
 
         // main 페이지로 라우팅
         router.push('/main');
