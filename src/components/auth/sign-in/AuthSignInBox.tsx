@@ -39,8 +39,13 @@ export default function AuthSignInBox() {
         // 성공 메시지 alert
         alert(response.data.message);
 
-        // main 페이지로 라우팅
-        router.push('/main');
+        // 관리자면 admin-manage 페이지로 라우팅
+        if (response.data.data.employee.role === 'ADMIN') {
+          router.push('/admin-manage');
+        } else {
+          // main 페이지로 라우팅
+          router.push('/main');
+        }
       }
       // 로그인 실패 시
       else {
