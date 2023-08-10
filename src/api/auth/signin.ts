@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { clientInstance } from '@/api/axios';
-import { ISignInRequestBody } from '@/types/ISignIn';
+import { ISignInRequestBody } from '@/types/ILogIn';
 
 // * [POST] 로그인 요청 api
 export async function requestSignIn(signInData: ISignInRequestBody) {
