@@ -16,6 +16,7 @@ export default function MemberDetail() {
   return (
     <div className="items-center justify-center">
       <div className="w-full p-16 bg-white shadow">
+
         <div className="pb-20">
           <div className="relative bg-gray-200 rounded-sm-lg font-bold sm:text-3xl sm:pb-8 h-10">
             <span className="bg-primary absolute top-0 left-0 w-4 h-10"></span>

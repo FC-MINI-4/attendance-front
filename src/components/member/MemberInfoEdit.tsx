@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { HiOutlineUserCircle } from 'react-icons/hi';
-import { useRef, useState } from 'react'
+import { useRef, useState } from 'react';
 
 const dummyData = {
   name: '문현수',
@@ -16,11 +16,10 @@ const handleClick = () => {
   return;
 };
 
-
 // 받아온 프로필URL을 Photo로 변환합니다.
 
 export default function MemberInfoEdit() {
-  const [myUrl, setMyUrl] = useState('')
+  const [myUrl, setMyUrl] = useState('');
   const imgRef = useRef<HTMLImageElement>(null);
 
   const readImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,11 +34,11 @@ export default function MemberInfoEdit() {
 
       imgRef.current.src = e.target.result;
     });
-    
-    setMyUrl(URL.createObjectURL(imageFile))
+
+    setMyUrl(URL.createObjectURL(imageFile));
 
     return reader.readAsDataURL(imageFile);
-  }
+  };
 
   return (
     <div className="flex flex-col items-center text-lg bg-white rounded shadow p-6">
@@ -57,29 +56,22 @@ export default function MemberInfoEdit() {
         <input
           type="file"
           id="modify"
-          onChange={(e) => readImage(e)}
+          onChange={e => readImage(e)}
           className="absolute w-0 h-0 p-0 overflow-hidden border-0"
         />
         <label
           htmlFor="modify"
-          className="cursor-pointer inline-block text-base border absolute right-3 bottom-0 px-0 py-1 text-light-blue-500 border-light-blue-500 mt-6" 
-        >
+          className="cursor-pointer inline-block text-base absolute right-3 bottom-0 px-0 py-1 text-light-blue-500 border-transparent mt-6 font-semibold">
           프로필 사진 업로드
         </label>
       </div>
-      
-      <div className="bg-gray-200 h-24 flex items-center justify-center rounded-md mt-6">
-        <div className="text-base">
-          <div className="mb-2 text-center">
-            새 이미지를 업로드 해주세요.
-             </div>
-             <div className="mt-2 text-center">
-              이미지 최대크기: 1MB
-              </div>
-              </div>
-            </div>
 
-      
+      <div className="bg-gray-200 h-24 flex items-center justify-center rounded-md mt-6 font-semibold">
+        <div className="text-base">
+          <div className="mb-2 text-center">새 이미지를 업로드 해주세요.</div>
+          <div className="mt-2 text-center">이미지 최대크기: 1MB</div>
+        </div>
+      </div>
     </div>
   );
- }
+}

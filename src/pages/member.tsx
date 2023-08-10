@@ -13,6 +13,7 @@ export default function Member() {
         <div className="flex h-fit">
           <div className="w-1/6 h-[858px] absolute left-0 top-24">
             <div className="mt-20">
+
               <MemberBoard />
             </div>
             <div className="mt-16">
