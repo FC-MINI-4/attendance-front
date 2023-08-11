@@ -57,8 +57,6 @@ export default function Calendar(){
     getDateRange()
   },[setDayOffs])
 
-  console.log(dateRangeArray)
-  console.log(dayOffStartDate)
   //일주일 표시
   const Weeks = () => {
     const days = []

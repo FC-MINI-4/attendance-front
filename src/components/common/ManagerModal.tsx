@@ -1,16 +1,20 @@
 import { manageState } from '@/recoil/common/modal';
 import { useRecoilState } from 'recoil';
 import { useEffect, useRef } from 'react';
+import { dayOffState, dutiesState } from '@/recoil/main';
+import { IDayOffFormatted } from '@/types/IDayOff';
+import { IDutiesFormatted } from '@/types/IDuty';
 
 interface IModalProps {
   type?: string;
-  label?: string;
   date?: string;
   value?: string;
 }
 
 export default function ManageModal(props: IModalProps) {
   const [isManageShow, setIsManageShow] = useRecoilState(manageState);
+  const [dayOffs, setDayOffs] = useRecoilState(dayOffState)
+  const [duties, setDuties] = useRecoilState(dutiesState)
 
   const modalRef = useRef<HTMLInputElement | null>(null);
   useEffect(() => {
@@ -26,15 +30,30 @@ export default function ManageModal(props: IModalProps) {
     };
   }, [modalRef, setIsManageShow]);
 
+
+  // dayOffs를 원하는 형식으로 변환
+  const dayOffsFormatted = (dayOffs as IDayOffFormatted[]).map(x=>({
+    type: x.type,
+    startDate: x.startDate,
+    endDate: x.endDate,
+    status: x.status
+  }))
+
+  const dutiesFormatted = (duties as IDutiesFormatted[]).map(item => ({
+    type: item.type,
+    date: item.date,
+    status: item.status
+  }));
+
   return (
     <>
       <div className="w-screen h-screen bg-black/40 fixed top-0 left-0 z-10">
         <div
           className="w-1/3 h-80 bg-white absolute top-0 left-0 bottom-0 right-0 m-auto"
           ref={modalRef}>
-          <div className="h-1/5 flex border-2 ">
+          <div className="h-[50px] flex border-2 ">
             <div className="w-[1.8rem] bg-primary"></div>
-            <div className="text-xl flex items-center ml-4">일정관리</div>
+            <div className="text-l flex items-center ml-4">일정관리</div>
           </div>
           <div className="h-4/5 flex  ">
             <div className=" m-auto h-4/5 w-4/5 border-2 border-primary rounded-lg  flex-wrap ">
@@ -46,7 +65,7 @@ export default function ManageModal(props: IModalProps) {
                   기간
                 </div>
                 <div className="w-1/5 flex  items-center justify-center text-white  border-l-2">
-                  {props.label}
+                  수정/삭제
                 </div>
               </div>
 
@@ -61,6 +80,7 @@ export default function ManageModal(props: IModalProps) {
                   {props.value}
                 </div>
               </div>
+
             </div>
           </div>
         </div>

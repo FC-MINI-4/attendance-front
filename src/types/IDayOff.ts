@@ -17,3 +17,13 @@ export interface IChangeDayOff {
 export interface ICancelDayOff {
 	status : string
 }
+
+export interface IDayOffFormatted {
+  amount:number
+  dayOffId:number
+  endDate:string
+  startDate:string
+  reason:string
+  status:string
+  type:string
+}
