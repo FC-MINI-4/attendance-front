@@ -118,7 +118,8 @@ export default function AuthChangePwInput() {
         }
       }
     } catch (error: any) {
-      throw error;
+      alert(error.response.data.message);
+      router.push('change-pw');
     }
   };
 

@@ -70,6 +70,7 @@ export default function AuthResetPwInput() {
       if (response) {
         if (response.data.success) {
           alert(response.data.message);
+          router.push('/');
         }
       }
     } catch (error: any) {
