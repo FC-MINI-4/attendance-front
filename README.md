@@ -17,7 +17,7 @@ Next.Js , React, TypeScript, Rest API를 활용해서 만든 연차 당직 관�
 
 ## 📌배포사이트
 
-[SOONYANG](https://soonyang.vercel.app/)
+[SOONYANG](https://soonyang.vercel.app)
 
 ## 📌Stack
 
