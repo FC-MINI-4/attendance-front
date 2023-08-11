@@ -1,37 +1,22 @@
-import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-import { IprivacyProps } from '@/types/IMyPages';
 import { clientInstance } from '@/api/axios';
 import Image from 'next/image';
 import memberInfo from '@/api/member/memberInfo';
 import Loading from '@/components/common/Loading';
+import { useRecoilState } from 'recoil';
+import { memberInfoState } from '@/recoil/memberInfo';
 
-export default function MemberInfoEdit() {
+export default function MemberDetail() {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [privacyInfo, setPrivacyInfo] = useState<IprivacyProps>({
-    success: false,
-    code: '',
-    message: '',
-    data: {
-      employeeId: 0,
-      department: '',
-      name: '',
-      email: '',
-      phone: '',
-      hireDate: '',
-      profilePath: '',
-      position: ''
-    }
-  });
+  const [memberState, setMemberState] = useRecoilState(memberInfoState);
 
   useEffect(() => {
     async function getInfo() {
       setIsLoading(true);
       const response = await memberInfo();
       if (response.success && response.data) {
-        const data = response;
-        setPrivacyInfo(data);
+        setMemberState(response.data);
       }
       {
         setTimeout(() => setIsLoading(false), 500);
@@ -41,7 +26,7 @@ export default function MemberInfoEdit() {
     getInfo();
   }, []);
 
-  const hireDate = new Date(privacyInfo.data.hireDate);
+  const hireDate = new Date(memberState.hireDate);
   const currentDate = new Date();
 
   const dateDifference = currentDate.getTime() - hireDate.getTime();
@@ -54,14 +39,14 @@ export default function MemberInfoEdit() {
   const months = Math.floor(remainingMilliseconds / millisecondsPerMonth);
 
   const List = {
-    이름: privacyInfo.data.name,
-    계열사: privacyInfo.data.department,
-    고용일: privacyInfo.data.hireDate
+    이름: memberState.name,
+    계열사: memberState.department,
+    고용일: memberState.hireDate
   };
 
   const More = {
-    직급: privacyInfo.data.position,
-    사원번호: privacyInfo.data.employeeId,
+    직급: memberState.position,
+    사원번호: memberState.employeeId,
     근무기간: `${years}년 ${months}개월`
   };
 
@@ -110,9 +95,9 @@ export default function MemberInfoEdit() {
                 height={320}
                 className="rounded-xl w-[240px] h-[240px] "
               />
-            ) : privacyInfo.data.profilePath ? (
+            ) : memberState.profilePath ? (
               <Image
-                src={`${clientInstance.defaults.baseURL}${privacyInfo.data.profilePath}`}
+                src={`${clientInstance.defaults.baseURL}${memberState.profilePath}`}
                 width={320}
                 height={320}
                 alt="프로필 이미지"
@@ -125,7 +110,7 @@ export default function MemberInfoEdit() {
             )}
           </div>
           <div className="flex justify-center mt-[15rem] font-bold text-xl ">
-            {privacyInfo.data.name}님, 반갑습니다.
+            {memberState.name}님, 반갑습니다.
           </div>
         </div>
       </div>
