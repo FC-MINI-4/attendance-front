@@ -10,11 +10,7 @@ import memberInfo from '@/api/member/memberInfo';
 import Loading from '@/components/common/Loading';
 
 export default function MemberInfoEdit() {
-  const [employeeId, setEmployeeId] = useState<number>();
-  const [department, setDepartment] = useState<string>('');
   const [profileImage, setProfileImage] = useState<File>();
-  const [name, setName] = useState<string>('');
-  const [phone, setPhone] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [privacyInfo, setPrivacyInfo] = useState<IprivacyProps>({
@@ -52,34 +48,32 @@ export default function MemberInfoEdit() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if ((employeeId && department && name && phone) || profileImage) {
-      try {
-        const data = {
-          employeeId: privacyInfo.data.employeeId,
-          department: privacyInfo.data.department,
-          name: privacyInfo.data.name,
-          phone: privacyInfo.data.phone
-        };
-        setIsLoading(true);
-        const formData = new FormData();
+    try {
+      const data = {
+        employeeId: privacyInfo.data.employeeId,
+        department: privacyInfo.data.department,
+        name: privacyInfo.data.name,
+        phone: privacyInfo.data.phone
+      };
+      setIsLoading(true);
+      const formData = new FormData();
 
-        formData.append(
-          'personalInfoRequest',
-          new Blob([JSON.stringify(data)], { type: 'application/json' })
-        );
+      formData.append(
+        'personalInfoRequest',
+        new Blob([JSON.stringify(data)], { type: 'application/json' })
+      );
 
+      if (profileImage) {
         formData.append('profileImageFile', profileImage as File);
-
-        const response = await memberModify(formData);
-        {
-          setTimeout(() => setIsLoading(false), 500);
-        }
-
-        alert(response.message);
-      } catch (error) {
-        alert('수정에 실패했습니다.');
       }
-    } else {
+
+      const response = await memberModify(formData);
+      {
+        setTimeout(() => setIsLoading(false), 500);
+      }
+
+      alert(response.message);
+    } catch (error) {
       alert('수정에 실패했습니다.');
     }
   };
@@ -134,7 +128,7 @@ export default function MemberInfoEdit() {
 
   return (
     <form onSubmit={handleSubmit} className="w-[70rem] flex h-[35rem]">
-      <div className="w-[40rem] border-primary   border-2 rounded shadow">
+      <div className="w-[40rem]  mr-8  border-[1px] rounded-md shadow">
         <div className="relative  w-[15rem]  rounded-sm font-bold sm:text-2xl sm:pb-8 h-9 ">
           <div className="bg-primary absolute   top-0 left-0 w-4 h-12 z-0"></div>
           <div className="relative z-10 pl-4 ml-2 pt-2">정보 수정</div>
@@ -143,7 +137,7 @@ export default function MemberInfoEdit() {
           <Loading />
         ) : (
           <>
-            <div className=" m-6 ml-16  ">
+            <div className=" m-6 ml-16 mt-12 ">
               <div className="text-md font-semibold mt-16 ">이름</div>
               <input
                 value={privacyInfo.data.name}
@@ -152,9 +146,9 @@ export default function MemberInfoEdit() {
               />
             </div>
 
-            <div className=" m-6 mt-8 ml-16">
+            <div className=" m-6 mt-12 ml-16">
               <div className="text-md font-semibold ">계열사</div>
-              <div className="font-small w-[21rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex ">
+              <div className="font-small w-[20rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex ">
                 <DropdownFilter
                   options={MODIFY_DEPARTMENT}
                   value={privacyInfo.data.department}
@@ -163,7 +157,7 @@ export default function MemberInfoEdit() {
               </div>
             </div>
 
-            <div className=" m-6 mt-8 ml-16 ">
+            <div className=" m-6 mt-12 ml-16 ">
               <div className="text-md font-semibold ">입사일</div>
               <input
                 defaultValue={privacyInfo.data.hireDate}
@@ -171,14 +165,7 @@ export default function MemberInfoEdit() {
               />
             </div>
 
-            <div className=" m-6 mt-8 ml-16 ">
-              <div className="text-md font-semibold ">이메일</div>
-              <input
-                defaultValue={privacyInfo.data.email}
-                className=" border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-              />
-            </div>
-            <div className=" m-6 ml-16 mt-8  ">
+            <div className=" m-6 ml-16 mt-12  ">
               <div className="text-md font-semibold ">전화번호</div>
               <input
                 value={privacyInfo.data.phone}
@@ -189,9 +176,9 @@ export default function MemberInfoEdit() {
           </>
         )}
       </div>
-      <div className="flex w-[25rem] border-2 rounded border-primary shadow ml-2 ">
+      <div className="flex w-[25rem] rounded-md border-[1px] shadow ml-2 ">
         <div className="w-full h-full">
-          <div className=" flex  justify-center h-[200px] rounded-full mt-20 ">
+          <div className=" flex  justify-center h-[200px] rounded-full ">
             {previewImage ? (
               <Image
                 src={previewImage}
@@ -206,7 +193,7 @@ export default function MemberInfoEdit() {
                 width={320}
                 height={320}
                 alt="프로필 이미지"
-                className="rounded-xl w-[240px] h-[240px] "
+                className="rounded-xl w-[320px] h-[320px]  mt-8 "
               />
             ) : (
               <div className="flex items-center justify-center font-semibold ">
@@ -216,8 +203,8 @@ export default function MemberInfoEdit() {
           </div>
           <label
             htmlFor="imageUpload"
-            className=" text-lg font-semibold hover:cursor-pointer justify-center flex  mt-16">
-            이미지를 선택해주세요.
+            className=" text-lg font-semibold hover:cursor-pointer justify-center flex  mt-[12rem]">
+            이미지선택
           </label>
           <input
             id="imageUpload"
@@ -227,7 +214,7 @@ export default function MemberInfoEdit() {
             name="file"
             onChange={handleImageChange}></input>
           <div className="w-[25rem] flex justify-center ">
-            <div className="w-[16rem] mt-20">
+            <div className="w-[16rem] mt-8">
               <Button contents="수정" submit />
             </div>
           </div>

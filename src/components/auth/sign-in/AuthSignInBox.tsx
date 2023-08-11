@@ -62,11 +62,15 @@ export default function AuthSignInBox() {
       <form onSubmit={handleLogin}>
         <AuthSignInInput />
         <Button contents={'로그인'} submit />
-        <div className="flex justify-between sm:mt-2 mb-12 sm:mb-0">
-          <Link href="/sign-up" className="cusor-pointer">
+        <div className="flex justify-between sm:mt-6 mt-4 mb-12 sm:mb-0">
+          <Link
+            href="/sign-up"
+            className="flex justify-center cusor-pointer w-1/2 text-base sm:px-16 border-r border-r-mainGray text-mainBlack">
             회원가입
           </Link>
-          <Link href="/find-pw" className="cusor-pointer">
+          <Link
+            href="/find-pw"
+            className=" w-1/2 cusor-pointer flex justify-center text-base sm:px-16 text-mainBlack">
             비밀번호 찾기
           </Link>
         </div>

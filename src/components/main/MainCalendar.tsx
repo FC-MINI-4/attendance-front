@@ -11,6 +11,8 @@ addDays
 } from 'date-fns'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 import { HOLIDAYS, VOTEDAY, THANKSGIVING, SUBTITLE, BUDDADAY, NEWYEAR  } from "@/constants/holidays";
+import { useRecoilState } from 'recoil';
+import { dayOffState } from '@/recoil/main'
 
 export default function Calendar(){
 
@@ -19,6 +21,7 @@ export default function Calendar(){
   const currentYear = moment(currentDate).format ('YYYY')
   const currentMonth = moment(currentDate).format('MM')
   const currentDayForm = moment(new Date()).format('YYYY.MM.DD')
+  const [dayOffs, setDayOffs] = useRecoilState(dayOffState)
 
   //버튼 클릭시 월 바뀌는 로직
   const prevMonth = () => {
@@ -28,6 +31,34 @@ export default function Calendar(){
     setCurrentDate(addMonths(currentDate, 1))
   }
 
+  const dayOffStartDate = dayOffs.map(x => moment(x['startDate']).format('YYYYMMDD'))
+  const dayOffEndDate = dayOffs.map(x => moment(x['endDate']).format('YYYYMMDD'))
+
+  const getDateRange = () => {
+    const daysInRange = []
+
+    for(let i=0; i<dayOffStartDate.length; i++){
+      const start = moment(dayOffStartDate[i])
+      const end = moment(dayOffEndDate[i])
+
+      while(start < end){
+        start.add(1,'days')
+        daysInRange.push(start.format('YYYYMMDD'))
+      }
+      const filteredDaysInRange = (daysInRange as string[]).filter(date => date !== end.format('YYYYMMDD'));
+
+      return filteredDaysInRange
+    }
+  }
+
+  const dateRangeArray = getDateRange()
+
+  useEffect(()=>{
+    getDateRange()
+  },[setDayOffs])
+
+  console.log(dateRangeArray)
+  console.log(dayOffStartDate)
   //일주일 표시
   const Weeks = () => {
     const days = []
@@ -72,6 +103,10 @@ export default function Calendar(){
         let e = NEWYEAR.filter(x => x === lunaDayForm)
         let f = SUBTITLE.filter(x => x === lunaDayForm)
 
+        let checkDayOffS = dayOffStartDate.filter(x => x === lunaDayForm)
+        let checkDayOffE = dayOffEndDate.filter(x => x === lunaDayForm)
+        //let rangeDayOff = (getDateRange() as string[]).filter(x => x === lunaDayForm)
+        
         days.push(
           (i === 0 || a.length>0 || b.length>0 || c.length>0 || d.length>0 || e.length>0 || f.length>0 ? 
             <div
@@ -95,15 +130,30 @@ export default function Calendar(){
               ${today ? `bg-primary text-white` : null}
               hover:bg-primaryHover hover:text-white`}
               key={formattedDate}>
-              { checkedMonth === currentMonth ?
-                <div className="w-6 h-6 pt-1.5 pl-1.5">
-                  {formattedDate}
-                </div>
-              :
-                <div className="w-6 h-6 pt-1.5 pl-1.5 text-mainGray">
-                  {formattedDate}
-                </div>
-              }
+                { checkedMonth === currentMonth ?
+                  <div className="w-6 h-6 pt-1.5 pl-1.5">
+                    {formattedDate}
+                  </div>
+                :
+                  <div className="w-6 h-6 pt-1.5 pl-1.5 text-mainGray">
+                    {formattedDate}
+                  </div>
+                }
+                {checkDayOffS.length > 0 && checkDayOffE.length === 0 ?
+                  <div className='w-full h-5 mt-3 bg-blue-500'>
+                    
+                  </div>
+                : null}
+                {checkDayOffE.length > 0 && checkDayOffS.length === 0 ?
+                  <div className='w-full h-5 mt-3 bg-blue-500'>
+                    
+                  </div>
+                : null}
+                {checkDayOffE.length > 0 && checkDayOffS.length > 0?
+                  <div className='w-full h-5 mt-3 bg-blue-500'>
+                    
+                  </div>
+                : null}
             </div>
           )
         )

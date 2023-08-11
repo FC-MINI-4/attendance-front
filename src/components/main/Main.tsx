@@ -1,33 +1,39 @@
 import Calendar from '@/components/main/MainCalendar';
 import MainHeader from '@/components/main/MainHeader';
 import SideMenu from '@/components/main/MainSideMenu';
-import { modalState } from '@/recoil/common/modal';
 import { useRecoilState } from 'recoil'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import requestSchedules from '@/api/main/schedules';
-import { IDayOffSchedules } from '@/types/IMain';
+import {
+dayOffState,
+dutiesState,
+emailState,
+nameState,
+remainDaysState
+} from '@/recoil/main';
 
 export default function Main(){
-  const [isModalShow] = useRecoilState(modalState)
-  const [remainDays, setRemainDays] = useState<number>()
-  const [dayOffs, setDayOffs] = useState([])
-  const [duites, setDuties] = useState([])
+  const [remainDays, setRemainDays] = useRecoilState(remainDaysState)
+  const [dayOffs, setDayOffs] = useRecoilState(dayOffState)
+  const [duties, setDuties] = useRecoilState(dutiesState)
+  const [userName, setUserName] = useRecoilState(nameState)
+  const [userEmail, setUserEmail] = useRecoilState(emailState)
 
   useEffect(()=>{
     const schedules = async () => {
       const request = await requestSchedules()
       const scheduleInfo = request.data
       
-      setRemainDays(scheduleInfo.daysOffRemains)
+      setRemainDays(scheduleInfo.dayOffRemains)
       setDayOffs(scheduleInfo.dayOffs)
       setDuties(scheduleInfo.duites)
-      
+      setUserName(scheduleInfo.name)
+      setUserEmail(scheduleInfo.email)
     }
     schedules()
-  },[])
-  console.log(dayOffs)
+  },[setDayOffs, setRemainDays, setDuties, setUserEmail, setUserName])
 
-  dayOffs
+  console.log(dayOffs)
 
   return(
   <>

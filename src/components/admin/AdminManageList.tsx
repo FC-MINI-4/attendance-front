@@ -123,7 +123,7 @@ export default function EmployeeList({
         <div className="w-screen h-screen bg-black/40 fixed top-0 left-0 z-10 ">
           <div
             ref={modalRef}
-            className="w-1/3 h-80 bg-white absolute top-0 left-0 bottom-0 right-0 m-auto">
+            className="w-1/3 h-80 bg-white absolute top-0 left-0 bottom-0 right-0 m-auto ">
             <div className="h-1/5 flex border-2 ">
               <div className="w-[1.8rem] bg-primary"></div>
               <div className="text-xl flex items-center ml-4">일정관리</div>
@@ -145,14 +145,14 @@ export default function EmployeeList({
                 {dayOffDetails.map(dayOffData => (
                   <div
                     key={dayOffData.dayOffId}
-                    className="flex h-1/5 w-full bg-primaryHover border-b-2 border-white ">
-                    <div className="w-1/5 flex items-center justify-center border-white border-r-2">
+                    className="flex h-1/5 w-full  border-b-2  ">
+                    <div className="w-1/5 flex items-center justify-center border-r-2">
                       {dayOffData.dayOff}
                     </div>
                     <div className="w-3/5 flex items-center justify-center">
                       {`${dayOffData.startDate} ~ ${dayOffData.endDate}`}
                     </div>
-                    <div className="w-1/5 flex items-center justify-center border-white border-l-2">
+                    <div className="w-1/5 flex items-center justify-center border-l-2">
                       {dayOffData.requestStatus}
                     </div>
                   </div>
@@ -160,14 +160,14 @@ export default function EmployeeList({
                 {dutyDetails.map(dutyData => (
                   <div
                     key={dutyData.dutyId}
-                    className="flex h-1/5 w-full bg-primaryHover border-b-2 border-white ">
-                    <div className="w-1/5 flex items-center justify-center border-white border-r-2">
+                    className="flex h-1/5 w-full  border-b-2  ">
+                    <div className="w-1/5 flex items-center justify-center border-r-2">
                       {dutyData.type}
                     </div>
                     <div className="w-3/5 flex items-center justify-center">
                       {dutyData.date}
                     </div>
-                    <div className="w-1/5 flex items-center justify-center border-white border-l-2">
+                    <div className="w-1/5 flex items-center justify-center border-l-2">
                       {dutyData.status}
                     </div>
                   </div>
@@ -185,21 +185,25 @@ export default function EmployeeList({
           {currentPageData.map(employee => (
             <div
               key={employee.employeeId}
-              className="flex justify-between border-solid border-b-[1px] h-[50px] items-center">
+              className="flex justify-between w-[1456px] border-solid border-b-[1px] h-[50px] items-center">
               <div className="w-[13.5rem] text-center">{employee.name}</div>
-              <div className="w-[7rem] text-center">{employee.department}</div>
-              <div className="w-[7rem] ml-2 mr-4 text-center">
+              <div className="w-[7rem] ml-4 text-center">
+                {employee.department}
+              </div>
+              <div className="w-[7rem] ml-2 mr-4 pl-4 text-center">
                 {employee.position}
               </div>
-              <div className="text-center w-[10rem]">{employee.hireDate}</div>
-              <div className="w-[10rem] flex justify-center">
+              <div className="text-center w-[10rem] pl-4">
+                {employee.hireDate}
+              </div>
+              <div className="w-[10rem] flex pl-4 justify-center">
                 <button
                   className="w-[10rem] text-center hover:underline text-secondaryGray"
                   onClick={() => handleDayOffDetails(employee.employeeId)}>
                   상세보기
                 </button>
               </div>
-              <div className="w-[10rem] justify-center flex">
+              <div className="w-[10rem] justify-center pl-2 flex">
                 <button
                   className="w-[10rem] text-center hover:underline text-secondaryGray"
                   onClick={() => handleDutyDetails(employee.employeeId)}>

@@ -36,12 +36,12 @@ export default function AdminModal({ reason }: IAdminModalProps) {
           <div className="h-4/5 flex  ">
             <div className=" m-auto h-4/5 w-4/5 border-2 border-primary rounded-lg  flex-wrap ">
               <div className="flex  h-1/5  bg-primary w-full border-b-2 border-white">
-                <div className="w-full flex items-center justify-center  ">
+                <div className="w-full flex items-center justify-center ">
                   사유
                 </div>
               </div>
 
-              <div className="flex  h-4/5 w-full bg-primaryHover    ">
+              <div className="flex  h-4/5 w-full   ">
                 <div className="w-full  flex items-center justify-center  ">
                   {reason}
                 </div>

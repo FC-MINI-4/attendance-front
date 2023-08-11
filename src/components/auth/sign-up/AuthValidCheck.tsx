@@ -12,7 +12,7 @@ export default function AuthValidCheck({ valid, name }: IRegexCheck) {
     if (!valid && name === 'password') {
       return (
         <div className="text-secondary text-xs ml-1">
-          영문, 숫자를 조합하여 입력해주세요. (8-16자)
+          영문, 숫자를 조합하여 입력해주세요. (8 - 16자)
         </div>
       );
     }

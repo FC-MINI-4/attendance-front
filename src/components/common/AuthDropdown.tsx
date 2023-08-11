@@ -1,9 +1,9 @@
-import { Fragment, useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { IDropdown } from '@/types/ICommon';
 import { signUpState } from '@/recoil/signUp';
+import { Fragment, useEffect, useState } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
+import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
 export default function AuthDropdown({ ...props }: IDropdown) {
   const [selected, setSelected] = useState(Object.keys(props.options)[0]);
