@@ -28,7 +28,7 @@ export async function requestDayOff(requestData: IApplyDayOff) {
 export async function changeDayOff(requestChange: IChangeDayOff) {
   try {
     const response = await axios.put(
-      `${clientInstance.defaults.baseURL}/api/schedules/day-off/`,
+      `${clientInstance.defaults.baseURL}/api/schedules/day-off/${requestChange.dayOffId}`,
       requestChange,
       {
         headers: {
@@ -46,7 +46,7 @@ export async function changeDayOff(requestChange: IChangeDayOff) {
 export async function cancelDayOff(requestChange: ICancelDayOff) {
   try {
     const response = await axios.put(
-      `${clientInstance.defaults.baseURL}/api/schedules/day-off/status`,
+      `${clientInstance.defaults.baseURL}/api/schedules/day-off/{${requestChange.dayOffId}}/${requestChange.status}`,
       requestChange,
       {
         headers: {
