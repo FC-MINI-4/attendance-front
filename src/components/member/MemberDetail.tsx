@@ -51,7 +51,7 @@ export default function MemberDetail() {
   };
 
   return (
-    <div className="w-[70rem] flex h-[35rem]">
+    <div className="w-[70rem] ml-20 flex h-[35rem]">
       <div className="w-[40rem]  mr-8  border-[1px] rounded shadow">
         <div className="relative  w-[15rem]  rounded-md font-bold sm:text-2xl sm:pb-8 h-9 ">
           <div className="bg-primary absolute   top-0 left-0 w-4 h-12 z-0"></div>

@@ -1,5 +1,5 @@
 import { ILayout } from '@/types/ICommon';
-import MemberHeader from './MemberHeader';
+import MemberHeader from '@/components/member/MemberHeader';
 
 export default function MemberLayout({ children }: ILayout) {
   return (
