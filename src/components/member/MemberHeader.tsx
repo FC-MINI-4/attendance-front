@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { clientInstance } from '@/api/axios';
 import { useRecoilValue } from 'recoil';
 import { memberInfoState } from '@/recoil/memberInfo';
+import Link from 'next/link';
 
 export default function MemberHeader() {
   const memberData = useRecoilValue(memberInfoState);
@@ -17,7 +18,9 @@ export default function MemberHeader() {
     <div className="w-full px-16 shadow-md">
       <div className="h-24 flex justify-between ">
         <div className="top-0 bottom-0 my-auto  text-3xl font-bold">
-          <Image src="/logo.png" alt="logo" width={200} height={20} />
+          <Link href="main">
+            <Image src="/logo.png" alt="logo" width={200} height={20} />
+          </Link>
         </div>
         <div className="flex top-0 bottom-0 my-auto">
           {memberData.profilePath ? (
