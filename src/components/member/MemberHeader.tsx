@@ -20,15 +20,19 @@ export default function MemberHeader() {
           <Image src="/logo.png" alt="logo" width={200} height={20} />
         </div>
         <div className="flex top-0 bottom-0 my-auto">
-          <div className="w-12 h-12 rounded-full border-2 mr-6 overflow-hidden flex justify-center items-center">
-            <Image
-              src={`${clientInstance.defaults.baseURL}${memberData.profilePath}`}
-              className="rounded-xl w-[320px] h-[320px] "
-              alt="profileImg"
-              width={48}
-              height={48}
-            />
-          </div>
+          {memberData.profilePath ? (
+            <div className="w-12 h-12 rounded-full border-2 mr-6 overflow-hidden flex justify-center items-center">
+              <Image
+                src={`${clientInstance.defaults.baseURL}${memberData.profilePath}`}
+                className="rounded-xl w-[320px] h-[320px] "
+                alt="profileImg"
+                width={48}
+                height={48}
+              />
+            </div>
+          ) : (
+            <div></div>
+          )}
           <div className="relative">
             <div className="flex justify-between absolute top-0 left-0">
               <div className="font-bold mr-6">{memberData.name}</div>
