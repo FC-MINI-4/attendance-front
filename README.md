@@ -17,7 +17,7 @@ Next.Js , React, TypeScript, Rest API를 활용해서 만든 연차 당직 관�
 
 ## 📌배포사이트
 
-[SOONYANG]()
+[SOONYANG](https://soonyang.vercel.app/)
 
 ## 📌Stack
 
@@ -51,15 +51,15 @@ Cowork Tools
 
 -
 -
--
--
-- **2️⃣ 메인 페이지**
+- 1
+
+**2️⃣ 메인 페이지**
 
 -
 -
--
--
-- **3️⃣ 마이페이지 페이지**
+- 1
+
+**3️⃣ 마이페이지 페이지**
 
 - 개인정보 조회
 - 개인정보 수정
