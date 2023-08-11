@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
-import Input from '@/components/common/Input';
 import { signInState } from '@/recoil/logIn';
+import Input from '@/components/common/Input';
 
 export default function AuthSignInInput() {
   // 회원가입 정보 atom state 구독

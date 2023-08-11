@@ -17,7 +17,7 @@ export default function MainHeader({ onToggleSidebar }: IMainHeaderProps) {
   };
 
   return (
-    <div className=" h-[4rem] border-solid border-b-2 border-mainGray  flex items-center justify-between">
+    <div className=" h-[4rem] border-solid border-b-2 border-mainGray shadow-lg  flex items-center justify-between">
       <div className="flex">
         <button className="ml-5 mr-[1rem] " onClick={handleToggle}>
           <HiOutlineBars4 className="w-[36px] h-[36px] " />

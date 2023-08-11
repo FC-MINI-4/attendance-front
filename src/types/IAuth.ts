@@ -19,7 +19,7 @@ export interface IAuthValidPw {
 }
 
 export interface IAuthResetPw {
-  accessToken: string;
+  authToken: string;
   password: string;
   confirmPassword: string;
 }
