@@ -1,5 +1,38 @@
 # AUTH 작업일지
 
+## 23.07.25.
+
+프로젝트 초기 세팅,
+회원가입 폼 UI 작업
+<img width="1200" alt="image" src="https://github.com/FC-MINI-4/attendance-front/assets/83483378/2db8ef3a-7597-4311-a243-0437c279ac85">
+
+---
+
+## 23.07.26.
+
+비밀번호 변경 페이지 UI 작업,
+Auth 파트 내 공용 컴포넌트 생성
+
+<img width="709" alt="image" src="https://github.com/1017yu/this-is-money/assets/83483378/4cf756d5-c5f1-4bba-90da-32539349014c">
+
+<img width="704" alt="image" src="https://github.com/1017yu/this-is-money/assets/83483378/7955b0d8-44bd-4067-b684-d42793ee7311">
+
+---
+
+## 23.07.27.
+
+비밀번호 유효성 검사 컴포넌트 생성
+회원가입 공통 Input 컴포넌트 생성
+Auth Layout 반응형 작업
+Auth Types 정리
+
+## 23.07.28.
+
+Auth 내 공통 Box 컴포넌트 생성
+로그인 페이지 UI 작업
+
+![Image](https://github.com/FC-MINI-4/attendance-front/assets/83483378/8c63b1c0-27a0-4b90-b416-3c030c6c3fc2)
+
 ## 23.07.31.
 
 ### 이메일 및 패스워드 유효성 검사 동적 구현
@@ -73,6 +106,59 @@ email 유효성 검사일 때는 emailCheck()의 boolean 값을, 패스워드 �
 
 Input 컴포넌트에 유효성을 동적으로 전달하여 동적 스타일링을 구현하는 한편,
 이와 유사하게 이메일과 패스워드 입력에만 현재 입력이 유효한지, 유효하지 않은 지 클라이언트에 알리는 컴포넌트를 리턴한다.
+
+---
+
+## 23.08.01
+
+tailwind.config.js theme 수정
+public/logo 추가
+프로젝트 기획 변경
+
+---
+
+## 23.08.02.
+
+![ezgif com-video-to-gif (9)](https://github.com/FC-MINI-4/attendance-front/assets/83483378/4fe9bb33-f80e-4ff0-8f0c-1f15fbd84e6c)
+
+rEmail 정규식을 통해 입력받는 이메일 주소의 유효성을 클라이언트 단에서 검사.
+
+---
+
+## 23.08.03.
+
+![ezgif com-video-to-gif (11)](https://github.com/FC-MINI-4/attendance-front/assets/83483378/9c9bf89a-2506-41c1-a3a9-42a7a6bdc45c)
+
+비밀번호 찾기 & 변경하기 페이지 유효성 검사
+
+- input과 button이 유효성 검사에 따라 동적으로 활성화-비활성화
+
+---
+
+## 23.08.04
+
+![ezgif com-video-to-gif (12)](https://github.com/FC-MINI-4/attendance-front/assets/83483378/993bc592-f2a3-4895-9c60-c284bff78426)
+
+비밀번호 변경(change-pw) 유효성 검사
+input 스타일링 변경
+
+---
+
+## 23.08.06
+
+![ezgif com-video-to-gif (13)](https://github.com/FC-MINI-4/attendance-front/assets/83483378/29f63c5b-7d44-4f4a-9bc3-8b40d1bd5acc)
+
+headlessUI를 통해 Auth Dropdown 생성, 회원가입 폼에 적용
+
+- 추후 공용으로 쓸 수 있도록 수정 필요 !
+
+## 23.08.07
+
+![ezgif com-video-to-gif (14)](https://github.com/FC-MINI-4/attendance-front/assets/83483378/598fe87c-2016-468e-b081-5bf98361c5d2)
+
+Axios 세팅 후, 로그인 api 연결
+
+CORS 에러 발생 인지
 
 ## 23.08.09.
 
