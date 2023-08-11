@@ -24,7 +24,7 @@ export default function MemberDetail() {
     }
 
     getInfo();
-  }, []);
+  }, [setMemberState]);
 
   const hireDate = new Date(memberState.hireDate);
   const currentDate = new Date();
