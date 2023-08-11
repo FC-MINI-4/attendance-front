@@ -140,7 +140,6 @@ export default function ApproveModal(modalProps: IModalProps) {
   };
 
   const submitDayOff = () => {
-    event?.preventDefault();
     requestDayOff(dayOffData);
   };
 
