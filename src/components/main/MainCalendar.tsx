@@ -55,10 +55,9 @@ export default function Calendar(){
 
   useEffect(()=>{
     getDateRange()
-  },[setDayOffs])
+  },[])
 
-  console.log(dateRangeArray)
-  console.log(dayOffStartDate)
+
   //일주일 표시
   const Weeks = () => {
     const days = []
@@ -138,7 +137,7 @@ export default function Calendar(){
                     
                   </div>
                 : null}
-                {rangeDayOff.length > 0 ?
+                {rangeDayOff?.length > 0 ?
                   <div className='w-full h-5 mt-3 bg-blue-500'>
                     
                   </div>
@@ -174,7 +173,7 @@ export default function Calendar(){
                     
                   </div>
                 : null}
-                {rangeDayOff.length > 0 ?
+                {rangeDayOff?.length > 0 ?
                   <div className='w-full h-5 mt-3 bg-blue-500'>
                     
                   </div>
