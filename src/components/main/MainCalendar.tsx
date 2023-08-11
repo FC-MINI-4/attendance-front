@@ -51,14 +51,13 @@ export default function Calendar(){
     }
   }
 
-  const dateRangeArray = getDateRange()
+  const dateRangeArray = getDateRange() as string[]
 
   useEffect(()=>{
     getDateRange()
-  },[setDayOffs])
+  },[])
 
-  console.log(dateRangeArray)
-  console.log(dayOffStartDate)
+
   //일주일 표시
   const Weeks = () => {
     const days = []
@@ -105,7 +104,7 @@ export default function Calendar(){
 
         let checkDayOffS = dayOffStartDate.filter(x => x === lunaDayForm)
         let checkDayOffE = dayOffEndDate.filter(x => x === lunaDayForm)
-        //let rangeDayOff = (getDateRange() as string[]).filter(x => x === lunaDayForm)
+        let rangeDayOff = dateRangeArray?.filter(x => x === lunaDayForm)
         
         days.push(
           (i === 0 || a.length>0 || b.length>0 || c.length>0 || d.length>0 || e.length>0 || f.length>0 ? 
@@ -123,6 +122,26 @@ export default function Calendar(){
                   {formattedDate}
                 </div>
               }
+              {checkDayOffS.length > 0 && checkDayOffE.length === 0 ?
+                  <div className='w-full h-5 mt-3 bg-blue-500'>
+                    
+                  </div>
+                : null}
+                {checkDayOffE.length > 0 && checkDayOffS.length === 0 ?
+                  <div className='w-full h-5 mt-3 bg-blue-500'>
+                    
+                  </div>
+                : null}
+                {checkDayOffE.length > 0 && checkDayOffS.length > 0?
+                  <div className='w-full h-5 mt-3 bg-blue-500'>
+                    
+                  </div>
+                : null}
+                {rangeDayOff?.length > 0 ?
+                  <div className='w-full h-5 mt-3 bg-blue-500'>
+                    
+                  </div>
+                : null}
             </div>
           :
             <div
@@ -150,6 +169,11 @@ export default function Calendar(){
                   </div>
                 : null}
                 {checkDayOffE.length > 0 && checkDayOffS.length > 0?
+                  <div className='w-full h-5 mt-3 bg-blue-500'>
+                    
+                  </div>
+                : null}
+                {rangeDayOff?.length > 0 ?
                   <div className='w-full h-5 mt-3 bg-blue-500'>
                     
                   </div>

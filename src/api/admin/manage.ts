@@ -17,9 +17,10 @@ export default async function reqManage(): Promise<IManageProps> {
       }
     );
     return response.data;
-  } catch (error) {
-    console.error('MANAGE_FAILURE', error);
-    throw error;
+  } catch (error: any) {
+    alert(error.response.data.message);
+    location.replace('/');
+    return error;
   }
 }
 // 관리페이지

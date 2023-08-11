@@ -4,7 +4,7 @@ import { IprivacyProps } from '@/types/IMyPages';
 import { clientInstance } from '@/api/axios';
 import Image from 'next/image';
 import DropdownFilter from '@/components/admin/AdminDropDownFilter';
-import { MODIFY_DEPARTMENT } from '@/constants/options';
+import { MEMBER_DEPARTMENT } from '@/constants/options';
 import Button from '@/components/common/Button';
 import memberInfo from '@/api/member/memberInfo';
 import Loading from '@/components/common/Loading';
@@ -127,7 +127,7 @@ export default function MemberInfoEdit() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-[70rem] flex h-[35rem]">
+    <form onSubmit={handleSubmit} className="w-[70rem] ml-20 flex h-[35rem]">
       <div className="w-[40rem]  mr-8  border-[1px] rounded-md shadow">
         <div className="relative  w-[15rem]  rounded-sm font-bold sm:text-2xl sm:pb-8 h-9 ">
           <div className="bg-primary absolute   top-0 left-0 w-4 h-12 z-0"></div>
@@ -142,15 +142,15 @@ export default function MemberInfoEdit() {
               <input
                 value={privacyInfo.data.name}
                 onChange={e => handleNameChange(e.target.value)}
-                className="w-[20rem]  border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md"
+                className="w-[20rem]  border-b-2 text-lg border-gray-200 pt-2  font-bold outline-none rounded-sm  focus:border-primary text-md"
               />
             </div>
 
             <div className=" m-6 mt-12 ml-16">
               <div className="text-md font-semibold ">계열사</div>
-              <div className="font-small w-[20rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex ">
+              <div className="font-small w-[20rem] text-lg pt-2 border-b-2 font-bold border-gray-200 text-md pl-[-2rem] flex ">
                 <DropdownFilter
-                  options={MODIFY_DEPARTMENT}
+                  options={MEMBER_DEPARTMENT}
                   value={privacyInfo.data.department}
                   onChange={handleDepartmentChange}
                 />
@@ -161,7 +161,7 @@ export default function MemberInfoEdit() {
               <div className="text-md font-semibold ">입사일</div>
               <input
                 defaultValue={privacyInfo.data.hireDate}
-                className="  border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
+                className="  border-b-2 border-gray-200 pt-2 text-lg  w-[20rem] font-bold focus:border-primary rounded-sm outline-none text-md"
               />
             </div>
 
@@ -169,7 +169,7 @@ export default function MemberInfoEdit() {
               <div className="text-md font-semibold ">전화번호</div>
               <input
                 value={privacyInfo.data.phone}
-                className="  border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
+                className="  border-b-2 border-gray-200 pt-2 w-[20rem] text-lg font-bold focus:border-primary rounded-sm outline-none text-md"
                 onChange={e => handlePhoneChange(e.target.value)}
               />
             </div>
