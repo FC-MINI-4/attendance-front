@@ -11,7 +11,6 @@ emailState,
 nameState,
 remainDaysState,
 } from '@/recoil/main';
-import { IDayOffFormatted } from '@/types/IDayOff';
 
 export default function Main(){
   const [remainDays, setRemainDays] = useRecoilState(remainDaysState)

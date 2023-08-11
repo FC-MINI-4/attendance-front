@@ -31,7 +31,7 @@ export async function requestDuty(requestData: IApplyDuty) {
 
 export async function changeDuty(requestChange: IChangeDuty) {
   try {
-    const response = await axios.post(
+    const response = await axios.put(
       `${clientInstance.defaults.baseURL}/api/schedules/duty/`,
       requestChange,
       {
@@ -40,6 +40,7 @@ export async function changeDuty(requestChange: IChangeDuty) {
         }
       }
     );
+    return response
   } catch (error) {
     console.error('Request_Fail', error);
     throw error;
@@ -57,6 +58,7 @@ export async function cancelDuty(requestChange: ICancelDuty) {
         }
       }
     );
+    return response
   } catch (error) {
     console.error('Request_Fail', error);
     throw error;
