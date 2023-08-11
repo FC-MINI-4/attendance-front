@@ -9,8 +9,9 @@ dayOffState,
 dutiesState,
 emailState,
 nameState,
-remainDaysState
+remainDaysState,
 } from '@/recoil/main';
+import { IDayOffFormatted } from '@/types/IDayOff';
 
 export default function Main(){
   const [remainDays, setRemainDays] = useRecoilState(remainDaysState)
@@ -33,7 +34,8 @@ export default function Main(){
     schedules()
   },[setDayOffs, setRemainDays, setDuties, setUserEmail, setUserName])
 
-  console.log(dayOffs)
+
+
 
   return(
   <>
