@@ -18,7 +18,8 @@ export interface IChangeDayOff {
 //대기, 취소, 승인, 거절
 export interface ICancelDayOff {
 	dayOffId : number,
-  employeeId : number
+  employeeId : number,
+  status: string
 }
 
 export interface IDayOffFormatted {
