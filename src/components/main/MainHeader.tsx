@@ -19,11 +19,11 @@ export default function MainHeader() {
   return (
     <div className="h-24 flex justify-between px-16">
       <div className="top-0 bottom-0 my-auto pl-7 text-3xl font-bold">
-        <Image src="/logo.png" alt="logo" width={200} height={20} />
+        <Image src="/logo.png" alt="logo" width={200} height={20} priority/>
       </div>
       <div className="flex top-0 bottom-0 my-auto pr-7">
         <div className="w-12 h-12 rounded-full border-2 mr-6 overflow-hidden flex justify-center items-center">
-          <Image src={userProfile ? userProfile : '/logo.png'} alt='profileImg' width={48} height={48}/>
+          <Image src={userProfile ? userProfile : '/logo.png'} alt='profileImg' width={48} height={48} priority/>
         </div>
         <div className="relative">
           <div className='flex justify-between absolute top-0 left-0'>

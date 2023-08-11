@@ -33,6 +33,7 @@ export default function Main(){
     schedules()
   },[setDayOffs, setRemainDays, setDuties, setUserEmail, setUserName])
 
+  console.log(dayOffs)
 
   return(
   <>
