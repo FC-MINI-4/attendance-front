@@ -112,12 +112,13 @@ export default function AuthChangePwInput() {
       const response = await requestValidPw({
         password: validPassword
       });
-
-      if (response.data.success) {
-        setIsValid(prev => !prev);
+      if (response.data) {
+        if (response.data.success) {
+          setIsValid(prev => !prev);
+        }
       }
     } catch (error: any) {
-      alert(error.response.data.message);
+      throw error;
     }
   };
 

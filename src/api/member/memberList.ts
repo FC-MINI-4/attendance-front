@@ -18,8 +18,9 @@ export default async function memberList(): Promise<IMemberListProps> {
       }
     );
     return response.data;
-  } catch (error) {
-    console.error('List_FAILURE', error);
-    throw error;
+  } catch (error: any) {
+    alert(error.response.data.message);
+    location.replace('/');
+    return error;
   }
 }

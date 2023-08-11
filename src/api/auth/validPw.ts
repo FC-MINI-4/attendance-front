@@ -19,8 +19,9 @@ export async function requestValidPw(passwordData: IAuthValidPw) {
       }
     );
     return response;
-  } catch (error) {
-    console.error('INVALID_PASSWORD', error);
-    throw error;
+  } catch (error: any) {
+    alert(error.response.data.message);
+    location.replace('/');
+    return error;
   }
 }
