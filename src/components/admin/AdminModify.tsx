@@ -157,9 +157,9 @@ export default function AdminModify() {
 
   return (
     <div className="ml-[3rem] h-[37rem] w-[92rem] flex">
-      <div className=" h-[37rem] w-[25rem] border-2  border-primaryHover overflow-auto border-soild rounded-xl">
+      <div className=" h-[37rem] w-[25rem] border-2   overflow-auto border-soild rounded-xl">
         <div className="w-[25rem] h-[2.5rem] flex bg-primary sticky top-0 z-10 ">
-          <div className="w-[5rem] border-r-2 border-white h-[2,5rem] "></div>
+          <div className="w-[5rem] border-r-2 border-white h-[2,5rem]  "></div>
           <div className="w-[10rem] border-r-2 border-white h-[2.5rem] justify-center items-center flex text-white">
             사원ID
           </div>
@@ -172,11 +172,11 @@ export default function AdminModify() {
           <button
             key={employee.employeeId}
             onClick={() => handleButtonClick(employee)}
-            className="w-[25rem] h-[2.5rem] flex border-b-2 border-primaryHover mt-[0.2px] focus:bg-subHover">
-            <div className="w-[5rem] border-r-2 h-[2.5rem]  border-primaryHover justify-center items-center flex  ">
+            className="w-[25rem] h-[2.5rem] flex border-b-2 r mt-[0.2px] focus:bg-subHover">
+            <div className="w-[5rem] border-r-2 h-[2.5rem]  justify-center items-center flex  ">
               {index + 1}
             </div>
-            <div className="w-[10rem] border-r-2 border-primaryHover h-[2.5rem] justify-center items-center flex ">
+            <div className="w-[10rem] border-r-2 h-[2.5rem] justify-center items-center flex ">
               {employee.employeeId}
             </div>
             <div className="w-[10rem] h-[2.5rem] flex justify-center items-center ">
@@ -187,8 +187,8 @@ export default function AdminModify() {
       </div>
 
       <form onSubmit={handleSubmit} className="flex">
-        <div className="h-[30rem] w-[20rem] ml-[3rem]">
-          <div className=" h-[20rem] w-[20rem]  border-2 border-primaryHover  border-soild rounded-xl flex items-center justify-center ">
+        <div className="h-[30rem] w-[20rem] ml-[3rem] ">
+          <div className=" h-[20rem] w-[20rem]  border-2 shadow border-soild rounded-xl flex items-center justify-center ">
             {previewImage ? (
               <Image
                 src={previewImage}
@@ -230,7 +230,7 @@ export default function AdminModify() {
           </div>
         </div>
 
-        <div className="ml-[3rem] h-[37rem] w-[30rem] border-2 border-primaryHover border-soild rounded-xl  ">
+        <div className="ml-[3rem] h-[37rem] w-[30rem] border-2 shadow border-soild rounded-xl  ">
           {isLoading ? (
             <Loading />
           ) : (

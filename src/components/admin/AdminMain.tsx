@@ -27,8 +27,6 @@ export default function Main({ page }: IMainProps) {
   const [searchValue, setSearchValue] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(0);
   const [filteredEmployees, setFilteredEmployees] = useState([]);
-  const [profileImage, setProfileImage] = useState('');
-
   const itemsPerPage = 10;
 
   const handlePageChange = (selectedPage: number) => {
@@ -80,7 +78,7 @@ export default function Main({ page }: IMainProps) {
             )}
 
             <div className={`${isSidebarOpen ? '' : 'ml-[3rem]'}`}>
-              <>
+              <div className="shadow w-[1456px]">
                 {page !== 'admin-modify' && (
                   <div
                     className={`flex border-solid border-b-2 justify-between h-[3rem]  items-center text-lg font-medium `}>
@@ -169,17 +167,25 @@ export default function Main({ page }: IMainProps) {
                             onChange={handlePositionChange}
                           />
                         </div>
-                        <div className="text-center w-[10rem]">입사일</div>
-                        <div className="w-[10rem] text-center">연차내역</div>
-                        <div className="w-[10rem] text-center">당직내역</div>
-                        <div className="w-[10rem] text-center">총연차</div>
-                        <div className="w-[10rem] text-center">사용연차</div>
-                        <div className="w-[10rem]  text-center">잔여연차</div>
+                        <div className="flex">
+                          {[
+                            '입사일',
+                            '연차내역',
+                            '당직내역',
+                            '총연차',
+                            '사용연차',
+                            '잔여연차'
+                          ].map((label, index) => (
+                            <div key={index} className="w-[10rem] text-center">
+                              {label}
+                            </div>
+                          ))}
+                        </div>
                       </>
                     )}
                   </div>
                 )}
-              </>
+              </div>
               <>{page === 'admin-modify' && <AdminModify />}</>
 
               <div>
