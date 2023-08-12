@@ -36,9 +36,6 @@ export default function AuthSignInBox() {
         document.cookie = `expires=${expireDate.toUTCString()};`;
         document.cookie = `employeeId=${employeeId};`;
 
-        // 성공 메시지 alert
-        alert(response.data.message);
-
         // 관리자면 admin-manage 페이지로 라우팅
         if (response.data.data.employee.role === 'ADMIN') {
           router.push('/admin-manage');
