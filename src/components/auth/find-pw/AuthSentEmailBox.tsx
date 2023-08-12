@@ -1,4 +1,4 @@
-import AuthBox from '@/components/common/AuthBox';
+import AuthBox from '@/components/auth/AuthBox';
 import SearchSiteButton from '@/components/common/SearchSiteButton';
 
 export default function AuthSentEmailBox() {
