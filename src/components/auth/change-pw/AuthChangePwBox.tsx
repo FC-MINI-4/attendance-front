@@ -1,6 +1,6 @@
 import { Cookies } from 'react-cookie';
 import { useEffect, useState } from 'react';
-import AuthBox from '@/components/common/AuthBox';
+import AuthBox from '@/components/auth/AuthBox';
 import DialogModal from '@/components/common/Dialog';
 import AuthChangePwInput from '@/components/auth/change-pw/AuthChangePwInput';
 

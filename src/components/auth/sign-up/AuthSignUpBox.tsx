@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useRouter } from 'next/router';
 import { signUpState } from '@/recoil/signUp';
@@ -6,12 +5,11 @@ import Button from '@/components/common/Button';
 import { requestSignUp } from '@/api/auth/signUp';
 import { TEMP_DEPARTMENT } from '@/constants/options';
 import { SIGNUP_INPUT_INFO } from '@/constants/constants';
-import AuthDropdown from '@/components/common/AuthDropdown';
+import AuthDropdown from '@/components/auth/AuthDropdown';
 import SinglePicker from '@/components/common/SinglePicker';
 import AuthSignUpInput from '@/components/auth/sign-up/AuthSignUpInput';
 
 export default function AuthSignUpBox() {
-  const [isLoading, setIsLoading] = useState(false);
   // 회원가입 폼 recoil state value 구독
   const signUpData = useRecoilValue(signUpState);
   // 라우팅
@@ -21,7 +19,6 @@ export default function AuthSignUpBox() {
     event.preventDefault();
 
     try {
-      setIsLoading(true);
       const response = await requestSignUp({
         confirmPassword: signUpData.confirmPassword,
         name: signUpData.name,
@@ -38,7 +35,6 @@ export default function AuthSignUpBox() {
       } else {
         alert(response.data.message);
       }
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
