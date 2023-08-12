@@ -1,4 +1,4 @@
-import AuthBox from '@/components/common/AuthBox';
+import AuthBox from '@/components/auth/AuthBox';
 import Button from '@/components/common/Button';
 import AdminSignInInput from '@/components/admin/AdminSignInInput';
 
