@@ -18,7 +18,7 @@ export default async function dutiesList(): Promise<IDutyProps> {
     );
     return response.data;
   } catch (error: any) {
-    alert(error.response.data.message);
+    alert('잘못된 접근입니다.');
     location.replace('/');
     return error;
   }

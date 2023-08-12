@@ -12,6 +12,5 @@ export async function requestResetPw(resetPwData: IAuthResetPw) {
     return response;
   } catch (error) {
     console.error('INVALID_PASSWORD', error);
-    throw error;
   }
 }
