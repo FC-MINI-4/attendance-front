@@ -13,6 +13,7 @@ export default function MainHeader({ onToggleSidebar }: IMainHeaderProps) {
     document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     document.cookie = 'employeeId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     document.cookie = 'expires=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    document.cookie = 'role=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     location.replace('/sign-in');
   };
 
