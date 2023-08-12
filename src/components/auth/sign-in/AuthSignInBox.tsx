@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { signInState } from '@/recoil/logIn';
 import Button from '@/components/common/Button';
 import { requestSignIn } from '@/api/auth/logIn';
-import AuthBox from '@/components/common/AuthBox';
+import AuthBox from '@/components/auth/AuthBox';
 import AuthSignInInput from '@/components/auth/sign-in/AuthSignInInput';
 
 export default function AuthSignInBox() {
