@@ -1,4 +1,4 @@
-import AuthBox from '@/components/common/AuthBox';
+import AuthBox from '@/components/auth/AuthBox';
 import AuthResetPwInput from '@/components/auth/reset-pw/AuthResetPwInput';
 
 export default function AuthResetPwBox() {
