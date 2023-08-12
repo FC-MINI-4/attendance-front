@@ -1,9 +1,9 @@
-import PwBox from '@/components/common/PwBox';
+import AuthBox from '@/components/common/AuthBox';
 import AuthFindPwInput from '@/components/auth/find-pw/AuthFindPwInput';
 
 export default function AuthFindPwBox() {
   return (
-    <PwBox>
+    <AuthBox>
       <div className="mb-8 text-3xl">
         <p>순양 계정의</p>
         <p>비밀번호를 재설정 합니다.</p>
@@ -13,6 +13,6 @@ export default function AuthFindPwBox() {
         <p>계정의 이메일을 입력해주세요.</p>
       </div>
       <AuthFindPwInput />
-    </PwBox>
+    </AuthBox>
   );
 }
