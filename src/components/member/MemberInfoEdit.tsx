@@ -185,7 +185,7 @@ export default function MemberInfoEdit() {
                 alt="미리보기 이미지"
                 width={320}
                 height={320}
-                className="rounded-xl w-[240px] h-[240px] "
+                className="rounded-xl w-[320px] h-[320px]   mt-8"
               />
             ) : privacyInfo.data.profilePath ? (
               <Image

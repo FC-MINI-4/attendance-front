@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { Cookies } from 'react-cookie';
 import { clientInstance } from '@/api/axios';
 import { IAuthValidPw } from '@/types/IAuth';
+import { Cookies } from 'react-cookie';
+
 const cookie = new Cookies();
 const accessToken = cookie.get('accessToken');
 const employeeId = cookie.get('employeeId');

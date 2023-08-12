@@ -4,14 +4,18 @@ import { useEffect, useRef } from 'react';
 import { dayOffState, dutiesState } from '@/recoil/main';
 import { IDayOffFormatted } from '@/types/IDayOff';
 import { IDutiesFormatted } from '@/types/IDuty';
-import Item from 'antd/es/list/Item';
+import { changeDayOff, cancelDayOff } from '@/api/main/dayoff';
+import { changeDuty, cancelDuty } from '@/api/main/duty';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid';
+import { Cookies } from 'react-cookie';
 
 interface IModalProps {
   type?: string;
   date?: string;
   value?: string;
 }
+
+const cookie = new Cookies();
 
 export default function ManageModal(props: IModalProps) {
   const [isManageShow, setIsManageShow] = useRecoilState(manageState);
@@ -35,6 +39,7 @@ export default function ManageModal(props: IModalProps) {
 
   // dayOffs를 원하는 형식으로 변환
   const dayOffsFormatted = dayOffs?.map((item:IDayOffFormatted)=>({
+    dayOffId: item.dayOffId,
     type: item.type,
     startDate: item.startDate,
     endDate: item.endDate,
@@ -44,6 +49,7 @@ export default function ManageModal(props: IModalProps) {
 
 
   const dutiesFormatted = duties?.map((item:IDutiesFormatted)=> ({
+    dayOffId: item.dutyId,
     type: item.type,
     date: item.date,
     status: item.status,
@@ -55,6 +61,51 @@ export default function ManageModal(props: IModalProps) {
   const filteredDuties = dutiesFormatted?.filter(item => item.status !== '승인됨');
 
   const manageFormatted = [...(filteredDayOffs || []), ...(filteredDuties || [])];
+
+  const employeeId = Number(cookie.get('employeeId'));
+
+  const dayOffEditClick = (index:number) => {
+    try{
+      const clickedItem = manageFormatted[index];
+
+      const itemType = clickedItem.type;
+      const start = clickedItem.startDate;
+      const end = clickedItem.endDate;
+      const status = clickedItem.status;
+      const dayOffId = clickedItem.dayOffId;
+  
+      const a ={
+        startDate: start,
+        endDate: end,
+        type: itemType,
+        status: status,
+        reason: '수정요망',
+        employeeId: employeeId,
+        dayOffId: dayOffId
+      }
+
+      changeDayOff(a)
+    }catch(error){
+      console.log(`error: ${error}`);
+    }
+  };
+
+  const dayOffDeleteClick = (index:number) => {
+    try{
+      const clickedItem = manageFormatted[index];
+
+      const dayOffId = clickedItem.dayOffId;
+  
+      const b ={
+        employeeId: employeeId,
+        dayOffId: dayOffId,
+        status: '취소'
+      }
+      cancelDayOff(b)
+    }catch(error){
+      console.log(`error: ${error}`);
+    }
+  };
 
   return (
     <>
@@ -101,10 +152,10 @@ export default function ManageModal(props: IModalProps) {
                       <div className='flex justify-between'>
                         <PencilSquareIcon
                           className="w-6 h-6 cursor-pointer text-white pr-1.5"
-                          />
+                          onClick={() => dayOffEditClick(index)}/>
                         <TrashIcon
                           className="w-6 h-6 cursor-pointer text-white pl-1.5"
-                          />
+                          onClick={() => dayOffDeleteClick(index)}/>
                       </div>
                     : props.status}
                   </div>
