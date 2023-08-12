@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useRouter } from 'next/router';
 import { signUpState } from '@/recoil/signUp';
@@ -10,13 +11,17 @@ import SinglePicker from '@/components/common/SinglePicker';
 import AuthSignUpInput from '@/components/auth/sign-up/AuthSignUpInput';
 
 export default function AuthSignUpBox() {
+  const [isLoading, setIsLoading] = useState(false);
+  // 회원가입 폼 recoil state value 구독
   const signUpData = useRecoilValue(signUpState);
+  // 라우팅
   const router = useRouter();
 
   const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
+      setIsLoading(true);
       const response = await requestSignUp({
         confirmPassword: signUpData.confirmPassword,
         name: signUpData.name,
@@ -33,6 +38,7 @@ export default function AuthSignUpBox() {
       } else {
         alert(response.data.message);
       }
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }

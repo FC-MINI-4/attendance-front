@@ -19,7 +19,7 @@ export default async function memberInfo() {
     );
     return response.data;
   } catch (error: any) {
-    alert(error.response.data.message);
+    alert('로그인이 필요합니다.');
     location.replace('/');
     return error;
   }
