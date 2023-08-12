@@ -63,7 +63,7 @@ export default function AuthSignUpBox() {
       <div className="text-xs sm:text-base font-semibold pl-1 text-mainBlack">
         입사일
       </div>
-      <div className="border-b-2 border-gray-200 mb-4 sm:w-full sm:max-w-[calc(100%-6rem)] pl-1">
+      <div className="border-b-2 border-gray-200 mb-4 sm:w-full sm:max-w-[calc(100%-7rem)] pl-1">
         <SinglePicker name={'hireDate'} />
       </div>
       <form onSubmit={handleSignUp}>
