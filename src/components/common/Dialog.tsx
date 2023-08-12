@@ -51,10 +51,10 @@ export default function DialogModal({ message }: IDialogModal) {
                     </p>
                   </div>
 
-                  <div className="mt-4 justify-center flex">
+                  <div className="mt-8 justify-center flex">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-subHover hover:bg-subHover hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:primary focus-visible:ring-offset-2"
+                      className="inline-flex justify-center rounded-md border border-primary bg-white px-4 py-2 text-sm font-medium text-primary hover:bg-primary hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:primary focus-visible:ring-offset-2"
                       onClick={closeModal}>
                       확인
                     </button>
