@@ -42,7 +42,7 @@ export default function DialogModal({ message }: IDialogModal) {
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-primary flex justify-center">
+                    className="text-3xl font-bold mb-8 leading-6 text-primary flex justify-center">
                     SOONYANG
                   </Dialog.Title>
                   <div className="mt-2">
