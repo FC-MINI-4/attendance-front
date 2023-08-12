@@ -1,6 +1,6 @@
 import { Cookies } from 'react-cookie';
 import { useEffect, useState } from 'react';
-import PwBox from '@/components/common/PwBox';
+import AuthBox from '@/components/common/AuthBox';
 import DialogModal from '@/components/common/Dialog';
 import AuthChangePwInput from '@/components/auth/change-pw/AuthChangePwInput';
 
@@ -19,7 +19,7 @@ export default function AuthChangePwBox() {
   }, [employeeId]);
 
   return (
-    <PwBox>
+    <AuthBox>
       {renderModal && <DialogModal message={'로그인이 필요합니다.'} />}
       <div className="sm:mb-8 sm:text-3xl mb-4 text-sm">
         <p>순양 계정의</p>
@@ -30,6 +30,6 @@ export default function AuthChangePwBox() {
         <p>입력해주세요.</p>
       </div>
       <AuthChangePwInput />
-    </PwBox>
+    </AuthBox>
   );
 }
