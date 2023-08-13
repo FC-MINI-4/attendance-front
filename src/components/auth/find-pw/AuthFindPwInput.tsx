@@ -34,16 +34,20 @@ export default function AuthFindPwInput() {
       });
 
       if (response) {
+        // 응답 code가 success true일 때
         if (response.data.success) {
           alert(response.data.message);
           setIsLoading(false);
           router.push('/sent-email');
         } else {
           alert(response.data.message);
+          setIsLoading(false);
         }
       }
+      // 존재하지 않는 이메일 전송 시
     } catch (error: any) {
       alert(error.response.data.message);
+      setIsLoading(false);
     }
   };
 

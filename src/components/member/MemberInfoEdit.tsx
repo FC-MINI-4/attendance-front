@@ -127,9 +127,9 @@ export default function MemberInfoEdit() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-[70rem] ml-20 flex h-[35rem]">
-      <div className="w-[40rem]  mr-8  border-[1px] rounded-md shadow">
-        <div className="relative  w-[15rem]  rounded-sm font-bold sm:text-2xl sm:pb-8 h-9 ">
+    <form onSubmit={handleSubmit} className="flex w-full h-[35rem]">
+      <div className="w-full mr-8  border-[1px] rounded shadow">
+        <div className="relative w-[15rem] rounded-md font-bold sm:text-2xl sm:pb-8 h-9">
           <div className="bg-primary absolute   top-0 left-0 w-4 h-12 z-0"></div>
           <div className="relative z-10 pl-4 ml-2 pt-2">정보 수정</div>
         </div>
@@ -185,7 +185,7 @@ export default function MemberInfoEdit() {
                 alt="미리보기 이미지"
                 width={320}
                 height={320}
-                className="rounded-xl w-[320px] h-[320px]   mt-8"
+                className="rounded-xl w-[320px] h-[320px]  mt-8"
               />
             ) : privacyInfo.data.profilePath ? (
               <Image
@@ -193,7 +193,7 @@ export default function MemberInfoEdit() {
                 width={320}
                 height={320}
                 alt="프로필 이미지"
-                className="rounded-xl w-[320px] h-[320px]  mt-8 "
+                className="rounded-xl w-[320px] h-[320px] px-8 mt-8 "
               />
             ) : (
               <div className="flex items-center justify-center font-semibold ">
