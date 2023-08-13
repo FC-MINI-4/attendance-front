@@ -19,7 +19,7 @@ export default function MemberLayout({ children }: ILayout) {
     <>
       {renderModal && <DialogModal message={'사원 로그인이 필요합니다.'} />}
       <MemberHeader />
-      <div className="px-16">{children}</div>
+      {children}
     </>
   );
 }

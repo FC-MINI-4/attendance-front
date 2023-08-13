@@ -10,17 +10,12 @@ export default function memberEdit() {
   return (
     <RecoilRoot>
       <MemberLayout>
-        <div className=" w-full shadow-md"></div>
-        <div className="flex  my-24">
-          <div className="pb-10 ">
+        <div className="flex justify-between my-24 px-16">
+          <div className="pb-10 mr-16">
             <MemberBoard />
-            <div className="mt-16 ">
-              <MemberSideBar />
-            </div>
+            <MemberSideBar />
           </div>
-          <div className="">
-            <MemberInfoEdit />
-          </div>
+          <MemberInfoEdit />
         </div>
       </MemberLayout>
     </RecoilRoot>
