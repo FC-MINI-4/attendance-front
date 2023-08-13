@@ -176,9 +176,9 @@ export default function MemberInfoEdit() {
           </>
         )}
       </div>
-      <div className="flex w-[25rem] rounded-md border-[1px] shadow ml-2 ">
+      <div className="flex w-[25rem] rounded-md border-[1px] shadow">
         <div className="w-full h-full">
-          <div className=" flex  justify-center h-[200px] rounded-full ">
+          <div className="flex justify-center h-[200px] rounded-full ">
             {previewImage ? (
               <Image
                 src={previewImage}

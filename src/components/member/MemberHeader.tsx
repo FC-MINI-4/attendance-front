@@ -49,14 +49,14 @@ export default function MemberHeader() {
             <div className="w-12 h-12 rounded-full border-2 mr-6 overflow-hidden flex justify-center items-center">
               <Image
                 src={`${clientInstance.defaults.baseURL}${memberState.profilePath}`}
-                className="rounded-xl w-[320px] h-[320px] "
+                className="rounded-xl"
                 alt="profileImg"
                 width={48}
                 height={48}
               />
             </div>
           ) : (
-            <div>hi</div>
+            <div></div>
           )}
           <div className="relative">
             <div className="flex justify-between absolute top-0 left-0">
