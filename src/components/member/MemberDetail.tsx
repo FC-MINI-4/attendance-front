@@ -35,8 +35,8 @@ export default function MemberDetail() {
 
   return (
     <div className="flex w-full h-[35rem]">
-      <div className="w-full mr-8  border-[1px] rounded shadow">
-        <div className="relative  w-[15rem]  rounded-md font-bold sm:text-2xl sm:pb-8 h-9 ">
+      <div className="w-full mr-8 border-[1px] rounded shadow">
+        <div className="relative rounded-md font-bold sm:text-2xl sm:pb-8 h-9 ">
           <div className="bg-primary absolute top-0 left-0 w-4 h-12 z-0"></div>
           <div className="relative z-10 pl-4 ml-2 pt-2">사용자 정보</div>
         </div>
@@ -48,7 +48,7 @@ export default function MemberDetail() {
               {Object.entries(List).map(([key, value]) => (
                 <div className="m-6 ml-12" key={key}>
                   <div className="text-md mt-14">{key}</div>
-                  <div className="w-[20rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm focus:border-primary text-md">
+                  <div className="w-[22rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm focus:border-primary text-md">
                     {value}
                   </div>
                 </div>
@@ -58,7 +58,7 @@ export default function MemberDetail() {
               {Object.entries(More).map(([key, value]) => (
                 <div className="m-6 ml-12" key={key}>
                   <div className="text-md mt-14">{key}</div>
-                  <div className="w-[20rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm focus:border-primary text-md">
+                  <div className="w-[22rem] text-lg font-semibold border-b-2 border-gray-200 pt-2 outline-none rounded-sm focus:border-primary text-md">
                     {value}
                   </div>
                 </div>
@@ -67,7 +67,7 @@ export default function MemberDetail() {
           </div>
         )}
       </div>
-      <div className="flex mx-16 w-full border-[1px] rounded-md shadow">
+      <div className="flex w-full border-[1px] rounded-md shadow">
         <div className="w-full h-full">
           <div className=" flex justify-center h-[200px] rounded-full  ">
             {previewImage ? (
