@@ -1,8 +1,10 @@
+import { Cookies } from 'react-cookie';
+import DialogModal from '@/components/common/Dialog';
 import Calendar from '@/components/main/MainCalendar';
 import MainHeader from '@/components/main/MainHeader';
 import SideMenu from '@/components/main/MainSideMenu';
 import { useRecoilState } from 'recoil';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import requestSchedules from '@/api/main/schedules';
 import {
   dayOffState,
@@ -18,9 +20,15 @@ export default function Main() {
   const [duties, setDuties] = useRecoilState(dutiesState);
   const [userName, setUserName] = useRecoilState(nameState);
   const [userEmail, setUserEmail] = useRecoilState(emailState);
+  const [renderModal, setRenderModal] = useState(true); // Diaglog Modal 렌더링 조건
+
+  // 쿠키에 저장된 employeeId를 꺼내와서 employeeId 변수에 저장
+  const cookie = new Cookies();
+  const isEmployee = cookie.get('role');
 
   useEffect(() => {
     const schedules = async () => {
+      if (isEmployee === 'USER') setRenderModal(false);
       try {
         const request = await requestSchedules();
         const scheduleInfo = request.data;
@@ -34,10 +42,18 @@ export default function Main() {
       }
     };
     schedules();
-  }, [setDayOffs, setRemainDays, setDuties, setUserEmail, setUserName]);
+  }, [
+    setDayOffs,
+    setRemainDays,
+    setDuties,
+    setUserEmail,
+    setUserName,
+    isEmployee
+  ]);
 
   return (
     <>
+      {renderModal && <DialogModal message={'사원 로그인이 필요합니다.'} />}
       <div className="w-screen h-screen relative">
         <div className="absolute top-0 left-0 w-full shadow-md">
           <MainHeader />
