@@ -17,6 +17,8 @@ export default async function dayOffList() {
     );
 
     return response.data;
-  } catch (error) {}
+  } catch (error: any) {
+    return error;
+  }
 }
 //연차요청관리페이지

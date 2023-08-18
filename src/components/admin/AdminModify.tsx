@@ -120,40 +120,52 @@ export default function AdminModify() {
     reader.readAsDataURL(file);
   };
 
-  const handleNameChange = (value: string) => {
+  const createFieldChangeHandler = (fieldName: string) => (value: string) => {
     setSelectedEmployee(prevState => ({
       ...prevState,
-      name: value
+      [fieldName]: value
     }));
   };
 
-  const handleHireDateChange = (value: string) => {
-    setSelectedEmployee(prevState => ({
-      ...prevState,
-      hireDate: value
-    }));
-  };
+  const handleNameChange = createFieldChangeHandler('name');
+  const handleHireDateChange = createFieldChangeHandler('hireDate');
+  const handlePhoneChange = createFieldChangeHandler('phone');
+  const handlePositionChange = createFieldChangeHandler('position');
+  const handleDepartmentChange = createFieldChangeHandler('department');
 
-  const handlePhoneChange = (value: string) => {
-    setSelectedEmployee(prevState => ({
-      ...prevState,
-      phone: value
-    }));
-  };
-
-  const handlePositionChange = (value: string) => {
-    setSelectedEmployee(prevState => ({
-      ...prevState,
-      position: value
-    }));
-  };
-
-  const handleDepartmentChange = (value: string) => {
-    setSelectedEmployee(prevState => ({
-      ...prevState,
-      department: value
-    }));
-  };
+  const inputFields = [
+    {
+      label: '이름',
+      value: selectedEmployee.name,
+      onChange: handleNameChange
+    },
+    {
+      label: '계열사',
+      options: MODIFY_DEPARTMENT,
+      value: selectedEmployee.department,
+      onChange: handleDepartmentChange
+    },
+    {
+      label: '직급',
+      value: selectedEmployee.position,
+      onChange: handlePositionChange,
+      options: MODIFY_POSITION
+    },
+    {
+      label: '입사일',
+      value: selectedEmployee.hireDate,
+      onChange: (value: string) => handleHireDateChange(value)
+    },
+    {
+      label: '이메일',
+      value: selectedEmployee.email
+    },
+    {
+      label: '전화번호',
+      value: selectedEmployee.phone,
+      onChange: (value: string) => handlePhoneChange(value)
+    }
+  ];
 
   return (
     <div className="ml-[3rem] h-[37rem] w-[92rem] flex">
@@ -236,60 +248,28 @@ export default function AdminModify() {
           ) : (
             <>
               <div>
-                <div className=" m-6 ml-16 mt-4 ">
-                  <div className="text-md font-semibold ">이름</div>
-                  <input
-                    value={selectedEmployee.name}
-                    onChange={e => handleNameChange(e.target.value)}
-                    className="w-[20rem]  border-b-2 border-gray-200 pt-2 outline-none rounded-sm  focus:border-primary text-md"
-                  />
-                </div>
-
-                <div className=" m-6 mt-4 ml-16">
-                  <div className="text-md font-semibold ">계열사</div>
-                  <div className="font-small w-[21rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex ">
-                    <DropdownFilter
-                      options={MODIFY_DEPARTMENT}
-                      value={selectedEmployee.department}
-                      onChange={handleDepartmentChange}
-                    />
+                {inputFields.map((field, index) => (
+                  <div key={index} className={`m-6 ml-16 mt-4`}>
+                    <div className="text-md font-semibold ">{field.label}</div>
+                    {field.options ? (
+                      <div className="font-small w-[21rem] pt-2 border-b-2 border-gray-200 text-md pl-[-2rem] flex">
+                        <DropdownFilter
+                          options={field.options}
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                      </div>
+                    ) : (
+                      <input
+                        value={field.value}
+                        onChange={e =>
+                          field.onChange && field.onChange(e.target.value)
+                        }
+                        className="border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
+                      />
+                    )}
                   </div>
-                </div>
-              </div>
-
-              <div className="  ml-16 mt-4 ">
-                <div className="text-md font-semibold ">직급</div>
-                <div className="font-small w-[21rem]  border-b-2 pt-2   border-gray-200 text-md ">
-                  <DropdownFilter
-                    options={MODIFY_POSITION}
-                    value={selectedEmployee.position}
-                    onChange={handlePositionChange}
-                  />
-                </div>
-              </div>
-              <div className=" m-6 mt-4 ml-16 ">
-                <div className="text-md font-semibold ">입사일</div>
-                <input
-                  value={selectedEmployee.hireDate}
-                  className="  border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-                  onChange={e => handleHireDateChange(e.target.value)}
-                />
-              </div>
-
-              <div className=" m-6 mt-4 ml-16 ">
-                <div className="text-md font-semibold ">이메일</div>
-                <input
-                  defaultValue={selectedEmployee.email}
-                  className=" border-b-2 border-gray-200 pt-2  w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-                />
-              </div>
-              <div className=" m-6 ml-16 mt-4  ">
-                <div className="text-md font-semibold ">전화번호</div>
-                <input
-                  value={selectedEmployee.phone}
-                  className="  border-b-2 border-gray-200 pt-2 w-[20rem] focus:border-primary rounded-sm outline-none text-md"
-                  onChange={e => handlePhoneChange(e.target.value)}
-                />
+                ))}
               </div>
               <div className="w-[30rem justify-center  flex">
                 <div className="w-[8rem]  ">

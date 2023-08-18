@@ -260,33 +260,18 @@ export default function RequestList({
               ) : null}
 
               <div className="w-[10rem] item-center flex justify-center">
-                {(() => {
-                  if (employee.status === '대기중') {
-                    return (
-                      <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-mainOrange">
-                        {employee.status}
-                      </div>
-                    );
-                  } else if (employee.status === '거절됨') {
-                    return (
-                      <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-secondary">
-                        {employee.status}
-                      </div>
-                    );
-                  } else if (employee.status === '취소') {
-                    return (
-                      <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-primary">
-                        {employee.status}
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <div className="w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center bg-mainBlue">
-                        {employee.status}
-                      </div>
-                    );
-                  }
-                })()}
+                <div
+                  className={`w-[4rem] h-[28px] text-white rounded-md item-center flex justify-center ${
+                    employee.status === '대기중'
+                      ? 'bg-mainOrange'
+                      : employee.status === '거절됨'
+                      ? 'bg-secondary'
+                      : employee.status === '취소'
+                      ? 'bg-primary'
+                      : 'bg-mainBlue'
+                  }`}>
+                  {employee.status}
+                </div>
               </div>
 
               <div className="w-[12rem] text-center">
